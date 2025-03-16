@@ -115,6 +115,9 @@ const Index: React.FC = () => {
             options = options.filter(option => option.key !== "connection");
           }
           
+          // Sort options by confidence score from highest to lowest
+          options = options.sort((a, b) => b.confidence - a.confidence);
+          
           setResolutionOptions(options);
           setShowResolutionOptions(true);
           setIsLoading(false);
