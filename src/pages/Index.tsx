@@ -6,7 +6,6 @@ import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
-import RelatedContent from '../components/RelatedContent';
 import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
 
 const Index: React.FC = () => {
@@ -810,16 +809,7 @@ const Index: React.FC = () => {
                 
                 {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
                 
-                {showAnswer && selectedPathKey && (
-                  <>
-                    <AIGeneratedAnswer 
-                      content={getAnswerContent()} 
-                      sources={getSelectedPathSources()} 
-                      isVisible={showAnswer} 
-                    />
-                    <RelatedContent isVisible={showAnswer} />
-                  </>
-                )}
+                {showAnswer && selectedPathKey && <AIGeneratedAnswer content={getAnswerContent()} sources={getSelectedPathSources()} isVisible={showAnswer} />}
               </div>}
           </section>
         </div>
