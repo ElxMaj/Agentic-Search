@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ThumbsUp, Clock, ArrowRight } from 'lucide-react';
+import { ThumbsUp, Clock, ArrowRight, Info } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
@@ -61,12 +61,12 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
                 <span className="text-sm text-gray-700">{option.confidence}% Confidence</span>
               </div>
               <div className="flex items-center">
-                <Clock size={16} className="text-gray-500 mr-1" />
+                <Info size={16} className="text-gray-500 mr-1" />
                 <span className="text-sm text-gray-700">{option.sources} Sources</span>
               </div>
             </div>
             
-            <div className="p-3 bg-gray-50 rounded-md text-sm text-gray-700">
+            <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-700">
               {option.detail}
             </div>
           </motion.div>

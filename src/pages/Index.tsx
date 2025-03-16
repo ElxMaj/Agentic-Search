@@ -38,6 +38,7 @@ const Index: React.FC = () => {
         setTimeout(() => {
           const options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths)
             .map(([key, path]) => {
+              // Determine confidence, source count and relevance summary based on path type
               let pathDetail = "";
               let confidence = 0;
               let sourceCount = 0;
