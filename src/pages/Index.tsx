@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -37,9 +36,7 @@ const Index: React.FC = () => {
         setShowQueryInterpretation(true);
         
         setTimeout(() => {
-          // Transform the resolution paths into options with confidence scores and source counts
           let options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
-            // Get relevant detail information based on the path key
             let detail = "";
             
             if (matchedQuery.query.includes("Webcam problem")) {
@@ -68,14 +65,12 @@ const Index: React.FC = () => {
               }
             }
             
-            // Get confidence score and source count based on the path
             const sources = path.sources || [];
             const sourceCount = sources.length;
             const confidence = sources.length > 0 
               ? Math.round(sources.reduce((sum, source) => sum + source.confidence, 0) / sources.length)
-              : Math.floor(Math.random() * 10) + 85; // Fallback to random score between 85-95
+              : Math.floor(Math.random() * 10) + 85;
             
-            // Create descriptive summary based on the path
             let description = "";
             if (key === "permissions") {
               description = "Check and update app permissions in Windows and Teams";
@@ -110,12 +105,10 @@ const Index: React.FC = () => {
             };
           });
           
-          // Filter out the connection option for webcam problems
           if (matchedQuery.query.includes("Webcam problem")) {
             options = options.filter(option => option.key !== "connection");
           }
           
-          // Sort options by confidence score from highest to lowest
           options = options.sort((a, b) => b.confidence - a.confidence);
           
           setResolutionOptions(options);
@@ -138,7 +131,6 @@ const Index: React.FC = () => {
     const path = currentQueryData.resolutionPaths[selectedPathKey];
     if (!path) return "";
     
-    // Return the existing detailed answers
     if (selectedPathKey === "software") {
       return `<h3 class="text-lg font-medium mb-3">Dell Graphics Performance: Software Solutions</h3>
       
@@ -352,7 +344,7 @@ const Index: React.FC = () => {
               <li>Press <strong>Win + X</strong> and select <strong>Device Manager</strong></li>
               <li>Expand <strong>Universal Serial Bus controllers</strong></li>
               <li>Right-click on each <strong>USB Root Hub</strong> and select <strong>Update driver</strong></li>
-              <li>Choose <strong>Search automatically for drivers</strong></li>
+              <li>Choose <strong>Search automatically for updated driver software</strong></li>
               <li>Repeat for all USB controllers and hubs listed</li>
               <li>Restart your computer after all updates are complete</li>
             </ol>
@@ -531,7 +523,7 @@ const Index: React.FC = () => {
           <div>
             <p class="font-medium">Free Up Disk Space</p>
             <p class="mb-2">Your SSD performance is degrading due to insufficient free space. SSDs require at least 20% free space for optimal performance.</p>
-            <div class="bg-white p-2 rounded-md text-sm border border-gray-200">
+            <div class="bg-white p-2 rounded-md text-xs mb-2">
               <p class="font-medium">Quick Actions:</p>
               <ul class="list-disc pl-4">
                 <li>Run Disk Cleanup (found 14.3GB of temporary files)</li>
@@ -790,7 +782,6 @@ const Index: React.FC = () => {
         <p class="text-sm">Based on your system's current memory usage patterns, implementing the software optimizations alone could improve application loading times by 15-20%. Adding a hardware upgrade would deliver a 25-40% overall performance boost for memory-intensive applications.</p>
       </div>`;
     } else {
-      // If for some reason we don't have a specific template, fall back to this
       return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
     }
   };
@@ -819,14 +810,11 @@ const Index: React.FC = () => {
                 {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
                 
                 {showAnswer && selectedPathKey && (
-                  <>
-                    <AIGeneratedAnswer 
-                      content={getAnswerContent()} 
-                      sources={getSelectedPathSources()} 
-                      isVisible={showAnswer} 
-                    />
-                    <RelatedContent isVisible={showAnswer} />
-                  </>
+                  <AIGeneratedAnswer 
+                    content={getAnswerContent()} 
+                    sources={getSelectedPathSources()} 
+                    isVisible={showAnswer} 
+                  />
                 )}
               </div>}
           </section>
