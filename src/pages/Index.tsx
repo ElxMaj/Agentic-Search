@@ -38,7 +38,7 @@ const Index: React.FC = () => {
         
         setTimeout(() => {
           // Transform the resolution paths into options with confidence scores and source counts
-          const options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
+          let options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
             // Get relevant detail information based on the path key
             let detail = "";
             
@@ -109,6 +109,11 @@ const Index: React.FC = () => {
               detail
             };
           });
+          
+          // Filter out the connection option for webcam problems
+          if (matchedQuery.query.includes("Webcam problem")) {
+            options = options.filter(option => option.key !== "connection");
+          }
           
           setResolutionOptions(options);
           setShowResolutionOptions(true);
