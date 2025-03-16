@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -7,7 +6,6 @@ import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
 import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
-
 const Index: React.FC = () => {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,90 +15,70 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
-  
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
     setIsLoading(true);
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
-    
     setTimeout(() => {
-      const matchedQuery = mockQueries.find(q => 
-        searchQuery.toLowerCase().includes(q.query.toLowerCase())
-      ) || mockQueries[0];
-      
+      const matchedQuery = mockQueries.find(q => searchQuery.toLowerCase().includes(q.query.toLowerCase())) || mockQueries[0];
       setCurrentQueryData(matchedQuery);
-      
       setTimeout(() => {
         setShowQueryInterpretation(true);
-        
         setTimeout(() => {
-          const options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths)
-            .map(([key, path]) => {
-              // Determine confidence, source count and relevance summary based on path type
-              let pathDetail = "";
-              let confidence = 0;
-              let sourceCount = 0;
-              
-              if (key === "software") {
-                confidence = 92;
-                sourceCount = 245;
-                pathDetail = "Current drivers detected as outdated by 3 months";
-              } else if (key === "hardware") {
-                confidence = 88;
-                sourceCount = 189;
-                pathDetail = "External GPU options and new models available";
-              } else if (key === "diagnostics") {
-                confidence = 85;
-                sourceCount = 156;
-                pathDetail = "Settings optimization for your most-used apps";
-              } else if (key === "setup") {
-                confidence = 94;
-                sourceCount = 212;
-                pathDetail = "Step-by-step setup instructions for common scenarios";
-              } else if (key === "comparison") {
-                confidence = 91;
-                sourceCount = 178;
-                pathDetail = "Compare models based on your specific needs";
-              } else if (key === "troubleshooting") {
-                confidence = 89;
-                sourceCount = 201;
-                pathDetail = "Solutions for common issues with detailed steps";
-              } else if (key === "diskOptimization") {
-                confidence = 94;
-                sourceCount = 237;
-                pathDetail = "Storage performance analysis and optimization";
-              } else if (key === "startupOptimization") {
-                confidence = 91;
-                sourceCount = 184;
-                pathDetail = "Identify and disable unnecessary startup items";
-              } else if (key === "memoryManagement") {
-                confidence = 89;
-                sourceCount = 176;
-                pathDetail = "Free up and optimize RAM usage";
-              }
-              
-              return {
-                key,
-                name: path.name,
-                icon: path.icon,
-                description: key === "software" ? "Free software and driver updates" : 
-                             key === "hardware" ? "Recommended upgrades for better performance" : 
-                             key === "diagnostics" ? "App-specific performance tips" :
-                             key === "setup" ? "First-time setup guide" :
-                             key === "comparison" ? "Find the right model for your needs" :
-                             key === "troubleshooting" ? "Resolve common webcam issues" :
-                             key === "diskOptimization" ? "Optimize storage performance" :
-                             key === "startupOptimization" ? "Streamline system startup" :
-                             key === "memoryManagement" ? "Improve RAM utilization" :
-                             "Improve system performance",
-                confidence,
-                sources: sourceCount,
-                detail: pathDetail
-              };
-            });
-          
+          const options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
+            // Determine confidence, source count and relevance summary based on path type
+            let pathDetail = "";
+            let confidence = 0;
+            let sourceCount = 0;
+            if (key === "software") {
+              confidence = 92;
+              sourceCount = 245;
+              pathDetail = "Current drivers detected as outdated by 3 months";
+            } else if (key === "hardware") {
+              confidence = 88;
+              sourceCount = 189;
+              pathDetail = "External GPU options and new models available";
+            } else if (key === "diagnostics") {
+              confidence = 85;
+              sourceCount = 156;
+              pathDetail = "Settings optimization for your most-used apps";
+            } else if (key === "setup") {
+              confidence = 94;
+              sourceCount = 212;
+              pathDetail = "Step-by-step setup instructions for common scenarios";
+            } else if (key === "comparison") {
+              confidence = 91;
+              sourceCount = 178;
+              pathDetail = "Compare models based on your specific needs";
+            } else if (key === "troubleshooting") {
+              confidence = 89;
+              sourceCount = 201;
+              pathDetail = "Solutions for common issues with detailed steps";
+            } else if (key === "diskOptimization") {
+              confidence = 94;
+              sourceCount = 237;
+              pathDetail = "Storage performance analysis and optimization";
+            } else if (key === "startupOptimization") {
+              confidence = 91;
+              sourceCount = 184;
+              pathDetail = "Identify and disable unnecessary startup items";
+            } else if (key === "memoryManagement") {
+              confidence = 89;
+              sourceCount = 176;
+              pathDetail = "Free up and optimize RAM usage";
+            }
+            return {
+              key,
+              name: path.name,
+              icon: path.icon,
+              description: key === "software" ? "Free software and driver updates" : key === "hardware" ? "Recommended upgrades for better performance" : key === "diagnostics" ? "App-specific performance tips" : key === "setup" ? "First-time setup guide" : key === "comparison" ? "Find the right model for your needs" : key === "troubleshooting" ? "Resolve common webcam issues" : key === "diskOptimization" ? "Optimize storage performance" : key === "startupOptimization" ? "Streamline system startup" : key === "memoryManagement" ? "Improve RAM utilization" : "Improve system performance",
+              confidence,
+              sources: sourceCount,
+              detail: pathDetail
+            };
+          });
           setResolutionOptions(options);
           setShowResolutionOptions(true);
           setIsLoading(false);
@@ -108,21 +86,16 @@ const Index: React.FC = () => {
       }, 1000);
     }, 1500);
   };
-  
   const handleSelectPath = (pathKey: string) => {
     setSelectedPathKey(pathKey);
-    
     setTimeout(() => {
       setShowAnswer(true);
     }, 300);
   };
-
   const getAnswerContent = () => {
     if (!currentQueryData || !selectedPathKey) return "";
-    
     const path = currentQueryData.resolutionPaths[selectedPathKey];
     if (!path) return "";
-    
     if (selectedPathKey === "software") {
       return `<h3 class="text-lg font-medium mb-3">Dell Graphics Performance: Software Solutions</h3>
       
@@ -747,63 +720,35 @@ const Index: React.FC = () => {
       return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
     }
   };
-  
   const getSelectedPathSources = (): Source[] => {
     if (!currentQueryData || !selectedPathKey) return [];
-    
     const path = currentQueryData.resolutionPaths[selectedPathKey];
     return path?.sources || [];
   };
-
-  return (
-    <div className="flex flex-col min-h-screen">
+  return <div className="flex flex-col min-h-screen">
       <Header />
       
       <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
         <div className="max-w-7xl w-full flex flex-col items-center">
-          <h1 className="text-4xl font-bold text-center mb-8 text-[#0076CE]">
+          <h1 className="text-4xl font-bold text-center mb-8 text-neutral-900">
             Ask anything
           </h1>
           
           <section className="w-full flex flex-col items-center">
-            <QueryInput 
-              onSearch={handleSearch} 
-              isLoading={isLoading} 
-              suggestedQueries={suggestedQueries}
-            />
+            <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
             
-            {currentQueryData && showQueryInterpretation && (
-              <div className="w-full max-w-4xl mx-auto mt-8">
-                <QueryInterpretation 
-                  steps={currentQueryData.interpretation.steps} 
-                  isVisible={showQueryInterpretation} 
-                />
+            {currentQueryData && showQueryInterpretation && <div className="w-full max-w-4xl mx-auto mt-8">
+                <QueryInterpretation steps={currentQueryData.interpretation.steps} isVisible={showQueryInterpretation} />
                 
-                {showResolutionOptions && (
-                  <ResolutionOptions 
-                    options={resolutionOptions}
-                    onSelectPath={handleSelectPath}
-                    selectedPath={selectedPathKey}
-                    isVisible={showResolutionOptions}
-                  />
-                )}
+                {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
                 
-                {showAnswer && selectedPathKey && (
-                  <AIGeneratedAnswer 
-                    content={getAnswerContent()}
-                    sources={getSelectedPathSources()}
-                    isVisible={showAnswer}
-                  />
-                )}
-              </div>
-            )}
+                {showAnswer && selectedPathKey && <AIGeneratedAnswer content={getAnswerContent()} sources={getSelectedPathSources()} isVisible={showAnswer} />}
+              </div>}
           </section>
         </div>
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
