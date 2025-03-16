@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -483,7 +484,7 @@ const Index: React.FC = () => {
           <div>
             <p class="font-medium">Free Up Disk Space</p>
             <p class="mb-2">Your SSD performance is degrading due to insufficient free space. SSDs require at least 20% free space for optimal performance.</p>
-            <div class="bg-gray-100 p-2 rounded-md text-sm">
+            <div class="bg-white p-2 rounded-md text-sm border border-gray-200">
               <p class="font-medium">Quick Actions:</p>
               <ul class="list-disc pl-4">
                 <li>Run Disk Cleanup (found 14.3GB of temporary files)</li>
