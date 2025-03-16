@@ -29,7 +29,7 @@ const QueryInterpretation: React.FC<QueryInterpretationProps> = ({ steps, isVisi
       <div className="bg-blue-50 rounded-xl p-6">
         <div className="flex items-center mb-4">
           <Zap className="text-[#0076CE] mr-2" size={20} />
-          <h2 className="text-[#0076CE] font-semibold text-lg">Here's how I understood your query:</h2>
+          <h2 className="text-black font-semibold text-lg">Here's how I understood your query:</h2>
         </div>
         
         <div className="space-y-3">
@@ -47,7 +47,7 @@ const QueryInterpretation: React.FC<QueryInterpretationProps> = ({ steps, isVisi
                 </div>
               </div>
               <div className="pt-1">
-                <p className="text-[#0076CE] text-md" dangerouslySetInnerHTML={{ __html: step.description }} />
+                <p className="text-black text-md" dangerouslySetInnerHTML={{ __html: step.description }} />
               </div>
             </motion.div>
           ))}
