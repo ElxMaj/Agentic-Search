@@ -1,5 +1,4 @@
-
-// Mock data for Coveo DeepResolution prototype
+// Mock data for DELL DeepResolution prototype
 
 export interface Source {
   type: 'official' | 'community' | 'knowledge-base';
@@ -52,24 +51,29 @@ export const mockQueries: MockQueryData[] = [
     interpretation: {
       steps: [
         {
-          description: "I identified <strong>Dell</strong> as your device manufacturer and <strong>graphics performance</strong> as your goal.",
+          description: "Detected <strong>Dell XPS 13</strong> from your system configuration",
           entities: [
-            { text: "Dell", type: "MANUFACTURER" },
-            { text: "graphics performance", type: "GOAL" }
+            { text: "Dell XPS 13", type: "DEVICE" }
           ]
         },
         {
-          description: "I'm focusing on solutions for improving graphics performance on Dell computers.",
+          description: "Identified <strong>graphics performance</strong> concerns",
           entities: [
-            { text: "solutions", type: "INTENT" },
-            { text: "Dell computers", type: "DEVICE" }
+            { text: "graphics performance", type: "ISSUE" }
+          ]
+        },
+        {
+          description: "Found both <strong>software</strong> and <strong>hardware</strong> improvement options",
+          entities: [
+            { text: "software", type: "SOLUTION_TYPE" },
+            { text: "hardware", type: "SOLUTION_TYPE" }
           ]
         }
       ]
     },
     resolutionPaths: {
       "software": {
-        name: "Software Optimization",
+        name: "Performance Optimization",
         icon: "💻",
         steps: [
           {
@@ -762,6 +766,373 @@ export const mockQueries: MockQueryData[] = [
             metadata: "Community Solutions",
             confidence: 89,
             excerpt: "Many users resolved detection issues by uninstalling all webcam drivers, disconnecting the device, restarting, and then reconnecting."
+          }
+        ]
+      }
+    }
+  },
+  {
+    query: "Troubleshoot slow application loading",
+    interpretation: {
+      steps: [
+        {
+          description: "Identified <strong>slow application loading</strong> as the performance issue",
+          entities: [
+            { text: "slow application loading", type: "PERFORMANCE_ISSUE" }
+          ]
+        },
+        {
+          description: "Detected your <strong>Dell XPS</strong> system with <strong>Windows 11</strong> and <strong>8GB RAM</strong>",
+          entities: [
+            { text: "Dell XPS", type: "DEVICE" },
+            { text: "Windows 11", type: "OS" },
+            { text: "8GB RAM", type: "SPECIFICATION" }
+          ]
+        },
+        {
+          description: "Found multiple optimization opportunities in <strong>storage</strong>, <strong>memory</strong>, and <strong>startup items</strong>",
+          entities: [
+            { text: "storage", type: "COMPONENT" },
+            { text: "memory", type: "COMPONENT" },
+            { text: "startup items", type: "SETTING" }
+          ]
+        }
+      ]
+    },
+    resolutionPaths: {
+      "diskOptimization": {
+        name: "Disk Optimization",
+        icon: "💽",
+        steps: [
+          {
+            id: "disk-step1",
+            title: "Storage Performance Troubleshooting",
+            description: "Let's investigate how your storage might be affecting application loading times.",
+            options: [
+              { id: "disk-opt1", text: "Check disk performance metrics", nextStepId: "disk-step2" },
+              { id: "disk-opt2", text: "Perform disk cleanup", nextStepId: "disk-step3" },
+              { id: "disk-opt3", text: "Optimize drive settings", nextStepId: "disk-step4" }
+            ]
+          },
+          {
+            id: "disk-step2",
+            title: "Disk Performance Analysis",
+            description: "Let's analyze your disk performance to identify potential bottlenecks.",
+            options: [
+              { id: "disk-opt4", text: "Check read/write speeds", nextStepId: "disk-step5" },
+              { id: "disk-opt5", text: "Check disk fragmentation", nextStepId: "disk-step6" },
+              { id: "disk-opt6", text: "Analyze disk health", nextStepId: "disk-step7" }
+            ]
+          },
+          {
+            id: "disk-step3",
+            title: "Disk Cleanup",
+            description: "Let's free up disk space to potentially improve performance.",
+            options: [
+              { id: "disk-opt7", text: "Clean temporary files", nextStepId: "disk-step8" },
+              { id: "disk-opt8", text: "Remove unnecessary applications", nextStepId: "disk-step9" },
+              { id: "disk-opt9", text: "Clear application caches", nextStepId: "disk-step10" }
+            ]
+          },
+          {
+            id: "disk-step4",
+            title: "Drive Optimization",
+            description: "Let's optimize your drive settings for better performance.",
+            options: [
+              { id: "disk-opt10", text: "Enable TRIM (for SSDs)", nextStepId: "disk-step11" },
+              { id: "disk-opt11", text: "Adjust virtual memory", nextStepId: "disk-step12" },
+              { id: "disk-opt12", text: "Consider drive upgrade options", nextStepId: "disk-step13" }
+            ]
+          },
+          {
+            id: "disk-step5",
+            title: "Disk Speed Analysis",
+            description: "Here's how to check your disk read/write speeds:",
+            options: []
+          },
+          {
+            id: "disk-step6",
+            title: "Disk Fragmentation Analysis",
+            description: "Here's how to check and fix disk fragmentation:",
+            options: []
+          },
+          {
+            id: "disk-step7",
+            title: "Disk Health Analysis",
+            description: "Here's how to check your disk's health status:",
+            options: []
+          },
+          {
+            id: "disk-step8",
+            title: "Temporary Files Cleanup",
+            description: "Here's how to clean temporary files to free up disk space:",
+            options: []
+          },
+          {
+            id: "disk-step9",
+            title: "Application Cleanup",
+            description: "Here's how to identify and remove unnecessary applications:",
+            options: []
+          },
+          {
+            id: "disk-step10",
+            title: "Cache Cleanup",
+            description: "Here's how to clear application caches to improve performance:",
+            options: []
+          },
+          {
+            id: "disk-step11",
+            title: "TRIM Optimization",
+            description: "Here's how to ensure TRIM is enabled for your SSD:",
+            options: []
+          },
+          {
+            id: "disk-step12",
+            title: "Virtual Memory Optimization",
+            description: "Here's how to optimize your virtual memory settings:",
+            options: []
+          },
+          {
+            id: "disk-step13",
+            title: "Storage Upgrade Options",
+            description: "Here are recommended storage upgrade options for your Dell system:",
+            options: []
+          }
+        ],
+        sources: [
+          {
+            type: "official",
+            title: "Dell Storage Optimization Guide",
+            date: "Updated Jan 2024",
+            metadata: "Official Documentation",
+            confidence: 96,
+            excerpt: "SSD firmware updates and TRIM optimization can significantly improve application loading times on Dell XPS systems."
+          },
+          {
+            type: "knowledge-base",
+            title: "Windows 11 Storage Performance",
+            date: "Updated Dec 2023",
+            metadata: "Knowledge Base",
+            confidence: 92,
+            excerpt: "Windows 11 storage optimization features can reduce application loading times by up to 30% compared to default settings."
+          },
+          {
+            type: "community",
+            title: "Dell User Community: SSD Upgrades",
+            date: "Thread from Mar 2024",
+            metadata: "Community Discussion",
+            confidence: 89,
+            excerpt: "Users report 40-60% faster application loading times after upgrading from SATA to NVMe SSDs in Dell XPS systems."
+          }
+        ]
+      },
+      "startupOptimization": {
+        name: "Startup Optimization",
+        icon: "🚀",
+        steps: [
+          {
+            id: "startup-step1",
+            title: "Startup Optimization",
+            description: "Let's optimize your system's startup configuration to improve application loading times.",
+            options: [
+              { id: "startup-opt1", text: "Manage startup applications", nextStepId: "startup-step2" },
+              { id: "startup-opt2", text: "Optimize background services", nextStepId: "startup-step3" },
+              { id: "startup-opt3", text: "Check for application conflicts", nextStepId: "startup-step4" }
+            ]
+          },
+          {
+            id: "startup-step2",
+            title: "Startup Applications Management",
+            description: "Let's review and optimize applications that start with your system.",
+            options: [
+              { id: "startup-opt4", text: "Use Task Manager to disable items", nextStepId: "startup-step5" },
+              { id: "startup-opt5", text: "Use third-party startup managers", nextStepId: "startup-step6" }
+            ]
+          },
+          {
+            id: "startup-step3",
+            title: "Background Services Optimization",
+            description: "Let's optimize Windows services that may be impacting performance.",
+            options: [
+              { id: "startup-opt6", text: "Use Services Manager", nextStepId: "startup-step7" },
+              { id: "startup-opt7", text: "Optimize Windows services", nextStepId: "startup-step8" }
+            ]
+          },
+          {
+            id: "startup-step4",
+            title: "Application Conflict Analysis",
+            description: "Let's check for applications that might be conflicting or impacting performance.",
+            options: [
+              { id: "startup-opt8", text: "Check for known conflicts", nextStepId: "startup-step9" },
+              { id: "startup-opt9", text: "Use diagnostic tools", nextStepId: "startup-step10" }
+            ]
+          },
+          {
+            id: "startup-step5",
+            title: "Task Manager Startup Management",
+            description: "Here's how to use Task Manager to disable unnecessary startup items:",
+            options: []
+          },
+          {
+            id: "startup-step6",
+            title: "Third-Party Startup Managers",
+            description: "Here are recommended third-party tools for managing startup applications:",
+            options: []
+          },
+          {
+            id: "startup-step7",
+            title: "Services Manager Optimization",
+            description: "Here's how to optimize Windows services using Services Manager:",
+            options: []
+          },
+          {
+            id: "startup-step8",
+            title: "Windows Services Optimization",
+            description: "Here are recommended Windows services to disable or set to manual start:",
+            options: []
+          },
+          {
+            id: "startup-step9",
+            title: "Known Application Conflicts",
+            description: "Here's information about known application conflicts that might affect performance:",
+            options: []
+          },
+          {
+            id: "startup-step10",
+            title: "Diagnostic Tools",
+            description: "Here are tools to help diagnose application conflicts and performance issues:",
+            options: []
+          }
+        ],
+        sources: [
+          {
+            type: "official",
+            title: "Dell Performance Optimization Guide",
+            date: "Updated Feb 2024",
+            metadata: "Official Documentation",
+            confidence: 95,
+            excerpt: "Reducing startup items can significantly improve overall system responsiveness and application loading times."
+          },
+          {
+            type: "knowledge-base",
+            title: "Windows 11 Startup Optimization",
+            date: "Updated Jan 2024",
+            metadata: "Knowledge Base",
+            confidence: 93,
+            excerpt: "Windows 11 includes improved startup management tools that can help identify and disable unnecessary startup applications."
+          },
+          {
+            type: "community",
+            title: "Dell User Forum: Startup Optimization",
+            date: "Thread from Dec 2023",
+            metadata: "Community Discussion",
+            confidence: 87,
+            excerpt: "Users report up to 50% faster login and application startup times after disabling unnecessary startup items and services."
+          }
+        ]
+      },
+      "memoryManagement": {
+        name: "Memory Optimization",
+        icon: "🧠",
+        steps: [
+          {
+            id: "memory-step1",
+            title: "Memory Performance Optimization",
+            description: "Let's optimize your system's memory usage to improve application loading times.",
+            options: [
+              { id: "memory-opt1", text: "Analyze current memory usage", nextStepId: "memory-step2" },
+              { id: "memory-opt2", text: "Close unnecessary applications", nextStepId: "memory-step3" },
+              { id: "memory-opt3", text: "Consider hardware upgrades", nextStepId: "memory-step4" }
+            ]
+          },
+          {
+            id: "memory-step2",
+            title: "Memory Usage Analysis",
+            description: "Let's analyze how your system is currently using memory to identify optimization opportunities.",
+            options: [
+              { id: "memory-opt4", text: "Use Resource Monitor", nextStepId: "memory-step5" },
+              { id: "memory-opt5", text: "Check for memory leaks", nextStepId: "memory-step6" }
+            ]
+          },
+          {
+            id: "memory-step3",
+            title: "Application Memory Management",
+            description: "Let's identify and manage memory-intensive applications that might be impacting performance.",
+            options: [
+              { id: "memory-opt6", text: "Identify high-memory applications", nextStepId: "memory-step7" },
+              { id: "memory-opt7", text: "Optimize application settings", nextStepId: "memory-step8" }
+            ]
+          },
+          {
+            id: "memory-step4",
+            title: "Memory Upgrade Options",
+            description: "Let's explore hardware upgrade options to improve memory performance.",
+            options: [
+              { id: "memory-opt8", text: "Check upgrade compatibility", nextStepId: "memory-step9" },
+              { id: "memory-opt9", text: "Compare memory options", nextStepId: "memory-step10" }
+            ]
+          },
+          {
+            id: "memory-step5",
+            title: "Resource Monitor Analysis",
+            description: "Here's how to use Resource Monitor to analyze memory usage:",
+            options: []
+          },
+          {
+            id: "memory-step6",
+            title: "Memory Leak Detection",
+            description: "Here's how to identify and address potential memory leaks:",
+            options: []
+          },
+          {
+            id: "memory-step7",
+            title: "High-Memory Application Management",
+            description: "Here's how to identify and manage memory-intensive applications:",
+            options: []
+          },
+          {
+            id: "memory-step8",
+            title: "Application Memory Optimization",
+            description: "Here's how to optimize memory usage in common applications:",
+            options: []
+          },
+          {
+            id: "memory-step9",
+            title: "Memory Upgrade Compatibility",
+            description: "Here's how to check memory upgrade compatibility for your Dell system:",
+            options: []
+          },
+          {
+            id: "memory-step10",
+            title: "Memory Upgrade Options",
+            description: "Here are recommended memory upgrade options for your Dell system:",
+            options: []
+          }
+        ],
+        sources: [
+          {
+            type: "official",
+            title: "Dell Memory Upgrade Guide",
+            date: "Updated Mar 2024",
+            metadata: "Official Documentation",
+            confidence: 97,
+            excerpt: "Upgrading from 8GB to 16GB RAM can improve application loading times by 25-40% for memory-intensive applications on Dell XPS systems."
+          },
+          {
+            type: "knowledge-base",
+            title: "Windows 11 Memory Management",
+            date: "Updated Feb 2024",
+            metadata: "Knowledge Base",
+            confidence: 94,
+            excerpt: "Windows 11's improved memory management algorithms can more efficiently allocate resources for frequently used applications."
+          },
+          {
+            type: "official",
+            title: "Dell Performance Analysis Report",
+            date: "Updated Real-time data",
+            metadata: "System Analysis",
+            confidence: 92,
+            excerpt: "Your system is currently using 85% of available memory during typical workloads, suggesting a memory upgrade would be beneficial."
           }
         ]
       }
