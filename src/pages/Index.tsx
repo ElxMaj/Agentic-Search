@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -5,7 +6,6 @@ import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
-import RelatedContent from '../components/RelatedContent';
 import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
 
 const Index: React.FC = () => {
@@ -55,7 +55,7 @@ const Index: React.FC = () => {
               } else if (key === "diagnostics") {
                 detail = "Settings optimization for your most-used apps";
               }
-            } else if (matchedQuery.query.includes("slow application")) {
+            } else if (matchedQuery.query.includes("My computer is slow")) {
               if (key === "diskOptimization") {
                 detail = "Storage performance analysis and optimization";
               } else if (key === "startupOptimization") {
