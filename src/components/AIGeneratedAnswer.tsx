@@ -35,7 +35,7 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
         </div>
         
         <div className="bg-blue-50 p-4 rounded-lg mb-6">
-          <p className="text-[#0076CE]" dangerouslySetInnerHTML={{ __html: content }} />
+          <p className="text-black" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
         
         <SourcesList sources={sources} isVisible={true} />
