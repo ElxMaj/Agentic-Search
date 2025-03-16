@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ThumbsUp, Clock, ArrowRight, Info } from 'lucide-react';
+import { ThumbsUp, Info, ArrowRight } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {

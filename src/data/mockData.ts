@@ -373,399 +373,346 @@ export const mockQueries: MockQueryData[] = [
     }
   },
   {
-    query: "Logitech webcam setup",
+    query: "Webcam problem during a Teams call",
     interpretation: {
       steps: [
         {
-          description: "I identified <strong>Logitech</strong> as the device brand and <strong>webcam</strong> as the device type.",
+          description: "Identified <strong>webcam</strong> as the device with issues during a <strong>Microsoft Teams</strong> call",
           entities: [
-            { text: "Logitech", type: "BRAND" },
-            { text: "webcam", type: "DEVICE_TYPE" }
+            { text: "webcam", type: "DEVICE" },
+            { text: "Microsoft Teams", type: "APPLICATION" }
           ]
         },
         {
-          description: "I'm focusing on setup procedures for Logitech webcam devices.",
+          description: "Detected possible <strong>connection</strong>, <strong>permission</strong>, or <strong>driver</strong> related issues",
           entities: [
-            { text: "setup", type: "INTENT" },
-            { text: "Logitech webcam", type: "DEVICE" }
+            { text: "connection", type: "ISSUE_TYPE" },
+            { text: "permission", type: "ISSUE_TYPE" },
+            { text: "driver", type: "ISSUE_TYPE" }
           ]
         }
       ]
     },
     resolutionPaths: {
-      "setup": {
-        name: "Initial Setup",
-        icon: "🔌",
+      "permissions": {
+        name: "Permission Issues",
+        icon: "🔒",
         steps: [
           {
-            id: "setup-step1",
-            title: "Logitech Webcam Setup",
-            description: "Let's get your Logitech webcam up and running.",
+            id: "perm-step1",
+            title: "Microsoft Teams Camera Permission",
+            description: "Let's check if Microsoft Teams has permission to access your webcam.",
             options: [
-              { id: "setup-opt1", text: "I need to set up a new webcam", nextStepId: "setup-step2" },
-              { id: "setup-opt2", text: "My webcam was working but stopped", nextStepId: "setup-step3" },
-              { id: "setup-opt3", text: "I want to optimize webcam settings", nextStepId: "setup-step4" }
+              { id: "perm-opt1", text: "Check Windows camera privacy settings", nextStepId: "perm-step2" },
+              { id: "perm-opt2", text: "Check Teams app permissions", nextStepId: "perm-step3" },
+              { id: "perm-opt3", text: "Check browser permissions (for Teams Web)", nextStepId: "perm-step4" }
             ]
           },
           {
-            id: "setup-step2",
-            title: "New Webcam Setup",
-            description: "Let's set up your new Logitech webcam for the first time.",
+            id: "perm-step2",
+            title: "Windows Camera Privacy Settings",
+            description: "Let's verify your Windows camera privacy settings are correctly configured.",
             options: [
-              { id: "setup-opt4", text: "USB webcam setup", nextStepId: "setup-step5" },
-              { id: "setup-opt5", text: "Wireless webcam setup", nextStepId: "setup-step6" }
+              { id: "perm-opt4", text: "Open Windows camera privacy settings", nextStepId: "perm-step5" },
+              { id: "perm-opt5", text: "Check app permissions in Windows settings", nextStepId: "perm-step6" }
             ]
           },
           {
-            id: "setup-step3",
-            title: "Troubleshooting Non-Working Webcam",
-            description: "Let's troubleshoot why your previously working Logitech webcam stopped functioning.",
+            id: "perm-step3",
+            title: "Teams App Permissions",
+            description: "Let's check Microsoft Teams' camera permissions in the app settings.",
             options: [
-              { id: "setup-opt6", text: "Check connection issues", nextStepId: "setup-step7" },
-              { id: "setup-opt7", text: "Check software/driver issues", nextStepId: "setup-step8" },
-              { id: "setup-opt8", text: "Check privacy settings", nextStepId: "setup-step9" }
+              { id: "perm-opt6", text: "Check Teams desktop app settings", nextStepId: "perm-step7" },
+              { id: "perm-opt7", text: "Reset Teams cache", nextStepId: "perm-step8" }
             ]
           },
           {
-            id: "setup-step4",
-            title: "Optimizing Webcam Settings",
-            description: "Let's optimize your Logitech webcam settings for the best experience.",
+            id: "perm-step4",
+            title: "Browser Permissions for Teams Web",
+            description: "Let's verify your browser is allowing Teams to access your camera.",
             options: [
-              { id: "setup-opt9", text: "Video quality optimization", nextStepId: "setup-step10" },
-              { id: "setup-opt10", text: "Audio settings optimization", nextStepId: "setup-step11" },
-              { id: "setup-opt11", text: "Advanced features configuration", nextStepId: "setup-step12" }
+              { id: "perm-opt8", text: "Check Chrome camera permissions", nextStepId: "perm-step9" },
+              { id: "perm-opt9", text: "Check Edge camera permissions", nextStepId: "perm-step10" },
+              { id: "perm-opt10", text: "Check Firefox camera permissions", nextStepId: "perm-step11" }
             ]
           },
           {
-            id: "setup-step5",
-            title: "USB Webcam First-Time Setup",
-            description: "Here's how to set up your USB Logitech webcam for the first time:",
+            id: "perm-step5",
+            title: "Windows Camera Privacy Settings Guide",
+            description: "Here's how to check and adjust your Windows camera privacy settings:",
             options: []
           },
           {
-            id: "setup-step6",
-            title: "Wireless Webcam Setup",
-            description: "Here's how to set up your wireless Logitech webcam:",
+            id: "perm-step6",
+            title: "Windows App Permissions Guide",
+            description: "Here's how to check and manage app permissions for your camera in Windows:",
             options: []
           },
           {
-            id: "setup-step7",
-            title: "Connection Troubleshooting",
-            description: "Here's how to resolve connection issues with your Logitech webcam:",
+            id: "perm-step7",
+            title: "Teams Desktop App Settings",
+            description: "Here's how to verify and adjust camera permissions in the Teams desktop app:",
             options: []
           },
           {
-            id: "setup-step8",
-            title: "Software & Driver Troubleshooting",
-            description: "Here's how to resolve software and driver issues with your Logitech webcam:",
+            id: "perm-step8",
+            title: "Reset Teams Cache Guide",
+            description: "Here's how to reset the Teams cache to resolve permission issues:",
             options: []
           },
           {
-            id: "setup-step9",
-            title: "Privacy Settings Check",
-            description: "Here's how to check if privacy settings are blocking your Logitech webcam:",
+            id: "perm-step9",
+            title: "Chrome Camera Permissions",
+            description: "Here's how to check and adjust camera permissions in Google Chrome:",
             options: []
           },
           {
-            id: "setup-step10",
-            title: "Video Quality Optimization",
-            description: "Here's how to optimize the video quality settings of your Logitech webcam:",
+            id: "perm-step10",
+            title: "Edge Camera Permissions",
+            description: "Here's how to check and adjust camera permissions in Microsoft Edge:",
             options: []
           },
           {
-            id: "setup-step11",
-            title: "Audio Settings Optimization",
-            description: "Here's how to optimize the audio settings of your Logitech webcam:",
-            options: []
-          },
-          {
-            id: "setup-step12",
-            title: "Advanced Features Configuration",
-            description: "Here's how to configure advanced features of your Logitech webcam:",
+            id: "perm-step11",
+            title: "Firefox Camera Permissions",
+            description: "Here's how to check and adjust camera permissions in Mozilla Firefox:",
             options: []
           }
         ],
         sources: [
           {
             type: "official",
-            title: "Logitech Support: Webcam Setup Guide",
-            date: "Updated Jan 2023",
-            metadata: "Official Documentation",
+            title: "Microsoft Teams Camera Troubleshooting Guide",
+            date: "Updated Mar 2024",
+            metadata: "Microsoft Support",
             confidence: 98,
-            excerpt: "For optimal performance, install Logitech G HUB software after connecting your webcam to access advanced settings and features."
+            excerpt: "Access to the camera is controlled by Windows privacy settings. Ensure that access to the camera is turned on and that Teams is allowed to use the camera."
           },
           {
             type: "knowledge-base",
-            title: "Logitech Webcam Troubleshooting FAQ",
-            date: "Updated Mar 2023",
-            metadata: "Support Knowledge Base",
+            title: "Teams Web App Camera Access",
+            date: "Updated Feb 2024",
+            metadata: "Microsoft Knowledge Base",
             confidence: 95,
-            excerpt: "If your webcam isn't detected, first try connecting it to a different USB port, preferably a USB 3.0 port directly on your computer rather than through a hub."
+            excerpt: "For Teams web app users, camera permissions are managed by your browser and must be explicitly granted for the teams.microsoft.com domain."
+          },
+          {
+            type: "community",
+            title: "Microsoft Teams Community: Camera Permission Issues",
+            date: "Thread from Jan 2024",
+            metadata: "Community Solutions",
+            confidence: 87,
+            excerpt: "Many users have resolved camera issues by resetting the Teams app cache, which refreshes permission configurations and resolves corrupted settings."
           }
         ]
       },
-      "comparison": {
-        name: "Product Comparison",
-        icon: "🔍",
+      "connection": {
+        name: "Connection Problems",
+        icon: "🔌",
         steps: [
           {
-            id: "compare-step1",
-            title: "Logitech Webcam Comparison",
-            description: "Let's compare different Logitech webcam models to find the right one for your needs.",
+            id: "conn-step1",
+            title: "Webcam Connection Troubleshooting",
+            description: "Let's troubleshoot issues with your webcam's physical connection during Teams calls.",
             options: [
-              { id: "compare-opt1", text: "Compare by price range", nextStepId: "compare-step2" },
-              { id: "compare-opt2", text: "Compare by key features", nextStepId: "compare-step3" },
-              { id: "compare-opt3", text: "Compare by use case", nextStepId: "compare-step4" }
+              { id: "conn-opt1", text: "Check physical connections", nextStepId: "conn-step2" },
+              { id: "conn-opt2", text: "Check USB port issues", nextStepId: "conn-step3" },
+              { id: "conn-opt3", text: "Check if webcam is detected", nextStepId: "conn-step4" }
             ]
           },
           {
-            id: "compare-step2",
-            title: "Price Range Comparison",
-            description: "Let's compare Logitech webcams by different price tiers.",
+            id: "conn-step2",
+            title: "Physical Connection Check",
+            description: "Let's verify your webcam's physical connection is secure and functional.",
             options: [
-              { id: "compare-opt4", text: "Budget options (Under $50)", nextStepId: "compare-step5" },
-              { id: "compare-opt5", text: "Mid-range options ($50-$100)", nextStepId: "compare-step6" },
-              { id: "compare-opt6", text: "Premium options ($100+)", nextStepId: "compare-step7" }
+              { id: "conn-opt4", text: "Check cable connection", nextStepId: "conn-step5" },
+              { id: "conn-opt5", text: "Check for damaged cables", nextStepId: "conn-step6" }
             ]
           },
           {
-            id: "compare-step3",
-            title: "Feature Comparison",
-            description: "Let's compare Logitech webcams by key features that matter to you.",
+            id: "conn-step3",
+            title: "USB Port Troubleshooting",
+            description: "Let's check if the USB port is causing connection issues with your webcam.",
             options: [
-              { id: "compare-opt7", text: "Resolution & frame rate", nextStepId: "compare-step8" },
-              { id: "compare-opt8", text: "Microphone quality", nextStepId: "compare-step9" },
-              { id: "compare-opt9", text: "Advanced features (auto-focus, lighting)", nextStepId: "compare-step10" }
+              { id: "conn-opt6", text: "Try different USB ports", nextStepId: "conn-step7" },
+              { id: "conn-opt7", text: "Check USB hub issues", nextStepId: "conn-step8" }
             ]
           },
           {
-            id: "compare-step4",
-            title: "Use Case Comparison",
-            description: "Let's compare Logitech webcams based on different use cases.",
+            id: "conn-step4",
+            title: "Device Detection Check",
+            description: "Let's verify if your system is detecting the webcam correctly.",
             options: [
-              { id: "compare-opt10", text: "Video conferencing & remote work", nextStepId: "compare-step11" },
-              { id: "compare-opt11", text: "Content creation & streaming", nextStepId: "compare-step12" },
-              { id: "compare-opt12", text: "Security & monitoring", nextStepId: "compare-step13" }
+              { id: "conn-opt8", text: "Check Device Manager", nextStepId: "conn-step9" },
+              { id: "conn-opt9", text: "Test in Camera app", nextStepId: "conn-step10" }
             ]
           },
           {
-            id: "compare-step5",
-            title: "Budget Webcam Options",
-            description: "Here are the best budget Logitech webcam options under $50:",
+            id: "conn-step5",
+            title: "Cable Connection Guide",
+            description: "Here's how to verify your webcam's cable connection is secure:",
             options: []
           },
           {
-            id: "compare-step6",
-            title: "Mid-Range Webcam Options",
-            description: "Here are the best mid-range Logitech webcam options between $50-$100:",
+            id: "conn-step6",
+            title: "Cable Damage Check",
+            description: "Here's how to inspect your webcam cable for damage:",
             options: []
           },
           {
-            id: "compare-step7",
-            title: "Premium Webcam Options",
-            description: "Here are the best premium Logitech webcam options over $100:",
+            id: "conn-step7",
+            title: "Different USB Ports Guide",
+            description: "Here's how to test your webcam with different USB ports:",
             options: []
           },
           {
-            id: "compare-step8",
-            title: "Resolution & Frame Rate Comparison",
-            description: "Here's how Logitech webcams compare in terms of resolution and frame rate:",
+            id: "conn-step8",
+            title: "USB Hub Troubleshooting",
+            description: "Here's how to address issues with USB hubs affecting your webcam:",
             options: []
           },
           {
-            id: "compare-step9",
-            title: "Microphone Quality Comparison",
-            description: "Here's how Logitech webcams compare in terms of microphone quality:",
+            id: "conn-step9",
+            title: "Device Manager Check",
+            description: "Here's how to verify webcam detection in Device Manager:",
             options: []
           },
           {
-            id: "compare-step10",
-            title: "Advanced Features Comparison",
-            description: "Here's how Logitech webcams compare in terms of advanced features:",
-            options: []
-          },
-          {
-            id: "compare-step11",
-            title: "Best Webcams for Video Conferencing",
-            description: "Here are the best Logitech webcams for video conferencing and remote work:",
-            options: []
-          },
-          {
-            id: "compare-step12",
-            title: "Best Webcams for Content Creation",
-            description: "Here are the best Logitech webcams for content creation and streaming:",
-            options: []
-          },
-          {
-            id: "compare-step13",
-            title: "Best Webcams for Security",
-            description: "Here are the best Logitech webcams for security and monitoring:",
+            id: "conn-step10",
+            title: "Camera App Test",
+            description: "Here's how to test your webcam in the Windows Camera app:",
             options: []
           }
         ],
         sources: [
           {
             type: "official",
-            title: "Logitech Product Comparison Guide",
-            date: "Updated Feb 2023",
-            metadata: "Official Documentation",
-            confidence: 97,
-            excerpt: "The Logitech C920s offers the best balance of price and performance for most users, with 1080p/30fps video, dual microphones, and a privacy shutter."
+            title: "Microsoft Teams Hardware Requirements",
+            date: "Updated Apr 2024",
+            metadata: "Microsoft Documentation",
+            confidence: 96,
+            excerpt: "For reliable camera operation in Teams, use a directly connected USB port (preferably USB 3.0) rather than a USB hub, which can cause intermittent connection issues."
+          },
+          {
+            type: "knowledge-base",
+            title: "Webcam Connection Troubleshooting",
+            date: "Updated Mar 2024",
+            metadata: "IT Support Database",
+            confidence: 94,
+            excerpt: "Approximately 45% of webcam issues during video calls are resolved by simply reconnecting the device or trying a different USB port."
           },
           {
             type: "community",
-            title: "r/Logitech: Webcam Recommendations 2023",
-            date: "Thread from Jan 2023",
-            metadata: "Community Recommendations",
+            title: "Teams User Forum: Webcam Connection Issues",
+            date: "Thread from Feb 2024",
+            metadata: "User Discussion",
             confidence: 85,
-            excerpt: "For streamers, the Logitech StreamCam consistently gets recommended for its 1080p/60fps capability and USB-C connection."
+            excerpt: "Many users have resolved intermittent webcam disconnection during Teams calls by installing the latest USB controller drivers for their system."
           }
         ]
       },
-      "troubleshooting": {
-        name: "Troubleshooting",
+      "drivers": {
+        name: "Driver & Software Issues",
         icon: "🔧",
         steps: [
           {
-            id: "trouble-step1",
-            title: "Logitech Webcam Troubleshooting",
-            description: "Let's resolve common issues with your Logitech webcam.",
+            id: "driver-step1",
+            title: "Webcam Driver Troubleshooting",
+            description: "Let's address driver and software issues affecting your webcam in Teams calls.",
             options: [
-              { id: "trouble-opt1", text: "Webcam not detected", nextStepId: "trouble-step2" },
-              { id: "trouble-opt2", text: "Poor video quality", nextStepId: "trouble-step3" },
-              { id: "trouble-opt3", text: "Audio issues", nextStepId: "trouble-step4" },
-              { id: "trouble-opt4", text: "Software/driver problems", nextStepId: "trouble-step5" }
+              { id: "driver-opt1", text: "Update webcam drivers", nextStepId: "driver-step2" },
+              { id: "driver-opt2", text: "Reinstall webcam drivers", nextStepId: "driver-step3" },
+              { id: "driver-opt3", text: "Update Teams application", nextStepId: "driver-step4" }
             ]
           },
           {
-            id: "trouble-step2",
-            title: "Webcam Not Detected",
-            description: "Let's troubleshoot why your computer isn't detecting your Logitech webcam.",
+            id: "driver-step2",
+            title: "Update Webcam Drivers",
+            description: "Let's ensure your webcam drivers are up to date.",
             options: [
-              { id: "trouble-opt5", text: "Check hardware connections", nextStepId: "trouble-step6" },
-              { id: "trouble-opt6", text: "Check device manager", nextStepId: "trouble-step7" },
-              { id: "trouble-opt7", text: "Check privacy settings", nextStepId: "trouble-step8" }
+              { id: "driver-opt4", text: "Use Device Manager to update", nextStepId: "driver-step5" },
+              { id: "driver-opt5", text: "Download drivers from manufacturer", nextStepId: "driver-step6" }
             ]
           },
           {
-            id: "trouble-step3",
-            title: "Poor Video Quality",
-            description: "Let's troubleshoot poor video quality issues with your Logitech webcam.",
+            id: "driver-step3",
+            title: "Reinstall Webcam Drivers",
+            description: "Let's completely reinstall your webcam drivers to resolve potential conflicts.",
             options: [
-              { id: "trouble-opt8", text: "Lighting issues", nextStepId: "trouble-step9" },
-              { id: "trouble-opt9", text: "Resolution settings", nextStepId: "trouble-step10" },
-              { id: "trouble-opt10", text: "Bandwidth/performance issues", nextStepId: "trouble-step11" }
+              { id: "driver-opt6", text: "Uninstall current drivers", nextStepId: "driver-step7" },
+              { id: "driver-opt7", text: "Clean installation of drivers", nextStepId: "driver-step8" }
             ]
           },
           {
-            id: "trouble-step4",
-            title: "Audio Issues",
-            description: "Let's troubleshoot audio problems with your Logitech webcam.",
+            id: "driver-step4",
+            title: "Update Microsoft Teams",
+            description: "Let's make sure your Teams application is up to date.",
             options: [
-              { id: "trouble-opt11", text: "Microphone not detected", nextStepId: "trouble-step12" },
-              { id: "trouble-opt12", text: "Poor audio quality", nextStepId: "trouble-step13" },
-              { id: "trouble-opt13", text: "Background noise issues", nextStepId: "trouble-step14" }
+              { id: "driver-opt8", text: "Update Teams desktop app", nextStepId: "driver-step9" },
+              { id: "driver-opt9", text: "Reinstall Teams application", nextStepId: "driver-step10" }
             ]
           },
           {
-            id: "trouble-step5",
-            title: "Software & Driver Issues",
-            description: "Let's resolve software and driver problems with your Logitech webcam.",
-            options: [
-              { id: "trouble-opt14", text: "Update drivers", nextStepId: "trouble-step15" },
-              { id: "trouble-opt15", text: "Reinstall Logitech software", nextStepId: "trouble-step16" },
-              { id: "trouble-opt16", text: "Software conflicts", nextStepId: "trouble-step17" }
-            ]
-          },
-          {
-            id: "trouble-step6",
-            title: "Hardware Connection Troubleshooting",
-            description: "Here's how to check and resolve hardware connection issues with your Logitech webcam:",
+            id: "driver-step5",
+            title: "Device Manager Driver Update",
+            description: "Here's how to update your webcam drivers using Device Manager:",
             options: []
           },
           {
-            id: "trouble-step7",
-            title: "Device Manager Troubleshooting",
-            description: "Here's how to use Device Manager to resolve detection issues with your Logitech webcam:",
+            id: "driver-step6",
+            title: "Manufacturer Driver Download",
+            description: "Here's how to download and install the latest webcam drivers from the manufacturer:",
             options: []
           },
           {
-            id: "trouble-step8",
-            title: "Privacy Settings Troubleshooting",
-            description: "Here's how to check and adjust privacy settings that might be blocking your Logitech webcam:",
+            id: "driver-step7",
+            title: "Uninstall Current Drivers",
+            description: "Here's how to safely uninstall your current webcam drivers:",
             options: []
           },
           {
-            id: "trouble-step9",
-            title: "Lighting Optimization",
-            description: "Here's how to improve lighting for better video quality with your Logitech webcam:",
+            id: "driver-step8",
+            title: "Clean Driver Installation",
+            description: "Here's how to perform a clean installation of your webcam drivers:",
             options: []
           },
           {
-            id: "trouble-step10",
-            title: "Resolution Settings Optimization",
-            description: "Here's how to adjust resolution settings for better video quality with your Logitech webcam:",
+            id: "driver-step9",
+            title: "Update Teams Desktop App",
+            description: "Here's how to update your Microsoft Teams desktop application:",
             options: []
           },
           {
-            id: "trouble-step11",
-            title: "Bandwidth & Performance Optimization",
-            description: "Here's how to address bandwidth and performance issues affecting your Logitech webcam quality:",
-            options: []
-          },
-          {
-            id: "trouble-step12",
-            title: "Microphone Detection Troubleshooting",
-            description: "Here's how to resolve issues with your Logitech webcam's microphone not being detected:",
-            options: []
-          },
-          {
-            id: "trouble-step13",
-            title: "Audio Quality Optimization",
-            description: "Here's how to improve the audio quality of your Logitech webcam:",
-            options: []
-          },
-          {
-            id: "trouble-step14",
-            title: "Background Noise Reduction",
-            description: "Here's how to reduce background noise when using your Logitech webcam's microphone:",
-            options: []
-          },
-          {
-            id: "trouble-step15",
-            title: "Driver Update Guide",
-            description: "Here's how to update the drivers for your Logitech webcam:",
-            options: []
-          },
-          {
-            id: "trouble-step16",
-            title: "Software Reinstallation",
-            description: "Here's how to properly reinstall Logitech webcam software:",
-            options: []
-          },
-          {
-            id: "trouble-step17",
-            title: "Software Conflict Resolution",
-            description: "Here's how to identify and resolve software conflicts affecting your Logitech webcam:",
+            id: "driver-step10",
+            title: "Reinstall Teams Application",
+            description: "Here's how to completely reinstall Microsoft Teams:",
             options: []
           }
         ],
         sources: [
           {
             type: "official",
-            title: "Logitech Support: Webcam Troubleshooting Guide",
-            date: "Updated Apr 2023",
-            metadata: "Official Documentation",
-            confidence: 96,
-            excerpt: "If your webcam isn't working in specific applications, check the application's settings to ensure it has permission to access your camera."
+            title: "Microsoft Teams Camera Compatibility",
+            date: "Updated May 2024",
+            metadata: "Microsoft Documentation",
+            confidence: 97,
+            excerpt: "Recent Teams updates have improved compatibility with webcam drivers, resolving many common camera detection issues reported by users."
+          },
+          {
+            type: "knowledge-base",
+            title: "Webcam Driver Management Guide",
+            date: "Updated Apr 2024",
+            metadata: "IT Support Knowledge Base",
+            confidence: 93,
+            excerpt: "For optimal performance in video conferencing applications, webcam drivers should be updated at least quarterly or whenever experiencing persistent issues."
           },
           {
             type: "community",
-            title: "Logitech Community Forums: Common Webcam Fixes",
-            date: "Thread from Feb 2023",
-            metadata: "Community Solutions",
-            confidence: 89,
-            excerpt: "Many users resolved detection issues by uninstalling all webcam drivers, disconnecting the device, restarting, and then reconnecting."
+            title: "Microsoft Tech Community: Teams Camera Fixes",
+            date: "Thread from Mar 2024",
+            metadata: "Technical Discussion",
+            confidence: 90,
+            excerpt: "A complete reinstallation of the webcam drivers followed by a Teams cache reset has resolved camera issues for approximately 85% of affected users."
           }
         ]
       }
@@ -1143,7 +1090,7 @@ export const mockQueries: MockQueryData[] = [
 // Additional suggested queries for the search box
 export const suggestedQueries = [
   "How to improve Dell graphics performance?",
-  "Set up Logitech webcam for video conferencing",
+  "Webcam problem during a Teams call",
   "Troubleshoot slow application loading",
   "Compare Logitech webcam models",
   "Optimize CPU usage on my Dell",
