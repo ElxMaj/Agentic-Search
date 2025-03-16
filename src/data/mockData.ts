@@ -1,3 +1,4 @@
+
 // Mock data for DELL DeepResolution prototype
 
 export interface Source {
@@ -166,6 +167,14 @@ export const mockQueries: MockQueryData[] = [
             metadata: "Knowledge Base",
             confidence: 95,
             excerpt: "Regular driver updates can resolve many common performance issues and improve compatibility with the latest games and applications."
+          },
+          {
+            type: "community",
+            title: "Dell User Forums: Graphics Driver Optimization",
+            date: "Thread from Jan 2023",
+            metadata: "Community Discussion",
+            confidence: 88,
+            excerpt: "Users report significant performance gains after updating to the latest graphics drivers and optimizing power settings."
           }
         ]
       },
@@ -357,7 +366,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Dell Support: Performance Diagnostics",
             date: "Updated Apr 2023",
             metadata: "Knowledge Base",
-            confidence: 94,
+            confidence: 74,
             excerpt: "Dell systems with high-performance graphics cards may require additional cooling to prevent thermal throttling during intensive tasks."
           },
           {
@@ -365,8 +374,24 @@ export const mockQueries: MockQueryData[] = [
             title: "Dell Community: Performance Optimization Guide",
             date: "Thread from Nov 2022",
             metadata: "Community Guide",
-            confidence: 88,
+            confidence: 68,
             excerpt: "Many users report 15-20% performance improvements after addressing thermal issues and updating power management settings."
+          },
+          {
+            type: "community",
+            title: "User Benchmarks: Dell XPS Graphics",
+            date: "Collected Data Oct 2022 - Mar 2023",
+            metadata: "User Benchmarks",
+            confidence: 73,
+            excerpt: "Benchmark data shows that thermal management has the biggest impact on sustained graphics performance in Dell XPS laptops."
+          },
+          {
+            type: "knowledge-base",
+            title: "Graphics Performance Bottleneck Analysis",
+            date: "Updated Jan 2023",
+            metadata: "Technical Guide",
+            confidence: 79,
+            excerpt: "Systematic diagnosis can identify whether CPU, memory, or thermal constraints are limiting graphics performance in Dell systems."
           }
         ]
       }
@@ -503,6 +528,22 @@ export const mockQueries: MockQueryData[] = [
             metadata: "Community Solutions",
             confidence: 87,
             excerpt: "Many users have resolved camera issues by resetting the Teams app cache, which refreshes permission configurations and resolves corrupted settings."
+          },
+          {
+            type: "knowledge-base",
+            title: "Windows 11 Permission Management",
+            date: "Updated Jan 2024",
+            metadata: "Microsoft Documentation",
+            confidence: 92,
+            excerpt: "Windows 11 introduces new granular camera permission controls that may affect Teams camera access differently than on Windows 10."
+          },
+          {
+            type: "official",
+            title: "Microsoft Teams Security Features",
+            date: "Updated Apr 2024",
+            metadata: "Microsoft Documentation",
+            confidence: 94,
+            excerpt: "Recent Teams security updates require explicit camera permission grants, even for previously authorized applications."
           }
         ]
       },
@@ -590,7 +631,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Microsoft Teams Hardware Requirements",
             date: "Updated Apr 2024",
             metadata: "Microsoft Documentation",
-            confidence: 96,
+            confidence: 76,
             excerpt: "For reliable camera operation in Teams, use a directly connected USB port (preferably USB 3.0) rather than a USB hub, which can cause intermittent connection issues."
           },
           {
@@ -598,7 +639,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Webcam Connection Troubleshooting",
             date: "Updated Mar 2024",
             metadata: "IT Support Database",
-            confidence: 94,
+            confidence: 64,
             excerpt: "Approximately 45% of webcam issues during video calls are resolved by simply reconnecting the device or trying a different USB port."
           },
           {
@@ -606,7 +647,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Teams User Forum: Webcam Connection Issues",
             date: "Thread from Feb 2024",
             metadata: "User Discussion",
-            confidence: 85,
+            confidence: 55,
             excerpt: "Many users have resolved intermittent webcam disconnection during Teams calls by installing the latest USB controller drivers for their system."
           }
         ]
@@ -695,7 +736,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Microsoft Teams Camera Compatibility",
             date: "Updated May 2024",
             metadata: "Microsoft Documentation",
-            confidence: 97,
+            confidence: 87,
             excerpt: "Recent Teams updates have improved compatibility with webcam drivers, resolving many common camera detection issues reported by users."
           },
           {
@@ -703,7 +744,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Webcam Driver Management Guide",
             date: "Updated Apr 2024",
             metadata: "IT Support Knowledge Base",
-            confidence: 93,
+            confidence: 73,
             excerpt: "For optimal performance in video conferencing applications, webcam drivers should be updated at least quarterly or whenever experiencing persistent issues."
           },
           {
@@ -711,8 +752,137 @@ export const mockQueries: MockQueryData[] = [
             title: "Microsoft Tech Community: Teams Camera Fixes",
             date: "Thread from Mar 2024",
             metadata: "Technical Discussion",
-            confidence: 90,
+            confidence: 80,
             excerpt: "A complete reinstallation of the webcam drivers followed by a Teams cache reset has resolved camera issues for approximately 85% of affected users."
+          },
+          {
+            type: "knowledge-base",
+            title: "Common Webcam Driver Issues",
+            date: "Updated Feb 2024",
+            metadata: "Technical Database",
+            confidence: 68,
+            excerpt: "Driver conflicts between manufacturer webcam software and Teams can cause camera access issues during calls."
+          },
+          {
+            type: "community",
+            title: "Logitech Webcam Teams Compatibility",
+            date: "Thread from Jan 2024",
+            metadata: "User Reports",
+            confidence: 71,
+            excerpt: "Logitech webcam users report higher success rates when using Microsoft's basic drivers rather than Logitech's software for Teams calls."
+          },
+          {
+            type: "official",
+            title: "Windows Camera Driver Architecture",
+            date: "Updated Mar 2024",
+            metadata: "Microsoft Documentation",
+            confidence: 82,
+            excerpt: "Windows camera driver architecture changes in recent updates require application-specific permissions that can affect Teams access."
+          }
+        ]
+      },
+      "application": {
+        name: "Teams Application Issues",
+        icon: "📱",
+        steps: [
+          {
+            id: "app-step1",
+            title: "Teams Application Troubleshooting",
+            description: "Let's address issues with the Teams application itself that may affect webcam functionality.",
+            options: [
+              { id: "app-opt1", text: "Reset Teams application cache", nextStepId: "app-step2" },
+              { id: "app-opt2", text: "Reinstall Teams", nextStepId: "app-step3" },
+              { id: "app-opt3", text: "Check Teams version compatibility", nextStepId: "app-step4" }
+            ]
+          },
+          {
+            id: "app-step2",
+            title: "Reset Teams Cache",
+            description: "Let's clear the Teams cache to resolve potential configuration issues.",
+            options: [
+              { id: "app-opt4", text: "Clear Teams cache files", nextStepId: "app-step5" },
+              { id: "app-opt5", text: "Reset Teams settings", nextStepId: "app-step6" }
+            ]
+          },
+          {
+            id: "app-step3",
+            title: "Reinstall Microsoft Teams",
+            description: "Let's completely reinstall Teams to resolve potential installation issues.",
+            options: [
+              { id: "app-opt6", text: "Uninstall Teams completely", nextStepId: "app-step7" },
+              { id: "app-opt7", text: "Install the latest Teams version", nextStepId: "app-step8" }
+            ]
+          },
+          {
+            id: "app-step4",
+            title: "Teams Version Compatibility",
+            description: "Let's check if your Teams version is compatible with your system and webcam.",
+            options: [
+              { id: "app-opt8", text: "Check Teams version", nextStepId: "app-step9" },
+              { id: "app-opt9", text: "Verify system requirements", nextStepId: "app-step10" }
+            ]
+          },
+          {
+            id: "app-step5",
+            title: "Clear Teams Cache Files",
+            description: "Here's how to clear the Teams cache files:",
+            options: []
+          },
+          {
+            id: "app-step6",
+            title: "Reset Teams Settings",
+            description: "Here's how to reset Teams settings to default:",
+            options: []
+          },
+          {
+            id: "app-step7",
+            title: "Uninstall Teams Completely",
+            description: "Here's how to completely uninstall Microsoft Teams:",
+            options: []
+          },
+          {
+            id: "app-step8",
+            title: "Install Latest Teams Version",
+            description: "Here's how to install the latest version of Microsoft Teams:",
+            options: []
+          },
+          {
+            id: "app-step9",
+            title: "Check Teams Version",
+            description: "Here's how to check your current Teams version:",
+            options: []
+          },
+          {
+            id: "app-step10",
+            title: "Verify System Requirements",
+            description: "Here's how to verify your system meets Teams requirements:",
+            options: []
+          }
+        ],
+        sources: [
+          {
+            type: "official",
+            title: "Microsoft Teams Troubleshooting Guide",
+            date: "Updated May 2024",
+            metadata: "Microsoft Support",
+            confidence: 92,
+            excerpt: "Many camera issues in Teams can be resolved by clearing the application cache, which removes corrupted settings and cached credentials."
+          },
+          {
+            type: "knowledge-base",
+            title: "Teams Application Architecture",
+            date: "Updated Mar 2024",
+            metadata: "Technical Documentation",
+            confidence: 81,
+            excerpt: "Teams desktop applications use multiple components that each require separate camera access permissions."
+          },
+          {
+            type: "community",
+            title: "Teams Version History Issues",
+            date: "Thread from Feb 2024",
+            metadata: "User Reports",
+            confidence: 69,
+            excerpt: "Some users report that rolling back to previous Teams versions resolved camera issues introduced in recent updates."
           }
         ]
       }
@@ -957,7 +1127,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Dell Performance Optimization Guide",
             date: "Updated Feb 2024",
             metadata: "Official Documentation",
-            confidence: 95,
+            confidence: 65,
             excerpt: "Reducing startup items can significantly improve overall system responsiveness and application loading times."
           },
           {
@@ -965,7 +1135,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Windows 11 Startup Optimization",
             date: "Updated Jan 2024",
             metadata: "Knowledge Base",
-            confidence: 93,
+            confidence: 73,
             excerpt: "Windows 11 includes improved startup management tools that can help identify and disable unnecessary startup applications."
           },
           {
@@ -973,7 +1143,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Dell User Forum: Startup Optimization",
             date: "Thread from Dec 2023",
             metadata: "Community Discussion",
-            confidence: 87,
+            confidence: 62,
             excerpt: "Users report up to 50% faster login and application startup times after disabling unnecessary startup items and services."
           }
         ]
@@ -1062,7 +1232,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Dell Memory Upgrade Guide",
             date: "Updated Mar 2024",
             metadata: "Official Documentation",
-            confidence: 97,
+            confidence: 77,
             excerpt: "Upgrading from 8GB to 16GB RAM can improve application loading times by 25-40% for memory-intensive applications on Dell XPS systems."
           },
           {
@@ -1070,7 +1240,7 @@ export const mockQueries: MockQueryData[] = [
             title: "Windows 11 Memory Management",
             date: "Updated Feb 2024",
             metadata: "Knowledge Base",
-            confidence: 94,
+            confidence: 84,
             excerpt: "Windows 11's improved memory management algorithms can more efficiently allocate resources for frequently used applications."
           },
           {
@@ -1078,8 +1248,121 @@ export const mockQueries: MockQueryData[] = [
             title: "Dell Performance Analysis Report",
             date: "Updated Real-time data",
             metadata: "System Analysis",
-            confidence: 92,
+            confidence: 82,
             excerpt: "Your system is currently using 85% of available memory during typical workloads, suggesting a memory upgrade would be beneficial."
+          }
+        ]
+      },
+      "softwareOptimization": {
+        name: "Software Cleanup",
+        icon: "🧹",
+        steps: [
+          {
+            id: "sw-step1",
+            title: "Software Optimization",
+            description: "Let's optimize your installed software to improve application loading times.",
+            options: [
+              { id: "sw-opt1", text: "Uninstall unused applications", nextStepId: "sw-step2" },
+              { id: "sw-opt2", text: "Update frequently used software", nextStepId: "sw-step3" },
+              { id: "sw-opt3", text: "Optimize browser performance", nextStepId: "sw-step4" }
+            ]
+          },
+          {
+            id: "sw-step2",
+            title: "Remove Unused Applications",
+            description: "Let's identify and remove applications you don't use to free up system resources.",
+            options: [
+              { id: "sw-opt4", text: "Identify large unused applications", nextStepId: "sw-step5" },
+              { id: "sw-opt5", text: "Use uninstaller tools", nextStepId: "sw-step6" }
+            ]
+          },
+          {
+            id: "sw-step3",
+            title: "Update Applications",
+            description: "Let's ensure your frequently used applications are up to date for optimal performance.",
+            options: [
+              { id: "sw-opt6", text: "Check for application updates", nextStepId: "sw-step7" },
+              { id: "sw-opt7", text: "Configure automatic updates", nextStepId: "sw-step8" }
+            ]
+          },
+          {
+            id: "sw-step4",
+            title: "Browser Optimization",
+            description: "Let's optimize your web browser, which can significantly impact overall system performance.",
+            options: [
+              { id: "sw-opt8", text: "Clear browser cache and data", nextStepId: "sw-step9" },
+              { id: "sw-opt9", text: "Manage browser extensions", nextStepId: "sw-step10" }
+            ]
+          },
+          {
+            id: "sw-step5",
+            title: "Identify Unused Applications",
+            description: "Here's how to identify large applications you rarely use:",
+            options: []
+          },
+          {
+            id: "sw-step6",
+            title: "Uninstaller Tools",
+            description: "Here are recommended tools for completely removing applications:",
+            options: []
+          },
+          {
+            id: "sw-step7",
+            title: "Application Update Check",
+            description: "Here's how to check for updates for your applications:",
+            options: []
+          },
+          {
+            id: "sw-step8",
+            title: "Automatic Updates",
+            description: "Here's how to configure automatic updates for your applications:",
+            options: []
+          },
+          {
+            id: "sw-step9",
+            title: "Browser Cache Cleanup",
+            description: "Here's how to clear your browser cache and temporary data:",
+            options: []
+          },
+          {
+            id: "sw-step10",
+            title: "Browser Extension Management",
+            description: "Here's how to manage browser extensions for optimal performance:",
+            options: []
+          }
+        ],
+        sources: [
+          {
+            type: "knowledge-base",
+            title: "Software Optimization Guide",
+            date: "Updated Apr 2024",
+            metadata: "Performance Guide",
+            confidence: 58,
+            excerpt: "Removing unused applications can free up to 15% of system resources on average Windows installations."
+          },
+          {
+            type: "official",
+            title: "Dell Bloatware Removal Guide",
+            date: "Updated Mar 2024",
+            metadata: "Official Documentation",
+            confidence: 63,
+            excerpt: "Dell systems may include pre-installed applications that can impact performance and can safely be removed if not needed."
+          },
+          {
+            type: "community",
+            title: "Windows 11 Performance Forum",
+            date: "Thread from Feb 2024",
+            metadata: "User Discussion",
+            confidence: 61,
+            excerpt: "Browser extensions are among the most common causes of system slowdowns, with each active extension consuming memory resources."
+          },
+          {
+            type: "knowledge-base",
+            title: "Application Update Impact Analysis",
+            date: "Updated Jan 2024",
+            metadata: "Technical Analysis",
+            confidence: 69,
+            excerpt: "Outdated applications can use up to 30% more system resources than their updated counterparts due to inefficient code and compatibility layers."
           }
         ]
       }

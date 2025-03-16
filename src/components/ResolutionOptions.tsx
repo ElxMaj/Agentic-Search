@@ -31,6 +31,14 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     return null;
   }
 
+  // Function to determine color based on confidence level
+  const getConfidenceColor = (confidence: number) => {
+    if (confidence >= 90) return "text-green-600";
+    if (confidence >= 75) return "text-blue-500";
+    if (confidence >= 60) return "text-amber-500";
+    return "text-orange-500";
+  };
+
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
       <div className="rounded-xl border border-gray-200 p-6 mb-6">
@@ -64,8 +72,10 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
               
               <div className="mt-4 pt-3 border-t border-gray-100">
                 <div className="flex items-center mb-2">
-                  <ThumbsUp size={16} className="text-blue-500 mr-2" />
-                  <span className="text-sm text-gray-600">{option.confidence}% Confidence</span>
+                  <ThumbsUp size={16} className={getConfidenceColor(option.confidence)} />
+                  <span className={`text-sm ${getConfidenceColor(option.confidence)}`}>
+                    {option.confidence}% Confidence
+                  </span>
                 </div>
                 
                 <div className="flex items-center mb-4">
