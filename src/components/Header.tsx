@@ -43,7 +43,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center">
             <span className="text-xl font-bold text-white">DELL</span>
-            <span className="text-xl font-medium ml-1 text-white/80">DeepResolution</span>
+            <span className="text-xl font-medium ml-1 text-white/90">DeepResolution</span>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
@@ -54,7 +54,7 @@ const Header: React.FC = () => {
                 className={`text-sm font-medium transition-colors hover:text-white ${
                   location.pathname === link.path 
                     ? 'text-white' 
-                    : 'text-white/80'
+                    : 'text-white/90'
                 }`}
                 onClick={closeMobileMenu}
               >
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
                 className={`text-sm font-medium transition-colors hover:text-white ${
                   location.pathname === link.path 
                     ? 'text-white' 
-                    : 'text-white/80'
+                    : 'text-white/90'
                 }`}
                 onClick={closeMobileMenu}
               >

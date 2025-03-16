@@ -43,7 +43,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
       <motion.form 
         onSubmit={handleSubmit}
         className={`relative mt-8 glass-panel p-1.5 transition-all duration-300 ${
-          isInputFocused ? 'shadow-medium ring-2 ring-primary/20' : ''
+          isInputFocused ? 'shadow-medium ring-2 ring-[#0076CE]/20' : ''
         }`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -53,7 +53,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
           <Search 
             size={18} 
             className={`ml-3 transition-colors ${
-              isInputFocused ? 'text-deep-blue' : 'text-muted-foreground'
+              isInputFocused ? 'text-[#0076CE]' : 'text-gray-500'
             }`} 
           />
           <input
@@ -63,7 +63,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
             placeholder={getRandomPlaceholder()}
-            className="flex-1 h-12 px-3 bg-transparent text-foreground focus:outline-none"
+            className="flex-1 h-12 px-3 bg-transparent text-black focus:outline-none"
             disabled={isLoading}
           />
           <button
@@ -71,8 +71,8 @@ const QueryInput: React.FC<QueryInputProps> = ({
             disabled={!query.trim() || isLoading}
             className={`flex items-center justify-center h-12 w-12 mr-1 rounded-md transition-all ${
               query.trim() && !isLoading
-                ? 'bg-deep-blue text-white hover:bg-deep-blue/90' 
-                : 'bg-muted text-muted-foreground cursor-not-allowed'
+                ? 'bg-[#0076CE] text-white hover:bg-[#005DA6]' 
+                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }`}
             aria-label="Search"
           >
@@ -96,7 +96,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
             <button
               key={index}
               onClick={() => handleSuggestionClick(suggestion)}
-              className="text-sm px-3 py-1.5 rounded-full bg-light-blue/30 hover:bg-light-blue/50 text-deep-blue transition-colors"
+              className="text-sm px-3 py-1.5 rounded-full bg-[#E6F1F8] hover:bg-[#D1E4F1] text-[#0076CE] transition-colors"
               disabled={isLoading}
             >
               {suggestion}
