@@ -34,7 +34,7 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
           <p className="text-sm text-gray-600">Generated with high confidence based on verified sources</p>
         </div>
         
-        <div className="bg-blue-50 p-4 rounded-lg mb-6">
+        <div className="bg-gray-50 p-4 rounded-lg mb-6">
           <div className="text-black prose prose-blue max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
         
