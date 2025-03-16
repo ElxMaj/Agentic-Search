@@ -36,14 +36,14 @@ const Header: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 py-4 px-6 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-sm shadow-soft' : 'bg-transparent'
+        isScrolled ? 'bg-[#0076CE]/90 backdrop-blur-sm shadow-soft' : 'bg-[#0076CE]'
       }`}
     >
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <span className="text-xl font-semibold text-deep-blue">Coveo</span>
-            <span className="text-xl font-medium ml-1 text-slate-600">DeepResolution</span>
+            <span className="text-xl font-bold text-white">DELL</span>
+            <span className="text-xl font-medium ml-1 text-white/80">DeepResolution</span>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
@@ -51,10 +51,10 @@ const Header: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-deep-blue ${
+                className={`text-sm font-medium transition-colors hover:text-white ${
                   location.pathname === link.path 
-                    ? 'text-deep-blue' 
-                    : 'text-slate-600'
+                    ? 'text-white' 
+                    : 'text-white/80'
                 }`}
                 onClick={closeMobileMenu}
               >
@@ -69,9 +69,9 @@ const Header: React.FC = () => {
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X size={24} className="text-deep-blue" />
+              <X size={24} className="text-white" />
             ) : (
-              <Menu size={24} className="text-deep-blue" />
+              <Menu size={24} className="text-white" />
             )}
           </button>
         </div>
@@ -84,17 +84,17 @@ const Header: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.2 }}
-          className="md:hidden absolute top-16 left-0 right-0 bg-white shadow-medium py-4 px-6"
+          className="md:hidden absolute top-16 left-0 right-0 bg-[#0076CE] shadow-medium py-4 px-6"
         >
           <nav className="flex flex-col space-y-4">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-deep-blue ${
+                className={`text-sm font-medium transition-colors hover:text-white ${
                   location.pathname === link.path 
-                    ? 'text-deep-blue' 
-                    : 'text-slate-600'
+                    ? 'text-white' 
+                    : 'text-white/80'
                 }`}
                 onClick={closeMobileMenu}
               >

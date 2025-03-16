@@ -60,9 +60,9 @@ const Index: React.FC = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-1 flex flex-col items-center justify-center py-10 px-6">
+      <main className="flex-1 flex flex-col items-center justify-center py-10 px-6 pt-24">
         <div className="max-w-6xl w-full flex flex-col items-center">
-          <h1 className="text-4xl font-bold text-center mb-8 text-deep-blue">
+          <h1 className="text-4xl font-bold text-center mb-8 text-[#0076CE]">
             Ask anything
           </h1>
           
