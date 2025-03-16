@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Menu, X, RefreshCw } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -25,6 +25,14 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const navLinks = [{
+    title: 'Home',
+    path: '/'
+  }, {
+    title: 'About',
+    path: '/about'
+  }];
+
   return <header className={`fixed top-0 left-0 right-0 z-50 py-4 px-6 transition-all duration-300 ${isScrolled ? 'bg-[#0076CE]/90 backdrop-blur-sm shadow-soft' : 'bg-[#0076CE]'}`}>
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between">
@@ -34,13 +42,17 @@ const Header: React.FC = () => {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            <Link 
-              to="/" 
-              className="text-sm font-medium transition-colors hover:text-white flex items-center space-x-2 text-white/90"
-            >
-              <RefreshCw size={16} />
-              <span>Restart Experience</span>
-            </Link>
+            {navLinks.map(link => (
+              <Link 
+                key={link.path} 
+                to={link.path} 
+                className={`text-sm font-medium transition-colors hover:text-white ${
+                  location.pathname === link.path ? 'text-white' : 'text-white/90'
+                }`}
+              >
+                {link.title}
+              </Link>
+            ))}
           </nav>
           
           <button className="block md:hidden focus:outline-none" onClick={toggleMobileMenu} aria-label="Toggle menu">
@@ -63,14 +75,9 @@ const Header: React.FC = () => {
       duration: 0.2
     }} className="md:hidden absolute top-16 left-0 right-0 bg-[#0076CE] shadow-medium py-4 px-6">
           <nav className="flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className="text-sm font-medium transition-colors hover:text-white flex items-center space-x-2 text-white/90" 
-              onClick={closeMobileMenu}
-            >
-              <RefreshCw size={16} />
-              <span>Restart Experience</span>
-            </Link>
+            {navLinks.map(link => <Link key={link.path} to={link.path} className={`text-sm font-medium transition-colors hover:text-white ${location.pathname === link.path ? 'text-white' : 'text-white/90'}`} onClick={closeMobileMenu}>
+                {link.title}
+              </Link>)}
           </nav>
         </motion.div>}
     </header>;

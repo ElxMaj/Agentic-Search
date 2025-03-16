@@ -795,31 +795,23 @@ const Index: React.FC = () => {
   return <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-1 flex flex-col items-center justify-center py-10 px-6">
+      <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
         <div className="max-w-7xl w-full flex flex-col items-center">
           <h1 className="text-4xl font-bold text-center mb-8 text-neutral-900">
             Ask anything
           </h1>
           
-          {!query ? (
-            // Centered search when no query has been entered
-            <section className="w-full flex flex-col items-center justify-center min-h-[50vh]">
-              <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
-            </section>
-          ) : (
-            // Regular layout after a search has been performed
-            <section className="w-full flex flex-col items-center">
-              <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
-              
-              {currentQueryData && showQueryInterpretation && <div className="w-full max-w-5xl mx-auto mt-8">
-                  <QueryInterpretation steps={currentQueryData.interpretation.steps} isVisible={showQueryInterpretation} />
-                  
-                  {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
-                  
-                  {showAnswer && selectedPathKey && <AIGeneratedAnswer content={getAnswerContent()} sources={getSelectedPathSources()} isVisible={showAnswer} />}
-                </div>}
-            </section>
-          )}
+          <section className="w-full flex flex-col items-center">
+            <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
+            
+            {currentQueryData && showQueryInterpretation && <div className="w-full max-w-5xl mx-auto mt-8">
+                <QueryInterpretation steps={currentQueryData.interpretation.steps} isVisible={showQueryInterpretation} />
+                
+                {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
+                
+                {showAnswer && selectedPathKey && <AIGeneratedAnswer content={getAnswerContent()} sources={getSelectedPathSources()} isVisible={showAnswer} />}
+              </div>}
+          </section>
         </div>
       </main>
       
