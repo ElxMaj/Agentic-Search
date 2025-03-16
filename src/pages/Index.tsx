@@ -29,12 +29,14 @@ const Index: React.FC = () => {
       const firstPathKey = Object.keys(matchedQuery.resolutionPaths)[0];
       setActivePathKey(firstPathKey);
       
-      // Set the steps from the first path
-      const firstPath = matchedQuery.resolutionPaths[firstPathKey];
-      setResolutionSteps(firstPath.steps);
-      
-      // Set the first step ID
-      setCurrentStepId(firstPath.steps[0].id);
+      // Set the steps from the first path if it exists
+      if (firstPathKey && matchedQuery.resolutionPaths[firstPathKey]) {
+        const firstPath = matchedQuery.resolutionPaths[firstPathKey];
+        if (firstPath.steps && firstPath.steps.length > 0) {
+          setResolutionSteps(firstPath.steps);
+          setCurrentStepId(firstPath.steps[0].id);
+        }
+      }
       
       setIsLoading(false);
       setShowResolutionPath(true);
@@ -67,13 +69,15 @@ const Index: React.FC = () => {
               suggestedQueries={suggestedQueries}
             />
             
-            <ResolutionPath
-              query={query}
-              steps={resolutionSteps}
-              currentStepId={currentStepId}
-              onSelectOption={handleSelectOption}
-              isVisible={showResolutionPath}
-            />
+            {showResolutionPath && resolutionSteps.length > 0 && (
+              <ResolutionPath
+                query={query}
+                steps={resolutionSteps}
+                currentStepId={currentStepId}
+                onSelectOption={handleSelectOption}
+                isVisible={showResolutionPath}
+              />
+            )}
           </section>
         </div>
       </main>

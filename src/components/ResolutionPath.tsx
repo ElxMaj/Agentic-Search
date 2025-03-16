@@ -33,14 +33,14 @@ const ResolutionPath: React.FC<ResolutionPathProps> = ({
   isVisible
 }) => {
   const currentStep = useMemo(() => {
-    return steps.find(step => step.id === currentStepId) || steps[0];
+    return steps.find(step => step.id === currentStepId);
   }, [steps, currentStepId]);
 
   const isTerminalStep = useMemo(() => {
-    return currentStep.options.length === 0;
+    return currentStep?.options?.length === 0;
   }, [currentStep]);
 
-  if (!isVisible || !query) {
+  if (!isVisible || !query || !currentStep) {
     return null;
   }
 
