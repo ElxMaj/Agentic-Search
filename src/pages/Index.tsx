@@ -6,6 +6,7 @@ import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
 import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
+
 const Index: React.FC = () => {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +16,7 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
+
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
     setIsLoading(true);
@@ -28,7 +30,6 @@ const Index: React.FC = () => {
         setShowQueryInterpretation(true);
         setTimeout(() => {
           const options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
-            // Determine confidence, source count and relevance summary based on path type
             let pathDetail = "";
             let confidence = 0;
             let sourceCount = 0;
@@ -86,12 +87,14 @@ const Index: React.FC = () => {
       }, 1000);
     }, 1500);
   };
+
   const handleSelectPath = (pathKey: string) => {
     setSelectedPathKey(pathKey);
     setTimeout(() => {
       setShowAnswer(true);
     }, 300);
   };
+
   const getAnswerContent = () => {
     if (!currentQueryData || !selectedPathKey) return "";
     const path = currentQueryData.resolutionPaths[selectedPathKey];
@@ -720,11 +723,13 @@ const Index: React.FC = () => {
       return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
     }
   };
+
   const getSelectedPathSources = (): Source[] => {
     if (!currentQueryData || !selectedPathKey) return [];
     const path = currentQueryData.resolutionPaths[selectedPathKey];
     return path?.sources || [];
   };
+
   return <div className="flex flex-col min-h-screen">
       <Header />
       
@@ -737,7 +742,7 @@ const Index: React.FC = () => {
           <section className="w-full flex flex-col items-center">
             <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
             
-            {currentQueryData && showQueryInterpretation && <div className="w-full max-w-4xl mx-auto mt-8">
+            {currentQueryData && showQueryInterpretation && <div className="w-full max-w-5xl mx-auto mt-8">
                 <QueryInterpretation steps={currentQueryData.interpretation.steps} isVisible={showQueryInterpretation} />
                 
                 {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
@@ -751,4 +756,5 @@ const Index: React.FC = () => {
       <Footer />
     </div>;
 };
+
 export default Index;
