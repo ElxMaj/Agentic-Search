@@ -39,7 +39,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto" id="query">
+    <div className="w-full max-w-4xl mx-auto" id="query">
       <motion.form 
         onSubmit={handleSubmit}
         className={`relative mt-8 glass-panel p-1.5 transition-all duration-300 ${

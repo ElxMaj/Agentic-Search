@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -25,25 +24,19 @@ const Index: React.FC = () => {
     setShowResolutionOptions(false);
     setShowAnswer(false);
     
-    // Simulate API call with the mock data
     setTimeout(() => {
-      // Find matching query or use the first one as default
       const matchedQuery = mockQueries.find(q => 
         searchQuery.toLowerCase().includes(q.query.toLowerCase())
       ) || mockQueries[0];
       
       setCurrentQueryData(matchedQuery);
       
-      // Show query interpretation
       setTimeout(() => {
         setShowQueryInterpretation(true);
         
-        // After showing the interpretation, show the resolution options
         setTimeout(() => {
-          // Process resolution paths into options
           const options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths)
             .map(([key, path]) => {
-              // Find a matching confidence and source count from the mock data
               let pathDetail = "";
               let confidence = 0;
               let sourceCount = 0;
@@ -117,13 +110,11 @@ const Index: React.FC = () => {
   const handleSelectPath = (pathKey: string) => {
     setSelectedPathKey(pathKey);
     
-    // Show the answer for the selected path
     setTimeout(() => {
       setShowAnswer(true);
     }, 300);
   };
 
-  // Generate artificial answer based on the selected path
   const getAnswerContent = () => {
     if (!currentQueryData || !selectedPathKey) return "";
     
@@ -755,7 +746,6 @@ const Index: React.FC = () => {
     }
   };
   
-  // Get sources for the selected path
   const getSelectedPathSources = (): Source[] => {
     if (!currentQueryData || !selectedPathKey) return [];
     
@@ -768,7 +758,7 @@ const Index: React.FC = () => {
       <Header />
       
       <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
-        <div className="max-w-6xl w-full flex flex-col items-center">
+        <div className="max-w-7xl w-full flex flex-col items-center">
           <h1 className="text-4xl font-bold text-center mb-8 text-[#0076CE]">
             Ask anything
           </h1>
@@ -781,7 +771,7 @@ const Index: React.FC = () => {
             />
             
             {currentQueryData && showQueryInterpretation && (
-              <div className="w-full max-w-3xl mx-auto mt-8">
+              <div className="w-full max-w-4xl mx-auto mt-8">
                 <QueryInterpretation 
                   steps={currentQueryData.interpretation.steps} 
                   isVisible={showQueryInterpretation} 
