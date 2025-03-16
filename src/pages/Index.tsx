@@ -60,9 +60,13 @@ const Index: React.FC = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-1 py-10 px-6">
-        <div className="max-w-6xl mx-auto">
-          <section>
+      <main className="flex-1 flex flex-col items-center justify-center py-10 px-6">
+        <div className="max-w-6xl w-full flex flex-col items-center">
+          <h1 className="text-4xl font-bold text-center mb-8 text-deep-blue">
+            Ask anything
+          </h1>
+          
+          <section className="w-full flex flex-col items-center">
             <QueryInput 
               onSearch={handleSearch} 
               isLoading={isLoading} 
