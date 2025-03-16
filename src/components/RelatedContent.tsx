@@ -99,120 +99,125 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
       <div className="rounded-xl border border-gray-200 p-6">
         <h2 className="text-lg font-semibold text-black mb-6">Related Resources & Recommendations</h2>
         
-        <div className="mb-8">
-          <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
-            <File className="mr-2 text-blue-500" size={18} />
-            Related Documents
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {relatedDocuments.map((doc) => (
-              <motion.div
-                key={doc.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * parseInt(doc.id) }}
-                className="p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <h4 className="font-medium text-gray-900 mb-1">{doc.title}</h4>
-                <p className="text-sm text-gray-600 mb-2">{doc.description}</p>
-                <a 
-                  href={doc.link} 
-                  className="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center"
+        <div className="space-y-8">
+          {/* Documents Section */}
+          <div>
+            <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
+              <File className="mr-2 text-blue-500" size={18} />
+              Related Documents
+            </h3>
+            <div className="space-y-3">
+              {relatedDocuments.map((doc) => (
+                <motion.div
+                  key={doc.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * parseInt(doc.id) }}
+                  className="p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  Read more <ArrowRight size={14} className="ml-1" />
-                </a>
-              </motion.div>
-            ))}
+                  <h4 className="font-medium text-gray-900 mb-1">{doc.title}</h4>
+                  <p className="text-sm text-gray-600 mb-2">{doc.description}</p>
+                  <a 
+                    href={doc.link} 
+                    className="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                  >
+                    Read more <ArrowRight size={14} className="ml-1" />
+                  </a>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-        
-        <div className="mb-8">
-          <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
-            <PlayCircle className="mr-2 text-red-500" size={18} />
-            Video Tutorials
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {relatedVideos.map((video) => (
-              <motion.div
-                key={video.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * parseInt(video.id) }}
-                className="flex gap-3 p-3 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <div className="relative flex-shrink-0">
-                  <img 
-                    src={video.thumbnail} 
-                    alt={video.title} 
-                    className="rounded-md w-[120px] h-[68px] object-cover bg-gray-100" 
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://via.placeholder.com/120x68?text=Video";
-                    }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-black bg-opacity-50 rounded-full p-1">
-                      <PlayCircle size={20} className="text-white" />
+          
+          {/* Videos Section */}
+          <div>
+            <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
+              <PlayCircle className="mr-2 text-red-500" size={18} />
+              Video Tutorials
+            </h3>
+            <div className="space-y-3">
+              {relatedVideos.map((video) => (
+                <motion.div
+                  key={video.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * parseInt(video.id) }}
+                  className="flex gap-3 p-3 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <div className="relative flex-shrink-0">
+                    <img 
+                      src={video.thumbnail} 
+                      alt={video.title} 
+                      className="rounded-md w-[120px] h-[68px] object-cover bg-gray-100" 
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://via.placeholder.com/120x68?text=Video";
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-black bg-opacity-50 rounded-full p-1">
+                        <PlayCircle size={20} className="text-white" />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col justify-between">
-                  <h4 className="font-medium text-gray-900 text-sm">{video.title}</h4>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500">{video.duration}</span>
-                    <a 
-                      href={video.link} 
-                      className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Watch <ArrowRight size={12} className="ml-1" />
-                    </a>
+                  <div className="flex flex-col justify-between">
+                    <h4 className="font-medium text-gray-900 text-sm">{video.title}</h4>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">{video.duration}</span>
+                      <a 
+                        href={video.link} 
+                        className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Watch <ArrowRight size={12} className="ml-1" />
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-        
-        <div>
-          <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
-            <ShoppingBag className="mr-2 text-green-500" size={18} />
-            Recommended Products
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {productRecommendations.map((product) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * parseInt(product.id) }}
-                className="p-4 border border-gray-100 rounded-lg hover:shadow-md transition-all"
-              >
-                <div className="flex items-start gap-3 mb-3">
+          
+          {/* Products Section */}
+          <div>
+            <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
+              <ShoppingBag className="mr-2 text-green-500" size={18} />
+              Recommended Products
+            </h3>
+            <div className="space-y-3">
+              {productRecommendations.map((product) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * parseInt(product.id) }}
+                  className="flex gap-4 p-4 border border-gray-100 rounded-lg hover:shadow-md transition-all"
+                >
                   <img 
                     src={product.image} 
                     alt={product.name} 
-                    className="w-[80px] h-[80px] object-contain rounded-md bg-gray-100" 
+                    className="w-[100px] h-[100px] object-contain rounded-md bg-gray-100" 
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      target.src = "https://via.placeholder.com/80x80?text=Product";
+                      target.src = "https://via.placeholder.com/100x100?text=Product";
                     }}
                   />
-                  <div>
-                    <h4 className="font-medium text-gray-900 text-sm">{product.name}</h4>
-                    <p className="text-green-600 font-bold text-sm">{product.price}</p>
+                  <div className="flex-1">
+                    <div className="flex justify-between">
+                      <h4 className="font-medium text-gray-900">{product.name}</h4>
+                      <p className="text-green-600 font-bold">{product.price}</p>
+                    </div>
+                    <p className="text-sm text-gray-600 my-2">{product.description}</p>
+                    <a 
+                      href={product.link} 
+                      className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors"
+                    >
+                      View Product
+                    </a>
                   </div>
-                </div>
-                <p className="text-xs text-gray-600 mb-3">{product.description}</p>
-                <a 
-                  href={product.link} 
-                  className="w-full text-center block bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  View Product
-                </a>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
