@@ -1,11 +1,9 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { File, PlayCircle, Link2, ArrowRight, ShoppingBag } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 import { useLocation } from 'react-router-dom';
 
-// Define the type structures for our related content
 interface RelatedDocument {
   id: string;
   title: string;
@@ -39,11 +37,9 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('q') || '';
   
-  // Generate different mock data based on the user's search query
   const isDellGraphicsQuery = query.toLowerCase().includes('dell') && query.toLowerCase().includes('graphics');
   const isLogitechQuery = query.toLowerCase().includes('logitech') && query.toLowerCase().includes('webcam');
   
-  // Mock data based on the query
   const relatedDocuments: RelatedDocument[] = isDellGraphicsQuery 
     ? [
         { id: '1', title: 'Dell Graphics Driver Installation Guide', description: 'Step-by-step instructions for installing the latest graphics drivers for Dell systems.', link: '#' },
@@ -71,7 +67,7 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
         { id: '2', title: 'Logitech Webcam Advanced Features', duration: '7:12', thumbnail: 'https://via.placeholder.com/120x68', link: '#' }
       ]
     : [
-        { id: '1', title: 'Tech Support Basics', duration: '6:45', thumbnail: 'https://via.placeholder.com/120x68', link: '#' }
+        { id: '1', title: 'Tech Support Basics', duration: '6:45', thumbnail: 'https://via.placeholder.com/120x68', link: 'https://youtu.be/s1kElkm5J1k?si=93gzgH63yXgYcEEq' }
       ];
       
   const productRecommendations: ProductRecommendation[] = isDellGraphicsQuery
@@ -99,7 +95,6 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
       <div className="rounded-xl border border-gray-200 p-6">
         <h2 className="text-lg font-semibold text-black mb-6">Related Resources & Recommendations</h2>
         
-        {/* Related Documents Section */}
         <div className="mb-8">
           <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
             <File className="mr-2 text-blue-500" size={18} />
@@ -127,7 +122,6 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
           </div>
         </div>
         
-        {/* Related Videos Section */}
         <div className="mb-8">
           <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
             <PlayCircle className="mr-2 text-red-500" size={18} />
@@ -167,7 +161,6 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
           </div>
         </div>
         
-        {/* Product Recommendations Section */}
         <div>
           <h3 className="text-md font-medium text-gray-700 mb-4 flex items-center">
             <ShoppingBag className="mr-2 text-green-500" size={18} />
