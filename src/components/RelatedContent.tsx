@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { File, PlayCircle, Link2, ArrowRight, ShoppingBag } from 'lucide-react';
@@ -56,30 +57,33 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
         { id: '2', title: 'User Manuals Library', description: 'Access to all product manuals and guides.', link: '#' }
       ];
   
+  // Tech support YouTube video with actual thumbnail
+  const techSupportVideoThumbnail = "/lovable-uploads/ab777ee2-0a85-4640-9dff-adde22694685.png";
+  
   const relatedVideos: RelatedVideo[] = isDellGraphicsQuery
     ? [
-        { id: '1', title: 'How to Update Dell Graphics Drivers', duration: '5:24', thumbnail: 'https://via.placeholder.com/120x68', link: '#' },
-        { id: '2', title: 'Dell XPS Graphics Performance Tips', duration: '8:15', thumbnail: 'https://via.placeholder.com/120x68', link: '#' }
+        { id: '1', title: 'How to Update Dell Graphics Drivers', duration: '5:24', thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg', link: '#' },
+        { id: '2', title: 'Dell XPS Graphics Performance Tips', duration: '8:15', thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg', link: '#' }
       ]
     : isLogitechQuery
     ? [
-        { id: '1', title: 'Logitech Webcam Setup Tutorial', duration: '4:30', thumbnail: 'https://via.placeholder.com/120x68', link: '#' },
-        { id: '2', title: 'Logitech Webcam Advanced Features', duration: '7:12', thumbnail: 'https://via.placeholder.com/120x68', link: '#' }
+        { id: '1', title: 'Logitech Webcam Setup Tutorial', duration: '4:30', thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg', link: '#' },
+        { id: '2', title: 'Logitech Webcam Advanced Features', duration: '7:12', thumbnail: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg', link: '#' }
       ]
     : [
-        { id: '1', title: 'Tech Support Basics', duration: '6:45', thumbnail: 'https://via.placeholder.com/120x68', link: 'https://youtu.be/s1kElkm5J1k?si=93gzgH63yXgYcEEq' }
+        { id: '1', title: 'Tech Support Basics', duration: '6:45', thumbnail: techSupportVideoThumbnail, link: 'https://youtu.be/s1kElkm5J1k?si=93gzgH63yXgYcEEq' }
       ];
       
   const productRecommendations: ProductRecommendation[] = isDellGraphicsQuery
     ? [
-        { id: '1', name: 'NVIDIA GeForce RTX 3060 Graphics Card', price: '$329.99', description: 'Compatible with Dell XPS desktop systems. Significantly improves graphics performance.', image: 'https://via.placeholder.com/80x80', link: '#' },
-        { id: '2', name: 'Dell Graphics Performance Bundle', price: '$129.99', description: 'Software suite and optimization tools designed specifically for Dell systems.', image: 'https://via.placeholder.com/80x80', link: '#' },
-        { id: '3', name: 'Dell 27" Gaming Monitor - S2721DGF', price: '$399.99', description: 'QHD gaming monitor with 165Hz refresh rate for smooth graphics.', image: 'https://via.placeholder.com/80x80', link: '#' }
+        { id: '1', name: 'NVIDIA GeForce RTX 3060 Graphics Card', price: '$329.99', description: 'Compatible with Dell XPS desktop systems. Significantly improves graphics performance.', image: 'https://images.nvidia.com/aem-dam/Solutions/geforce/ampere/rtx-3060/geforce-rtx-3060-product-gallery-full-screen-3840-2.jpg', link: '#' },
+        { id: '2', name: 'Dell Graphics Performance Bundle', price: '$129.99', description: 'Software suite and optimization tools designed specifically for Dell systems.', image: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-15-9530/media-gallery/black/notebook-xps-15-9530-t-black-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=402&qlt=100,1&resMode=sharp2&size=402,402&chrss=full', link: '#' },
+        { id: '3', name: 'Dell 27" Gaming Monitor - S2721DGF', price: '$399.99', description: 'QHD gaming monitor with 165Hz refresh rate for smooth graphics.', image: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/s-series/s2721dgf/global-spi/monitor-s2721dgf-hero-504x350-v2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=402&qlt=100,0&resMode=sharp2&size=402,402', link: '#' }
       ]
     : isLogitechQuery
     ? [
-        { id: '1', name: 'Logitech C920x HD Pro Webcam', price: '$69.99', description: 'Full HD 1080p video calling and recording with dual mics.', image: 'https://via.placeholder.com/80x80', link: '#' },
-        { id: '2', name: 'Logitech StreamCam', price: '$169.99', description: 'Premium webcam for content creators with smart features.', image: 'https://via.placeholder.com/80x80', link: '#' }
+        { id: '1', name: 'Logitech C920x HD Pro Webcam', price: '$69.99', description: 'Full HD 1080p video calling and recording with dual mics.', image: 'https://resource.logitech.com/w_800,c_lpad,ar_16:9,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/webcams/c920s/gallery/c920s-gallery-1.png?v=1', link: '#' },
+        { id: '2', name: 'Logitech StreamCam', price: '$169.99', description: 'Premium webcam for content creators with smart features.', image: 'https://resource.logitech.com/w_800,c_lpad,ar_16:9,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/webcams/streamcam/gallery/streamcam-gallery-1-graphite.png?v=1', link: '#' }
       ]
     : [
         { id: '1', name: 'Dell XPS 15 Laptop', price: '$1,499.99', description: 'High-performance laptop with NVIDIA graphics.', image: '/lovable-uploads/b53da895-fe0c-4788-be67-b07907211aaf.png', link: '#' },
@@ -137,7 +141,15 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
                 className="flex gap-3 p-3 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 <div className="relative flex-shrink-0">
-                  <img src={video.thumbnail} alt={video.title} className="rounded-md w-[120px] h-[68px] object-cover" />
+                  <img 
+                    src={video.thumbnail} 
+                    alt={video.title} 
+                    className="rounded-md w-[120px] h-[68px] object-cover bg-gray-100" 
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://via.placeholder.com/120x68?text=Video";
+                    }}
+                  />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="bg-black bg-opacity-50 rounded-full p-1">
                       <PlayCircle size={20} className="text-white" />
@@ -151,6 +163,8 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
                     <a 
                       href={video.link} 
                       className="text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Watch <ArrowRight size={12} className="ml-1" />
                     </a>
@@ -176,7 +190,15 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
                 className="p-4 border border-gray-100 rounded-lg hover:shadow-md transition-all"
               >
                 <div className="flex items-start gap-3 mb-3">
-                  <img src={product.image} alt={product.name} className="w-[80px] h-[80px] object-contain rounded-md" />
+                  <img 
+                    src={product.image} 
+                    alt={product.name} 
+                    className="w-[80px] h-[80px] object-contain rounded-md bg-gray-100" 
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://via.placeholder.com/80x80?text=Product";
+                    }}
+                  />
                   <div>
                     <h4 className="font-medium text-gray-900 text-sm">{product.name}</h4>
                     <p className="text-green-600 font-bold text-sm">{product.price}</p>
