@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ThumbsUp, Info, ArrowRight } from 'lucide-react';
+import { MessageCircleQuestion } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
@@ -17,7 +17,7 @@ export interface ResolutionPathOption {
 interface ResolutionOptionsProps {
   options: ResolutionPathOption[];
   onSelectPath: (pathKey: string) => void;
-  selectedPath?: string;
+  selectedPath: string;
   isVisible: boolean;
 }
 
@@ -25,52 +25,60 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   options, 
   onSelectPath, 
   selectedPath,
-  isVisible 
+  isVisible
 }) => {
-  if (!isVisible || !options.length) {
+  if (!isVisible || options.length === 0) {
     return null;
   }
 
   return (
-    <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.3}>
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold text-black mb-1">I found multiple relevant topics. What are you looking for?</h2>
-        <p className="text-gray-600">Select the option that best matches your needs</p>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {options.map((option, index) => (
-          <motion.div
-            key={option.key}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 + (index * 0.1) }}
-            className={`border rounded-lg p-5 cursor-pointer transition-all ${
-              selectedPath === option.key 
-                ? 'border-[#0076CE] ring-1 ring-[#0076CE] bg-white'
-                : 'border-gray-200 hover:border-gray-300 bg-white'
-            }`}
-            onClick={() => onSelectPath(option.key)}
-          >
-            <h3 className="font-semibold text-black mb-1">{option.name}</h3>
-            <p className="text-gray-600 text-sm mb-4">{option.description}</p>
-            
-            <div className="flex items-center mb-4">
-              <div className="flex items-center mr-4">
-                <ThumbsUp size={16} className="text-[#0076CE] mr-1" />
-                <span className="text-sm text-gray-700">{option.confidence}% Confidence</span>
-              </div>
-              <div className="flex items-center">
-                <Info size={16} className="text-gray-500 mr-1" />
-                <span className="text-sm text-gray-700">{option.sources} Sources</span>
+    <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
+      <div className="rounded-xl border border-gray-200 p-6 mb-6">
+        <div className="flex items-center mb-4">
+          <MessageCircleQuestion className="text-[#0076CE] mr-2" size={20} />
+          <h2 className="text-lg font-semibold text-black">Solution Approaches</h2>
+        </div>
+        
+        <p className="text-gray-600 mb-6">
+          Here are the most effective approaches to resolve your issue, based on analysis of similar cases.
+        </p>
+        
+        <div className="space-y-4">
+          {options.map((option) => (
+            <div 
+              key={option.key}
+              className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer ${
+                selectedPath === option.key 
+                  ? 'border-[#0076CE] bg-blue-50' 
+                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+              }`}
+              onClick={() => onSelectPath(option.key)}
+            >
+              <div className="flex items-start">
+                <div className="text-2xl mr-3">{option.icon}</div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="font-medium text-black">{option.name}</h3>
+                    <div className="flex items-center">
+                      <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${
+                        option.confidence >= 90 ? 'bg-green-100 text-green-800' :
+                        option.confidence >= 80 ? 'bg-blue-100 text-blue-800' :
+                        'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {option.confidence}% confidence
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-2">{option.description}</p>
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-sm text-gray-500">{option.detail}</span>
+                    <span className="text-xs text-gray-500">Based on {option.sources} sources</span>
+                  </div>
+                </div>
               </div>
             </div>
-            
-            <div className="bg-gray-50 p-3 rounded-md text-sm text-gray-700">
-              {option.detail}
-            </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </AnimatedTransition>
   );

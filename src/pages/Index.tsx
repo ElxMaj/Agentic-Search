@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -23,63 +24,91 @@ const Index: React.FC = () => {
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
+    
     setTimeout(() => {
-      const matchedQuery = mockQueries.find(q => searchQuery.toLowerCase().includes(q.query.toLowerCase())) || mockQueries[0];
+      const matchedQuery = mockQueries.find(q => 
+        searchQuery.toLowerCase().includes(q.query.toLowerCase())
+      ) || mockQueries[0];
+      
       setCurrentQueryData(matchedQuery);
+      
       setTimeout(() => {
         setShowQueryInterpretation(true);
+        
         setTimeout(() => {
+          // Transform the resolution paths into options with confidence scores and source counts
           const options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
-            let pathDetail = "";
-            let confidence = 0;
-            let sourceCount = 0;
-            if (key === "software") {
-              confidence = 92;
-              sourceCount = 245;
-              pathDetail = "Current drivers detected as outdated by 3 months";
-            } else if (key === "hardware") {
-              confidence = 88;
-              sourceCount = 189;
-              pathDetail = "External GPU options and new models available";
-            } else if (key === "diagnostics") {
-              confidence = 85;
-              sourceCount = 156;
-              pathDetail = "Settings optimization for your most-used apps";
-            } else if (key === "setup") {
-              confidence = 94;
-              sourceCount = 212;
-              pathDetail = "Step-by-step setup instructions for common scenarios";
-            } else if (key === "comparison") {
-              confidence = 91;
-              sourceCount = 178;
-              pathDetail = "Compare models based on your specific needs";
-            } else if (key === "troubleshooting") {
-              confidence = 89;
-              sourceCount = 201;
-              pathDetail = "Solutions for common issues with detailed steps";
-            } else if (key === "diskOptimization") {
-              confidence = 94;
-              sourceCount = 237;
-              pathDetail = "Storage performance analysis and optimization";
-            } else if (key === "startupOptimization") {
-              confidence = 91;
-              sourceCount = 184;
-              pathDetail = "Identify and disable unnecessary startup items";
-            } else if (key === "memoryManagement") {
-              confidence = 89;
-              sourceCount = 176;
-              pathDetail = "Free up and optimize RAM usage";
+            // Get relevant detail information based on the path key
+            let detail = "";
+            
+            if (matchedQuery.query.includes("Webcam problem")) {
+              if (key === "permissions") {
+                detail = "Privacy settings might be blocking camera access";
+              } else if (key === "connection") {
+                detail = "Physical or USB connection issues detected";
+              } else if (key === "drivers") {
+                detail = "Driver conflicts or outdated software identified";
+              }
+            } else if (matchedQuery.query.includes("Dell graphics")) {
+              if (key === "software") {
+                detail = "Current drivers detected as outdated by 3 months";
+              } else if (key === "hardware") {
+                detail = "External GPU options and new models available";
+              } else if (key === "diagnostics") {
+                detail = "Settings optimization for your most-used apps";
+              }
+            } else if (matchedQuery.query.includes("slow application")) {
+              if (key === "diskOptimization") {
+                detail = "Storage performance analysis and optimization";
+              } else if (key === "startupOptimization") {
+                detail = "Identify and disable unnecessary startup items";
+              } else if (key === "memoryManagement") {
+                detail = "Free up and optimize RAM usage";
+              }
             }
+            
+            // Get confidence score and source count based on the path
+            const sources = path.sources || [];
+            const sourceCount = sources.length;
+            const confidence = sources.length > 0 
+              ? Math.round(sources.reduce((sum, source) => sum + source.confidence, 0) / sources.length)
+              : Math.floor(Math.random() * 10) + 85; // Fallback to random score between 85-95
+            
+            // Create descriptive summary based on the path
+            let description = "";
+            if (key === "permissions") {
+              description = "Check and update app permissions in Windows and Teams";
+            } else if (key === "connection") {
+              description = "Troubleshoot physical connections and USB ports";
+            } else if (key === "drivers") {
+              description = "Update or reinstall webcam and USB drivers";
+            } else if (key === "software") {
+              description = "Free software and driver updates";
+            } else if (key === "hardware") {
+              description = "Recommended upgrades for better performance";
+            } else if (key === "diagnostics") {
+              description = "App-specific performance tips";
+            } else if (key === "diskOptimization") {
+              description = "Optimize storage performance and SSD settings";
+            } else if (key === "startupOptimization") {
+              description = "Streamline system startup and background services";
+            } else if (key === "memoryManagement") {
+              description = "Improve RAM utilization and application memory usage";
+            } else {
+              description = "Improve system performance";
+            }
+
             return {
               key,
               name: path.name,
               icon: path.icon,
-              description: key === "software" ? "Free software and driver updates" : key === "hardware" ? "Recommended upgrades for better performance" : key === "diagnostics" ? "App-specific performance tips" : key === "setup" ? "First-time setup guide" : key === "comparison" ? "Find the right model for your needs" : key === "troubleshooting" ? "Resolve common webcam issues" : key === "diskOptimization" ? "Optimize storage performance" : key === "startupOptimization" ? "Streamline system startup" : key === "memoryManagement" ? "Improve RAM utilization" : "Improve system performance",
+              description,
               confidence,
-              sources: sourceCount,
-              detail: pathDetail
+              sources: sourceCount > 0 ? sourceCount : Math.floor(Math.random() * 100) + 150,
+              detail
             };
           });
+          
           setResolutionOptions(options);
           setShowResolutionOptions(true);
           setIsLoading(false);
@@ -99,6 +128,8 @@ const Index: React.FC = () => {
     if (!currentQueryData || !selectedPathKey) return "";
     const path = currentQueryData.resolutionPaths[selectedPathKey];
     if (!path) return "";
+    
+    // Return the existing detailed answers
     if (selectedPathKey === "software") {
       return `<h3 class="text-lg font-medium mb-3">Dell Graphics Performance: Software Solutions</h3>
       
@@ -189,243 +220,273 @@ const Index: React.FC = () => {
       </div>
       
       <p>Implementing these optimization settings could improve your graphics performance by up to 25% with your current hardware configuration.</p>`;
-    } else if (selectedPathKey === "setup") {
-      return `<h3 class="text-lg font-medium mb-3">Logitech Webcam: Complete Setup Guide</h3>
+    } else if (selectedPathKey === "permissions") {
+      return `<h3 class="text-lg font-medium mb-3">Teams Webcam Issues: Privacy & Permissions</h3>
       
-      <p class="mb-3">I've prepared a comprehensive setup guide for your Logitech webcam based on the most reliable information available:</p>
+      <p class="mb-3">After analyzing your system, I've identified that camera permission issues are likely preventing Teams from accessing your webcam:</p>
       
-      <div class="bg-blue-100 p-3 rounded-md mb-4">
-        <p class="font-medium">Before you begin:</p>
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+        <p class="font-medium">System Analysis Results:</p>
         <ul class="list-disc pl-5 mt-1">
-          <li>Unbox your webcam and remove all packaging materials</li>
-          <li>For optimal performance, prepare to connect directly to a USB 3.0 port (blue port)</li>
-          <li>Close any applications that might use the camera</li>
+          <li>Windows camera privacy settings: <span class="text-red-600 font-medium">Restricted</span></li>
+          <li>Teams app camera permissions: <span class="text-red-600 font-medium">Not granted</span></li>
+          <li>Camera functionality in other apps: <span class="text-green-600 font-medium">Working correctly</span></li>
         </ul>
       </div>
       
-      <h4 class="font-medium mt-4 mb-2">Step-by-Step Setup:</h4>
+      <h4 class="font-medium mt-4 mb-2">Step-by-Step Resolution:</h4>
       
       <div class="space-y-4 mb-4">
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
           <div>
-            <p class="font-medium">Physical Connection</p>
-            <p>Connect your Logitech webcam to an available USB port on your computer. If possible, use a USB 3.0 port (blue connector) for optimal performance and avoid using USB hubs.</p>
+            <p class="font-medium">Check Windows Camera Privacy Settings</p>
+            <ol class="list-decimal pl-5 mt-1 space-y-1 text-sm">
+              <li>Press <strong>Win + I</strong> to open Windows Settings</li>
+              <li>Navigate to <strong>Privacy & Security > Camera</strong></li>
+              <li>Ensure <strong>Camera access</strong> is toggled <strong>On</strong></li>
+              <li>Under "Let apps access your camera," toggle the switch to <strong>On</strong></li>
+              <li>Scroll down to find Microsoft Teams in the app list and ensure it's toggled <strong>On</strong></li>
+            </ol>
           </div>
         </div>
         
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
           <div>
-            <p class="font-medium">Driver Installation</p>
-            <p>Wait for automatic driver installation, which typically takes 30-60 seconds. For optimal functionality, download and install Logitech G HUB software from the <a href="#" class="text-blue-600 underline">official Logitech website</a>.</p>
+            <p class="font-medium">Check Teams App Permissions</p>
+            <ol class="list-decimal pl-5 mt-1 space-y-1 text-sm">
+              <li>Open <strong>Microsoft Teams</strong></li>
+              <li>Click your <strong>profile picture</strong> in the top-right corner</li>
+              <li>Select <strong>Settings</strong></li>
+              <li>Go to <strong>Permissions</strong></li>
+              <li>Ensure <strong>Media > Camera</strong> is set to <strong>Allowed</strong></li>
+            </ol>
           </div>
         </div>
         
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
           <div>
-            <p class="font-medium">Configure Settings</p>
-            <p>Open Logitech G HUB software to access advanced features:</p>
-            <ul class="list-disc pl-5 mt-1">
-              <li>Adjust video resolution (recommended: 1080p for meetings)</li>
-              <li>Configure field of view</li>
-              <li>Enable/disable auto-focus</li>
-              <li>Adjust brightness, contrast, and color settings</li>
+            <p class="font-medium">Reset Teams Cache (If Issues Persist)</p>
+            <ol class="list-decimal pl-5 mt-1 space-y-1 text-sm">
+              <li>Close Microsoft Teams completely (check Task Manager to ensure it's not running)</li>
+              <li>Press <strong>Win + R</strong> to open the Run dialog</li>
+              <li>Type one of these paths depending on your Teams version:
+                <ul class="list-disc pl-4 mt-1">
+                  <li>For personal Teams: <code>%appdata%\\Microsoft\\Teams</code></li>
+                  <li>For work Teams: <code>%appdata%\\Microsoft\\Teams\\meeting-addin\\Cache</code></li>
+                </ul>
+              </li>
+              <li>Delete all files in the Cache folder</li>
+              <li>Restart Teams and test your camera</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-blue-50 p-3 rounded-md mb-4">
+        <p class="font-medium">Why This Works:</p>
+        <p class="text-sm">Windows 11's enhanced security features sometimes reset app permissions after updates. The steps above ensure that Teams has the necessary permissions at both the operating system and application levels. Cache clearing resolves any corrupted permission states that may have occurred from previous sessions.</p>
+      </div>`;
+    } else if (selectedPathKey === "connection") {
+      return `<h3 class="text-lg font-medium mb-3">Teams Webcam Issues: Connection Problems</h3>
+      
+      <p class="mb-3">Based on diagnostics, your webcam connection issues during Teams calls appear to be hardware-related:</p>
+      
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+        <p class="font-medium">Connection Diagnostic Results:</p>
+        <ul class="list-disc pl-5 mt-1">
+          <li>USB controller status: <span class="text-yellow-600 font-medium">Intermittent issues detected</span></li>
+          <li>Webcam power delivery: <span class="text-red-600 font-medium">Fluctuating (below optimal)</span></li>
+          <li>USB port recognition: <span class="text-yellow-600 font-medium">Inconsistent during video calls</span></li>
+        </ul>
+      </div>
+      
+      <h4 class="font-medium mt-4 mb-2">Comprehensive Connection Troubleshooting:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Test Different USB Ports</p>
+            <p class="mb-2 text-sm">Your current port may not be providing consistent power or data connectivity:</p>
+            <ul class="list-disc pl-5 text-sm">
+              <li>Connect your webcam directly to a <strong>USB 3.0 port</strong> (typically blue) on your computer instead of USB 2.0</li>
+              <li>Avoid using USB hubs, extension cables, or front panel USB ports</li>
+              <li>Try ports on different sides of your laptop or different areas of your desktop</li>
+              <li>After connecting to a new port, wait 30 seconds for device recognition before testing</li>
             </ul>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Check for Physical Connection Issues</p>
+            <p class="mb-2 text-sm">Physical hardware problems account for approximately 40% of webcam connection issues:</p>
+            <ul class="list-disc pl-5 text-sm">
+              <li>Inspect the USB cable for any visible damage, kinks, or bent connectors</li>
+              <li>Ensure the connection is secure at both the webcam and computer ends</li>
+              <li>Try gently cleaning the USB connector with compressed air or a soft brush</li>
+              <li>If your webcam has a detachable cable, try replacing it with a high-quality alternative</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Update USB Controllers</p>
+            <p class="mb-2 text-sm">Outdated USB controller drivers can cause intermittent connection issues:</p>
+            <ol class="list-decimal pl-5 text-sm">
+              <li>Press <strong>Win + X</strong> and select <strong>Device Manager</strong></li>
+              <li>Expand <strong>Universal Serial Bus controllers</strong></li>
+              <li>Right-click on each <strong>USB Root Hub</strong> and select <strong>Update driver</strong></li>
+              <li>Choose <strong>Search automatically for drivers</strong></li>
+              <li>Repeat for all USB controllers and hubs listed</li>
+              <li>Restart your computer after all updates are complete</li>
+            </ol>
           </div>
         </div>
         
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
           <div>
-            <p class="font-medium">Test Video Conference</p>
-            <p>Open your preferred video conferencing application (Zoom, Teams, Google Meet) and select your Logitech webcam as the video source in the settings menu.</p>
+            <p class="font-medium">Power Management Optimization</p>
+            <p class="mb-2 text-sm">Windows power settings may be cutting power to your USB ports:</p>
+            <ol class="list-decimal pl-5 text-sm">
+              <li>Open <strong>Device Manager</strong></li>
+              <li>Expand <strong>Universal Serial Bus controllers</strong></li>
+              <li>Right-click each <strong>USB Root Hub</strong> and select <strong>Properties</strong></li>
+              <li>Go to the <strong>Power Management</strong> tab</li>
+              <li>Uncheck <strong>Allow the computer to turn off this device to save power</strong></li>
+              <li>Click <strong>OK</strong> and repeat for all USB Root Hubs</li>
+            </ol>
           </div>
         </div>
       </div>
       
-      <p class="mb-3">For video conferencing optimization, consider these additional settings:</p>
-      <ul class="list-disc pl-5 mb-4">
-        <li>Enable background noise cancellation for clearer audio</li>
-        <li>Position the webcam slightly above eye level for the most flattering angle</li>
-        <li>Ensure proper lighting from the front rather than behind you</li>
-      </ul>`;
-    } else if (selectedPathKey === "comparison") {
-      return `<h3 class="text-lg font-medium mb-3">Logitech Webcam: Product Comparison Guide</h3>
+      <div class="bg-blue-50 p-3 rounded-md">
+        <p class="font-medium">Advanced Diagnosis:</p>
+        <p class="text-sm">If issues persist after trying these solutions, the problem may be with the webcam's internal components or firmware. Connect the webcam to another computer to determine if the issue follows the webcam or stays with your current system. This will help identify whether you need a firmware update or a hardware replacement.</p>
+      </div>`;
+    } else if (selectedPathKey === "drivers") {
+      return `<h3 class="text-lg font-medium mb-3">Teams Webcam Issues: Driver & Software Solutions</h3>
       
-      <p class="mb-3">Based on your query, I've analyzed the current Logitech webcam lineup to help you find the right model for your video conferencing needs:</p>
-      
-      <div class="space-y-6 mb-5">
-        <div class="border rounded-md p-3">
-          <h4 class="font-medium text-blue-700">Entry Level: Logitech C920s HD Pro</h4>
-          <div class="grid grid-cols-2 gap-2 mt-2">
-            <div>
-              <p class="text-sm font-medium">Price Range:</p>
-              <p>$60-70</p>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Resolution:</p>
-              <p>1080p/30fps</p>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Key Features:</p>
-              <ul class="list-disc pl-4 text-sm">
-                <li>Dual microphones</li>
-                <li>Privacy shutter</li>
-                <li>Automatic light correction</li>
-              </ul>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Best For:</p>
-              <p>Regular video calls, general use</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="border rounded-md p-3">
-          <h4 class="font-medium text-blue-700">Mid-Range: Logitech C922 Pro Stream</h4>
-          <div class="grid grid-cols-2 gap-2 mt-2">
-            <div>
-              <p class="text-sm font-medium">Price Range:</p>
-              <p>$80-100</p>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Resolution:</p>
-              <p>1080p/30fps or 720p/60fps</p>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Key Features:</p>
-              <ul class="list-disc pl-4 text-sm">
-                <li>Background replacement</li>
-                <li>Superior low-light performance</li>
-                <li>Stereo audio</li>
-              </ul>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Best For:</p>
-              <p>Frequent meetings, basic content creation</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="border rounded-md p-3 bg-blue-50">
-          <h4 class="font-medium text-blue-700">Premium: Logitech StreamCam</h4>
-          <div class="grid grid-cols-2 gap-2 mt-2">
-            <div>
-              <p class="text-sm font-medium">Price Range:</p>
-              <p>$150-170</p>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Resolution:</p>
-              <p>1080p/60fps</p>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Key Features:</p>
-              <ul class="list-disc pl-4 text-sm">
-                <li>USB-C connection</li>
-                <li>Smart auto-focus and framing</li>
-                <li>Vertical video option</li>
-              </ul>
-            </div>
-            <div>
-              <p class="text-sm font-medium">Best For:</p>
-              <p>Professional video conferencing, content creation</p>
-            </div>
-          </div>
-          <div class="mt-2 text-sm bg-green-100 p-2 rounded-md">
-            <p class="font-medium">Recommended for your needs based on analysis of similar user profiles</p>
-          </div>
-        </div>
-      </div>
-      
-      <p>For professional video conferencing, the StreamCam offers the best balance of quality and features, with superior color accuracy and frame rate that creates a more professional appearance in meetings.</p>`;
-    } else if (selectedPathKey === "troubleshooting") {
-      return `<h3 class="text-lg font-medium mb-3">Logitech Webcam: Troubleshooting Guide</h3>
-      
-      <p class="mb-3">Based on diagnostic information and common issues, I've created this troubleshooting guide for Logitech webcam problems:</p>
+      <p class="mb-3">Analysis of your system indicates that driver conflicts and outdated software are affecting your webcam during Teams calls:</p>
       
       <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
-        <p class="font-medium">Before advanced troubleshooting:</p>
-        <p>Try these quick fixes that resolve 70% of webcam issues:</p>
+        <p class="font-medium">Driver Diagnostic Results:</p>
         <ul class="list-disc pl-5 mt-1">
-          <li>Disconnect and reconnect the webcam</li>
-          <li>Try a different USB port (preferably USB 3.0)</li>
-          <li>Restart your computer</li>
-          <li>Check if the webcam is being used by another application</li>
+          <li>Webcam driver status: <span class="text-red-600 font-medium">Outdated (last updated 11 months ago)</span></li>
+          <li>Teams application version: <span class="text-yellow-600 font-medium">Two versions behind current release</span></li>
+          <li>Driver conflicts detected: <span class="text-red-600 font-medium">Yes, with audio processing software</span></li>
         </ul>
       </div>
       
-      <div class="space-y-5 mb-4">
-        <div>
-          <h4 class="font-medium text-blue-700 mb-2">Issue: Webcam Not Detected</h4>
-          <div class="pl-4 border-l-2 border-gray-300">
-            <p class="font-medium mb-1">Potential causes:</p>
-            <ul class="list-disc pl-5 mb-2">
-              <li>Hardware connection problems</li>
-              <li>Driver issues</li>
-              <li>Privacy settings blocking access</li>
-            </ul>
+      <h4 class="font-medium mt-4 mb-2">Comprehensive Driver & Software Resolution Plan:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Update Webcam Drivers</p>
+            <p class="mb-2 text-sm">Your current drivers are outdated and might not be fully compatible with the latest Teams updates:</p>
             
-            <p class="font-medium mb-1">Solution steps:</p>
-            <ol class="list-decimal pl-5">
-              <li class="mb-1">Check Device Manager to see if the webcam appears:
-                <ul class="list-disc pl-5 mt-1 text-sm">
-                  <li>Press Win+X and select "Device Manager"</li>
-                  <li>Look under "Cameras" or "Imaging devices"</li>
-                  <li>If you see a yellow exclamation mark, right-click and select "Update driver"</li>
-                </ul>
-              </li>
-              <li class="mb-1">Check Windows privacy settings:
-                <ul class="list-disc pl-5 mt-1 text-sm">
-                  <li>Go to Settings > Privacy & Security > Camera</li>
-                  <li>Ensure "Camera access" is turned on</li>
-                  <li>Make sure your apps have permission to access the camera</li>
-                </ul>
-              </li>
-              <li class="mb-1">Reinstall Logitech software:
-                <ul class="list-disc pl-5 mt-1 text-sm">
-                  <li>Uninstall current Logitech software (Control Panel > Programs)</li>
-                  <li>Download fresh copy from Logitech's official website</li>
-                  <li>Install and restart your system</li>
-                </ul>
-              </li>
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">Method A: Manufacturer Website (Recommended)</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Visit your webcam manufacturer's website (Logitech, Microsoft, etc.)</li>
+                <li>Navigate to the Support or Downloads section</li>
+                <li>Search for your specific webcam model</li>
+                <li>Download the latest driver package</li>
+                <li>Close all applications using the webcam before installation</li>
+                <li>Run the installer and follow the prompts</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">Method B: Device Manager</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Press <strong>Win + X</strong> and select <strong>Device Manager</strong></li>
+                <li>Expand <strong>Cameras</strong> or <strong>Imaging devices</strong></li>
+                <li>Right-click on your webcam and select <strong>Update driver</strong></li>
+                <li>Choose <strong>Search automatically for updated driver software</strong></li>
+                <li>Follow the prompts to complete the installation</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Reinstall Webcam Drivers (If Issues Persist)</p>
+            <p class="mb-2 text-sm">A clean reinstallation can resolve driver conflicts and corruption:</p>
+            <ol class="list-decimal pl-5 text-sm space-y-1">
+              <li>Open <strong>Device Manager</strong></li>
+              <li>Expand <strong>Cameras</strong> or <strong>Imaging devices</strong></li>
+              <li>Right-click on your webcam and select <strong>Uninstall device</strong></li>
+              <li>Check the box for <strong>Delete the driver software for this device</strong> if available</li>
+              <li>Click <strong>Uninstall</strong> and confirm</li>
+              <li>Disconnect the webcam from your computer</li>
+              <li>Restart your computer</li>
+              <li>Reconnect the webcam and wait for Windows to detect it</li>
+              <li>If Windows doesn't automatically install drivers, use Method A above</li>
             </ol>
           </div>
         </div>
         
-        <div>
-          <h4 class="font-medium text-blue-700 mb-2">Issue: Poor Video Quality</h4>
-          <div class="pl-4 border-l-2 border-gray-300">
-            <p class="font-medium mb-1">Potential causes:</p>
-            <ul class="list-disc pl-5 mb-2">
-              <li>Insufficient lighting</li>
-              <li>Incorrect resolution settings</li>
-              <li>Bandwidth limitations</li>
-            </ul>
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Update Microsoft Teams</p>
+            <p class="mb-2 text-sm">Running an outdated Teams version can cause compatibility issues with webcam drivers:</p>
             
-            <p class="font-medium mb-1">Solution steps:</p>
-            <ol class="list-decimal pl-5">
-              <li class="mb-1">Optimize lighting conditions:
-                <ul class="list-disc pl-5 mt-1 text-sm">
-                  <li>Position light sources in front of you, not behind</li>
-                  <li>Avoid mixing different light temperatures (warm/cool)</li>
-                  <li>Consider a ring light for optimal video quality</li>
-                </ul>
-              </li>
-              <li class="mb-1">Adjust camera settings in Logitech G HUB:
-                <ul class="list-disc pl-5 mt-1 text-sm">
-                  <li>Increase brightness and contrast</li>
-                  <li>Enable RightLight feature if available</li>
-                  <li>Manually focus if auto-focus is causing issues</li>
-                </ul>
-              </li>
-            </ol>
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">For Teams Desktop App:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Open Microsoft Teams</li>
+                <li>Click your <strong>profile picture</strong> in the top-right corner</li>
+                <li>Select <strong>Check for updates</strong></li>
+                <li>If updates are available, Teams will download and install them</li>
+                <li>Restart Teams when prompted</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">Alternative Method (Complete Reinstall):</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Uninstall Teams from <strong>Control Panel > Programs > Uninstall a program</strong></li>
+                <li>Delete leftover files from <code>%appdata%\\Microsoft\\Teams</code></li>
+                <li>Download the latest Teams installer from Microsoft's website</li>
+                <li>Install Teams and sign in to your account</li>
+                <li>Configure your camera settings before joining a call</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+          <div>
+            <p class="font-medium">Resolve Software Conflicts</p>
+            <p class="mb-2 text-sm">Other applications may be interfering with your webcam during Teams calls:</p>
+            <ul class="list-disc pl-5 text-sm">
+              <li><strong>Close competing video applications</strong> (Zoom, Skype, OBS, etc.) before starting Teams</li>
+              <li><strong>Temporarily disable antivirus camera scanning</strong> features during calls</li>
+              <li><strong>Check for conflicting background apps</strong> using Task Manager and close unnecessary ones</li>
+              <li><strong>Disable camera enhancements software</strong> that may be modifying the video stream</li>
+            </ul>
           </div>
         </div>
       </div>
       
-      <p>If these solutions don't resolve your issue, Logitech offers comprehensive support through their <a href="#" class="text-blue-600 underline">support website</a> or by contacting their customer service.</p>`;
+      <div class="bg-blue-50 p-3 rounded-md">
+        <p class="font-medium">Technical Insight:</p>
+        <p class="text-sm">Modern webcams use complex DirectShow or Media Foundation frameworks that can experience conflicts between different software layers. This comprehensive approach addresses issues at all levels of the driver stack, from hardware interfacing to application integration, ensuring maximum compatibility with Teams' video processing pipeline.</p>
+      </div>`;
     } else if (selectedPathKey === "diskOptimization") {
       return `<h3 class="text-lg font-medium mb-3">Slow Application Loading: Disk Optimization Solutions</h3>
       
@@ -720,6 +781,7 @@ const Index: React.FC = () => {
         <p class="text-sm">Based on your system's current memory usage patterns, implementing the software optimizations alone could improve application loading times by 15-20%. Adding a hardware upgrade would deliver a 25-40% overall performance boost for memory-intensive applications.</p>
       </div>`;
     } else {
+      // If for some reason we don't have a specific template, fall back to this
       return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
     }
   };
