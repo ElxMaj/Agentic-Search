@@ -63,7 +63,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
             placeholder={getRandomPlaceholder()}
-            className="flex-1 h-12 px-3 bg-transparent text-black focus:outline-none"
+            className="flex-1 h-12 px-3 bg-transparent text-black focus:outline-none text-center"
             disabled={isLoading}
           />
           <button
