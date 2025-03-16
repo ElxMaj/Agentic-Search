@@ -72,7 +72,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
               
               <div className="mt-4 pt-3 border-t border-gray-100">
                 <div className="flex items-center mb-2">
-                  <ThumbsUp size={16} className={getConfidenceColor(option.confidence)} />
+                  <ThumbsUp size={16} className={`${getConfidenceColor(option.confidence)} mr-2`} />
                   <span className={`text-sm ${getConfidenceColor(option.confidence)}`}>
                     {option.confidence}% Confidence
                   </span>
