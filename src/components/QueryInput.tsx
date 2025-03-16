@@ -6,9 +6,14 @@ import { Search, ArrowRight, Loader2 } from 'lucide-react';
 interface QueryInputProps {
   onSearch: (query: string) => void;
   isLoading?: boolean;
+  suggestedQueries?: string[];
 }
 
-const QueryInput: React.FC<QueryInputProps> = ({ onSearch, isLoading = false }) => {
+const QueryInput: React.FC<QueryInputProps> = ({ 
+  onSearch, 
+  isLoading = false,
+  suggestedQueries = []
+}) => {
   const [query, setQuery] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -19,16 +24,22 @@ const QueryInput: React.FC<QueryInputProps> = ({ onSearch, isLoading = false }) 
     }
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setQuery(suggestion);
+    onSearch(suggestion);
+  };
+
+  // Get a random example query for the placeholder
+  const getRandomPlaceholder = () => {
+    if (suggestedQueries.length > 0) {
+      const randomIndex = Math.floor(Math.random() * suggestedQueries.length);
+      return `e.g., ${suggestedQueries[randomIndex]}`;
+    }
+    return "e.g., How do I improve my software's performance?";
+  };
+
   return (
     <div className="w-full max-w-3xl mx-auto" id="query">
-      <div className="text-center mb-6">
-        <div className="chip mb-2">Interactive AI System</div>
-        <h2 className="text-2xl md:text-3xl font-semibold mb-3">What would you like to know?</h2>
-        <p className="text-medium-gray max-w-xl mx-auto">
-          Ask any support question and our AI will guide you through the most efficient resolution path.
-        </p>
-      </div>
-
       <motion.form 
         onSubmit={handleSubmit}
         className={`relative mt-8 glass-panel p-1.5 transition-all duration-300 ${
@@ -51,7 +62,7 @@ const QueryInput: React.FC<QueryInputProps> = ({ onSearch, isLoading = false }) 
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
-            placeholder="e.g., How do I improve my software's performance?"
+            placeholder={getRandomPlaceholder()}
             className="flex-1 h-12 px-3 bg-transparent text-foreground focus:outline-none"
             disabled={isLoading}
           />
@@ -74,14 +85,25 @@ const QueryInput: React.FC<QueryInputProps> = ({ onSearch, isLoading = false }) 
         </div>
       </motion.form>
 
-      <motion.div 
-        className="mt-4 text-sm text-center text-muted-foreground"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4 }}
-      >
-        Try: "What are the best practices for API optimization?" or "How to fix database connection issues?"
-      </motion.div>
+      {suggestedQueries.length > 0 && (
+        <motion.div 
+          className="mt-4 flex flex-wrap gap-2 justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          {suggestedQueries.slice(0, 3).map((suggestion, index) => (
+            <button
+              key={index}
+              onClick={() => handleSuggestionClick(suggestion)}
+              className="text-sm px-3 py-1.5 rounded-full bg-light-blue/30 hover:bg-light-blue/50 text-deep-blue transition-colors"
+              disabled={isLoading}
+            >
+              {suggestion}
+            </button>
+          ))}
+        </motion.div>
+      )}
     </div>
   );
 };
