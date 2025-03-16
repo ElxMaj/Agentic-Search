@@ -86,8 +86,8 @@ const RelatedContent: React.FC<RelatedContentProps> = ({ isVisible }) => {
         { id: '2', name: 'Logitech StreamCam', price: '$169.99', description: 'Premium webcam for content creators with smart features.', image: 'https://via.placeholder.com/80x80', link: '#' }
       ]
     : [
-        { id: '1', name: 'Dell XPS 15 Laptop', price: '$1,499.99', description: 'High-performance laptop with NVIDIA graphics.', image: 'https://via.placeholder.com/80x80', link: '#' },
-        { id: '2', name: 'Logitech MX Master 3 Mouse', price: '$99.99', description: 'Advanced wireless mouse for maximum productivity.', image: 'https://via.placeholder.com/80x80', link: '#' }
+        { id: '1', name: 'Dell XPS 15 Laptop', price: '$1,499.99', description: 'High-performance laptop with NVIDIA graphics.', image: '/lovable-uploads/b53da895-fe0c-4788-be67-b07907211aaf.png', link: '#' },
+        { id: '2', name: 'Logitech MX Master 3 Mouse', price: '$99.99', description: 'Advanced wireless mouse for maximum productivity.', image: '/lovable-uploads/70dc402c-6297-400a-b9b5-16e6dee61286.png', link: '#' }
       ];
 
   if (!isVisible) {
