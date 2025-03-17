@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink, BatteryFull, Wifi } from 'lucide-react';
+import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink, BatteryFull, Wifi, Monitor, Clock, Camera } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
@@ -35,17 +35,29 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     return null;
   }
 
-  // Get query from URL to check if it's a battery-related query or wifi-related query
+  // Get query from URL to check for specific query scenarios
   const urlParams = new URLSearchParams(window.location.search);
   const currentQuery = urlParams.get('q') || '';
+  
+  // Check for different query types
   const isBatteryQuery = currentQuery.toLowerCase().includes('battery') && 
                          (currentQuery.toLowerCase().includes('drain') || 
                           currentQuery.toLowerCase().includes('life') || 
                           currentQuery.toLowerCase().includes('dying'));
+                          
   const isWifiQuery = currentQuery.toLowerCase().includes('wifi') ||
                       currentQuery.toLowerCase().includes('wi-fi') ||
                       currentQuery.toLowerCase().includes('wireless') ||
                       currentQuery.toLowerCase().includes('unstable');
+                      
+  const isGraphicsQuery = currentQuery.toLowerCase().includes('graphics') && 
+                          currentQuery.toLowerCase().includes('dell');
+                          
+  const isComputerSlowQuery = currentQuery.toLowerCase().includes('computer') && 
+                              currentQuery.toLowerCase().includes('slow');
+                              
+  const isWebcamQuery = currentQuery.toLowerCase().includes('webcam') || 
+                        currentQuery.toLowerCase().includes('camera');
 
   // Custom options for Dell battery drain scenario
   const batteryDrainOptions = [
@@ -123,7 +135,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
       detail: "Adjust wireless channel, band settings, and router positioning for optimal signal.",
       links: [
         {
-          text: "Dell Wireless Troubleshooting",
+          text: "Wi-Fi Troubleshooting Guide",
           url: "https://www.dell.com/support/kbdoc/en-us/000132223/how-to-troubleshoot-wireless-network-connectivity-issues"
         }
       ]
@@ -145,6 +157,153 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     }
   ];
 
+  // Custom options for Dell graphics performance scenario
+  const graphicsPerformanceOptions = [
+    {
+      key: "driver-optimization",
+      name: "Graphics Driver Optimization",
+      icon: "🖥️",
+      description: "Update and configure Dell-specific graphics drivers for optimal performance.",
+      confidence: 95,
+      sources: 12,
+      detail: "The latest driver versions contain important performance enhancements and bug fixes.",
+      links: [
+        {
+          text: "Dell Graphics Drivers",
+          url: "https://www.dell.com/support/home/en-us/product-support/product/dell-g5-15-5590-laptop/drivers"
+        }
+      ]
+    },
+    {
+      key: "performance-tuning",
+      name: "Performance Profile Tuning",
+      icon: "🚀",
+      description: "Configure system and application settings to maximize graphics performance.",
+      confidence: 93,
+      sources: 10,
+      detail: "Balance power and performance settings for optimal graphics capability.",
+      links: [
+        {
+          text: "NVIDIA Control Panel Guide",
+          url: "https://www.nvidia.com/en-us/geforce/guides/nvidia-control-panel-guide/"
+        }
+      ]
+    },
+    {
+      key: "hardware-acceleration",
+      name: "Hardware Acceleration Management",
+      icon: "⚡",
+      description: "Optimize hardware acceleration settings across applications and system services.",
+      confidence: 89,
+      sources: 7,
+      detail: "Enable and configure hardware acceleration for graphics-intensive tasks.",
+      links: [
+        {
+          text: "Intel Graphics Command Center",
+          url: "https://www.intel.com/content/www/us/en/support/articles/000055848/graphics.html"
+        }
+      ]
+    }
+  ];
+
+  // Custom options for Computer slow scenario
+  const computerSlowOptions = [
+    {
+      key: "startup-optimization",
+      name: "Startup & Background Process Optimization",
+      icon: "🔄",
+      description: "Identify and disable unnecessary startup items and background processes.",
+      confidence: 97,
+      sources: 14,
+      detail: "Significantly improves boot time and overall system responsiveness.",
+      links: [
+        {
+          text: "Windows Task Manager Guide",
+          url: "https://support.microsoft.com/en-us/windows/open-task-manager-bce95b4f-e178-fce3-6bc1-a0631290730d"
+        }
+      ]
+    },
+    {
+      key: "disk-cleanup",
+      name: "Storage & File System Maintenance",
+      icon: "💾",
+      description: "Clean up unused files and optimize storage for maximum performance.",
+      confidence: 92,
+      sources: 9,
+      detail: "Remove temporary files, optimize disk usage and ensure adequate free space.",
+      links: [
+        {
+          text: "Disk Cleanup Tutorial",
+          url: "https://support.microsoft.com/en-us/windows/disk-cleanup-in-windows-10-8a96ff42-5751-39ad-23d6-434b4d5b9a68"
+        }
+      ]
+    },
+    {
+      key: "system-optimization",
+      name: "System Configuration & Services",
+      icon: "⚙️",
+      description: "Optimize Windows services, visual effects, and system settings.",
+      confidence: 90,
+      sources: 11,
+      detail: "Fine-tune Windows for performance rather than aesthetics.",
+      links: [
+        {
+          text: "Windows Performance Guide",
+          url: "https://support.microsoft.com/en-us/windows/improve-pc-performance-in-windows-9c5e5479-eff5-2940-611b-b07443dca6bb"
+        }
+      ]
+    }
+  ];
+
+  // Custom options for Webcam issue scenario
+  const webcamIssueOptions = [
+    {
+      key: "driver-software",
+      name: "Driver & Software Update",
+      icon: "📥",
+      description: "Install the latest Logitech webcam drivers and software for compatibility.",
+      confidence: 96,
+      sources: 13,
+      detail: "Most webcam issues are resolved with proper driver installation.",
+      links: [
+        {
+          text: "Logitech Support",
+          url: "https://support.logi.com/hc/en-us/categories/360001759473-Webcams"
+        }
+      ]
+    },
+    {
+      key: "app-permissions",
+      name: "Application & Privacy Settings",
+      icon: "🔒",
+      description: "Troubleshoot application permissions and privacy settings affecting webcam access.",
+      confidence: 94,
+      sources: 10,
+      detail: "Windows and browser privacy settings often block webcam access.",
+      links: [
+        {
+          text: "Windows Camera Privacy Settings",
+          url: "ms-settings:privacy-webcam"
+        }
+      ]
+    },
+    {
+      key: "connectivity-troubleshooting",
+      name: "Connection & Hardware Testing",
+      icon: "🔌",
+      description: "Verify physical connections and test webcam hardware across multiple applications.",
+      confidence: 91,
+      sources: 8,
+      detail: "Isolate whether the issue is hardware, software, or application-specific.",
+      links: [
+        {
+          text: "Logitech Webcam Test Tool",
+          url: "https://support.logi.com/hc/en-us/articles/360023237594-Logitech-Capture"
+        }
+      ]
+    }
+  ];
+
   // Function to determine color based on confidence level
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 90) return "text-green-600";
@@ -156,20 +315,35 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   // Use appropriate options based on query type
   let displayOptions = options;
   let headerText = "Here are the most effective approaches to resolve your issue, based on analysis of similar cases.";
+  let headerIcon = <MessageCircleQuestion className="text-[#0076CE] mr-2" size={20} />;
   
   if (isBatteryQuery) {
     displayOptions = batteryDrainOptions;
     headerText = "Here are the most effective approaches to extend your Dell laptop's battery life.";
+    headerIcon = <BatteryFull className="text-[#538234] mr-2" size={20} />;
   } else if (isWifiQuery) {
     displayOptions = wifiUnstableOptions;
     headerText = "Here are the most effective approaches to resolve your WiFi connectivity issues.";
+    headerIcon = <Wifi className="text-[#445bc5] mr-2" size={20} />;
+  } else if (isGraphicsQuery) {
+    displayOptions = graphicsPerformanceOptions;
+    headerText = "Here are the most effective approaches to improve your Dell's graphics performance.";
+    headerIcon = <Monitor className="text-[#F97316] mr-2" size={20} />;
+  } else if (isComputerSlowQuery) {
+    displayOptions = computerSlowOptions;
+    headerText = "Here are the most effective approaches to speed up your slow computer.";
+    headerIcon = <Clock className="text-[#9B6C14] mr-2" size={20} />;
+  } else if (isWebcamQuery) {
+    displayOptions = webcamIssueOptions;
+    headerText = "Here are the most effective approaches to fix your Logitech webcam issues.";
+    headerIcon = <Camera className="text-[#E43D59] mr-2" size={20} />;
   }
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
       <div className="rounded-xl border border-gray-200 p-6 mb-6">
         <div className="flex items-center mb-4">
-          <MessageCircleQuestion className="text-[#0076CE] mr-2" size={20} />
+          {headerIcon}
           <h2 className="text-lg font-semibold text-black">Solution Approaches</h2>
         </div>
         

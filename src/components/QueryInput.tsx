@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2, X, Battery, Wifi } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X, Battery, Wifi, Monitor, Clock, Camera } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -60,6 +60,27 @@ const QueryInput: React.FC<QueryInputProps> = ({
     const wifiQuery = "Wifi unstable";
     setQuery(wifiQuery);
     onSearch(wifiQuery);
+    setHasSearched(true);
+  };
+
+  const handleDellGraphicsClick = () => {
+    const graphicsQuery = "Dell graphics performance";
+    setQuery(graphicsQuery);
+    onSearch(graphicsQuery);
+    setHasSearched(true);
+  };
+
+  const handleComputerSlowClick = () => {
+    const slowQuery = "My computer is slow";
+    setQuery(slowQuery);
+    onSearch(slowQuery);
+    setHasSearched(true);
+  };
+
+  const handleWebcamIssueClick = () => {
+    const webcamQuery = "Logitech webcam not working";
+    setQuery(webcamQuery);
+    onSearch(webcamQuery);
     setHasSearched(true);
   };
 
@@ -150,6 +171,18 @@ const QueryInput: React.FC<QueryInputProps> = ({
         </motion.div>
         
         <motion.button
+          onClick={handleDellGraphicsClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#FDE1D3] hover:bg-[#FACDB6] text-[#F97316] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Monitor size={14} className="text-[#F97316]" />
+          Dell graphics
+        </motion.button>
+        
+        <motion.button
           onClick={handleBatteryDrainClick}
           className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#F0F7E8] hover:bg-[#E3EDD8] text-[#538234] transition-colors"
           disabled={isLoading}
@@ -171,6 +204,30 @@ const QueryInput: React.FC<QueryInputProps> = ({
         >
           <Wifi size={14} className="text-[#445bc5]" />
           Wifi unstable
+        </motion.button>
+
+        <motion.button
+          onClick={handleComputerSlowClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#FEF7CD] hover:bg-[#F9ECA8] text-[#9B6C14] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          <Clock size={14} className="text-[#9B6C14]" />
+          Computer slow
+        </motion.button>
+
+        <motion.button
+          onClick={handleWebcamIssueClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#FFDEE2] hover:bg-[#FFCCD2] text-[#E43D59] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <Camera size={14} className="text-[#E43D59]" />
+          Webcam issue
         </motion.button>
       </div>
     </div>
