@@ -39,3 +39,103 @@ export function formatContentSection(content: string, title: string, color: stri
     </div>
   `;
 }
+
+/**
+ * Creates a badge with a background color based on status
+ * @param text The text to display in the badge
+ * @param status The status (on, off, warning, etc.)
+ * @returns HTML string with the formatted badge
+ */
+export function createStatusBadge(text: string, status: string = "default"): string {
+  let colorClass = "bg-gray-100 text-gray-800";
+  
+  switch (status.toLowerCase()) {
+    case "on":
+    case "active":
+    case "enabled":
+      colorClass = "bg-green-100 text-green-800";
+      break;
+    case "off":
+    case "inactive":
+    case "disabled":
+      colorClass = "bg-red-100 text-red-800";
+      break;
+    case "warning":
+    case "caution":
+      colorClass = "bg-yellow-100 text-yellow-800";
+      break;
+    case "info":
+    case "note":
+      colorClass = "bg-blue-100 text-blue-800";
+      break;
+  }
+  
+  return `<span class="${colorClass} px-1.5 py-0.5 rounded">${text}</span>`;
+}
+
+/**
+ * Creates a pro tip box with consistent styling
+ * @param content The tip content
+ * @returns HTML string with the formatted tip box
+ */
+export function createProTip(content: string): string {
+  return `
+    <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 text-sm">
+      <p class="text-gray-700"><span class="font-medium">Pro tip:</span> ${content}</p>
+    </div>
+  `;
+}
+
+/**
+ * Creates a warning box with consistent styling
+ * @param content The warning content
+ * @param type The type of warning (caution, important, etc.)
+ * @returns HTML string with the formatted warning box
+ */
+export function createWarningBox(content: string, type: string = "Important"): string {
+  return `
+    <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200 text-sm">
+      <p class="text-yellow-800"><span class="font-medium">⚠️ ${type}:</span> ${content}</p>
+    </div>
+  `;
+}
+
+/**
+ * Creates a success/tip box with consistent styling
+ * @param content The success/tip content
+ * @returns HTML string with the formatted success box
+ */
+export function createSuccessBox(content: string): string {
+  return `
+    <div class="bg-green-50 p-3 rounded-lg border border-green-200 text-sm">
+      <p class="text-green-800"><span class="font-medium">💡 Pro tip:</span> ${content}</p>
+    </div>
+  `;
+}
+
+/**
+ * Formats a numbered or bulleted list
+ * @param items Array of list items
+ * @param type Type of list (ordered or unordered)
+ * @returns HTML string with the formatted list
+ */
+export function formatList(items: string[], type: 'ordered' | 'unordered' = 'ordered'): string {
+  const tag = type === 'ordered' ? 'ol' : 'ul';
+  const classList = type === 'ordered' ? 'list-decimal' : 'list-disc';
+  
+  return `
+    <${tag} class="${classList} pl-5 space-y-2">
+      ${items.map(item => `<li>${item}</li>`).join('')}
+    </${tag}>
+  `;
+}
+
+/**
+ * Formats a keyboard shortcut with consistent styling
+ * @param keys Array of key names
+ * @returns HTML string with the formatted keyboard shortcut
+ */
+export function formatKeyboardShortcut(keys: string[]): string {
+  return keys.map(key => `<kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">${key}</kbd>`).join('+');
+}
+
