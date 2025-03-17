@@ -46,6 +46,8 @@ const Index: React.FC = () => {
                 detail = "Physical or USB connection issues detected";
               } else if (key === "drivers") {
                 detail = "Driver conflicts or outdated software identified";
+              } else if (key === "teams") {
+                detail = "Teams configuration and cache issues detected";
               }
             } else if (matchedQuery.query.includes("Dell graphics")) {
               if (key === "software") {
@@ -78,6 +80,8 @@ const Index: React.FC = () => {
               description = "Troubleshoot physical connections and USB ports";
             } else if (key === "drivers") {
               description = "Update or reinstall webcam and USB drivers";
+            } else if (key === "teams") {
+              description = "Update and troubleshoot Teams application issues";
             } else if (key === "software") {
               description = "Free software and driver updates";
             } else if (key === "hardware") {
