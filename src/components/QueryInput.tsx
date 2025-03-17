@@ -25,8 +25,8 @@ const QueryInput: React.FC<QueryInputProps> = ({
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    setQuery("My computer is slow");
-    onSearch("My computer is slow");
+    setQuery(suggestion);
+    onSearch(suggestion);
   };
 
   // Get a random example query for the placeholder
@@ -35,7 +35,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
       const randomIndex = Math.floor(Math.random() * suggestedQueries.length);
       return `e.g., ${suggestedQueries[randomIndex]}`;
     }
-    return "e.g., My computer is slow";
+    return "e.g., How do I improve my software's performance?";
   };
 
   return (
@@ -99,7 +99,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
               className="text-sm px-3 py-1.5 rounded-full bg-[#E6F1F8] hover:bg-[#D1E4F1] text-[#0076CE] transition-colors"
               disabled={isLoading}
             >
-              My computer is slow
+              {suggestion}
             </button>
           ))}
         </motion.div>
