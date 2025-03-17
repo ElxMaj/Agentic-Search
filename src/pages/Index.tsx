@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -12,6 +11,7 @@ const Index: React.FC = () => {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showQueryInterpretation, setShowQueryInterpretation] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
   const [showResolutionOptions, setShowResolutionOptions] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
@@ -32,8 +32,11 @@ const Index: React.FC = () => {
       
       setCurrentQueryData(matchedQuery);
       
+      setIsThinking(true);
+      setShowQueryInterpretation(true);
+      
       setTimeout(() => {
-        setShowQueryInterpretation(true);
+        setIsThinking(false);
         
         setTimeout(() => {
           let options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
@@ -123,8 +126,8 @@ const Index: React.FC = () => {
           setShowResolutionOptions(true);
           setIsLoading(false);
         }, 500);
-      }, 1000);
-    }, 1500);
+      }, 1500);
+    }, 1000);
   };
 
   const handleSelectPath = (pathKey: string) => {
@@ -145,7 +148,7 @@ const Index: React.FC = () => {
       <p class="mb-3">Based on analysis of your Dell XPS 13 system, I've identified several software optimizations that can significantly improve graphics performance:</p>
       
       <ol class="list-decimal pl-5 mb-4 space-y-2">
-        <li><strong>Update NVIDIA Graphics Driver</strong> - Your current driver is 3 months out of date. The latest version (535.98) includes specific optimizations for your hardware.</li>
+        <li><strong>Update Intel Iris Xe Graphics drivers</strong> - Your current driver is 3 months out of date. The latest version (535.98) includes specific optimizations for your hardware.</li>
         <li><strong>Optimize Windows Power Settings</strong> - Your system is currently using the "Balanced" power plan. Switching to "High Performance" can boost graphics processing.</li>
         <li><strong>Enable Hardware Acceleration</strong> - This setting is currently disabled in several of your applications, including Chrome and Adobe products.</li>
         <li><strong>Update Intel Dynamic Tuning</strong> - The latest version improves thermal management, preventing throttling during graphics-intensive tasks.</li>
@@ -962,7 +965,8 @@ const Index: React.FC = () => {
               <div className="w-full max-w-5xl mx-auto mt-8">
                 <QueryInterpretation 
                   steps={currentQueryData.interpretation.steps} 
-                  isVisible={showQueryInterpretation} 
+                  isVisible={showQueryInterpretation}
+                  isThinking={isThinking}
                 />
                 
                 {showResolutionOptions && (
