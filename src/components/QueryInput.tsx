@@ -154,7 +154,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          {suggestedQueries.slice(0, 5).map((suggestion, index) => {
+          {suggestedQueries.slice(0, 3).map((suggestion, index) => {
             const { icon, bgColor, textColor } = getSuggestionStyle(suggestion);
             const displayText = suggestion === "Troubleshoot slow application loading" ? "My computer is slow" : suggestion;
             
