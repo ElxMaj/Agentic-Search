@@ -41,10 +41,11 @@ const QueryInput: React.FC<QueryInputProps> = ({
     e.preventDefault(); // Prevent form submission
     e.stopPropagation(); // Stop event propagation
     
+    // Reset the component state
     setQuery('');
     setHasSearched(false);
     
-    // Call onSearch with empty string to reset the search state
+    // Call onSearch with empty string to reset the application state
     onSearch('');
   };
 
