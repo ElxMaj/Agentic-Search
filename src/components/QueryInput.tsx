@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2, X } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X, Battery } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -47,6 +47,13 @@ const QueryInput: React.FC<QueryInputProps> = ({
     
     // Call onSearch with empty string to reset the application state
     onSearch('');
+  };
+
+  const handleBatteryDrainClick = () => {
+    const batteryQuery = "Dell battery draining too fast";
+    setQuery(batteryQuery);
+    onSearch(batteryQuery);
+    setHasSearched(true);
   };
 
   // Get a random example query for the placeholder
@@ -116,9 +123,9 @@ const QueryInput: React.FC<QueryInputProps> = ({
         </div>
       </motion.form>
 
-      {suggestedQueries.length > 0 && (
+      <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
         <motion.div 
-          className="mt-4 flex flex-wrap gap-2 justify-center"
+          className="flex flex-wrap gap-2 justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -134,7 +141,19 @@ const QueryInput: React.FC<QueryInputProps> = ({
             </button>
           ))}
         </motion.div>
-      )}
+        
+        <motion.button
+          onClick={handleBatteryDrainClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#F0F7E8] hover:bg-[#E3EDD8] text-[#538234] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Battery size={14} className="text-[#538234]" />
+          Dell battery drain
+        </motion.button>
+      </div>
     </div>
   );
 };
