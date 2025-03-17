@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2 } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -16,11 +16,13 @@ const QueryInput: React.FC<QueryInputProps> = ({
 }) => {
   const [query, setQuery] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim() && !isLoading) {
       onSearch(query);
+      setHasSearched(true);
     }
   };
 
@@ -32,6 +34,14 @@ const QueryInput: React.FC<QueryInputProps> = ({
       
     setQuery(updatedSuggestion);
     onSearch(updatedSuggestion);
+    setHasSearched(true);
+  };
+
+  const handleClearSearch = () => {
+    setQuery('');
+    setHasSearched(false);
+    // Call onSearch with empty string to reset the search state
+    onSearch('');
   };
 
   // Get a random example query for the placeholder
@@ -71,22 +81,33 @@ const QueryInput: React.FC<QueryInputProps> = ({
             className="flex-1 h-12 px-3 bg-transparent text-black focus:outline-none"
             disabled={isLoading}
           />
-          <button
-            type="submit"
-            disabled={!query.trim() || isLoading}
-            className={`flex items-center justify-center h-12 w-12 mr-1 rounded-md transition-all ${
-              query.trim() && !isLoading
-                ? 'bg-[#0076CE] text-white hover:bg-[#005DA6]' 
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            }`}
-            aria-label="Search"
-          >
-            {isLoading ? (
-              <Loader2 size={18} className="animate-spin" />
-            ) : (
-              <ArrowRight size={18} />
-            )}
-          </button>
+          {hasSearched && query.trim() && !isLoading ? (
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="flex items-center justify-center h-12 w-12 mr-1 rounded-md bg-red-500 text-white hover:bg-red-600 transition-all"
+              aria-label="Clear search"
+            >
+              <X size={18} />
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled={!query.trim() || isLoading}
+              className={`flex items-center justify-center h-12 w-12 mr-1 rounded-md transition-all ${
+                query.trim() && !isLoading
+                  ? 'bg-[#0076CE] text-white hover:bg-[#005DA6]' 
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+              aria-label="Search"
+            >
+              {isLoading ? (
+                <Loader2 size={18} className="animate-spin" />
+              ) : (
+                <ArrowRight size={18} />
+              )}
+            </button>
+          )}
         </div>
       </motion.form>
 
