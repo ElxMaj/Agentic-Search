@@ -109,6 +109,10 @@ const Index: React.FC = () => {
             options = options.filter(option => option.key !== "connection");
           }
           
+          if (matchedQuery.query.includes("My computer is slow")) {
+            options = options.filter(option => option.key !== "softwareCleanup");
+          }
+          
           options = options.sort((a, b) => b.confidence - a.confidence);
           
           setResolutionOptions(options);
