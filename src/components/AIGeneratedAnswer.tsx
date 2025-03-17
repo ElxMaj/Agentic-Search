@@ -18,27 +18,9 @@ const processContentWithLinks = (content: string): string => {
   const urlRegex = /(?<!<a[^>]*href=["'])https?:\/\/[^\s<>"']+/g;
   
   // Replace URLs with anchor tags
-  let processedContent = content.replace(urlRegex, (url) => {
+  return content.replace(urlRegex, (url) => {
     return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">${url}</a>`;
   });
-  
-  // Make text more concise by shortening lengthy paragraphs
-  // Replace long bullet points with more concise versions
-  processedContent = processedContent
-    // Make headings more impactful
-    .replace(/<h3 class="text-lg font-medium mb-3">(.*?)<\/h3>/g, '<h3 class="text-lg font-semibold mb-2">$1</h3>')
-    // Shorten introductory paragraphs
-    .replace(/<p class="mb-3">After analyzing your (.*?), I've identified (.*?)<\/p>/g, 
-             '<p class="mb-2">Analysis of your $1 shows:</p>')
-    .replace(/<p class="mb-3">Based on analysis of your (.*?), I've identified (.*?)<\/p>/g, 
-             '<p class="mb-2">Analysis of your $1 reveals:</p>')
-    // Make lists more compact
-    .replace(/<ol class="list-decimal pl-5 mb-4 space-y-2">/g, 
-             '<ol class="list-decimal pl-5 mb-3 space-y-1">')
-    // Enhance link visibility
-    .replace(/href="(.*?)"/g, 'href="$1" class="text-blue-600 font-medium hover:underline"');
-  
-  return processedContent;
 };
 
 const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({ 
@@ -58,13 +40,13 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   // Check if content contains Intel Iris Xe Graphics
   const hasGPUInfo = content.includes("Intel Iris Xe Graphics");
   
-  // Process content to add hyperlinks if not already present and make it more concise
+  // Process content to add hyperlinks if not already present
   const processedContent = processContentWithLinks(content);
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.4}>
       <div className="rounded-xl border border-gray-200 p-6 mb-4">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
             <Zap className="text-[#0076CE] mr-2" size={20} />
             <h2 className="text-lg font-semibold text-black">AI-Generated Answer</h2>
@@ -79,23 +61,21 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
           </div>
         </div>
         
-        <div className="flex flex-wrap gap-2 mb-4">
-          <div className="flex items-center">
-            <CheckCircle2 size={16} className="text-green-500 mr-1" />
-            <p className="text-xs text-gray-600">Verified sources</p>
+        <div className="flex items-center mb-2">
+          <CheckCircle2 size={16} className="text-green-500 mr-2" />
+          <p className="text-sm text-gray-600">Generated with high confidence based on verified sources</p>
+        </div>
+        
+        {hasGPUInfo && (
+          <div className="flex items-center mb-2">
+            <Cpu size={16} className="text-blue-500 mr-2" />
+            <p className="text-sm text-gray-600">Optimized for Intel Iris Xe Graphics on your Dell XPS 13</p>
           </div>
-          
-          {hasGPUInfo && (
-            <div className="flex items-center">
-              <Cpu size={16} className="text-blue-500 mr-1" />
-              <p className="text-xs text-gray-600">Optimized for Intel Iris Xe Graphics</p>
-            </div>
-          )}
-          
-          <div className="flex items-center">
-            <Info size={16} className="text-blue-500 mr-1" />
-            <p className="text-xs text-gray-600">{sources.length} sources analyzed</p>
-          </div>
+        )}
+        
+        <div className="flex items-center mb-6">
+          <Info size={16} className="text-blue-500 mr-2" />
+          <p className="text-sm text-gray-600">Based on analysis of {sources.length} relevant sources and similar cases</p>
         </div>
         
         <div className="bg-gray-50 p-4 rounded-lg mb-6">
