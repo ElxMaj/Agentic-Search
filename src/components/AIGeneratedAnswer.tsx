@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database } from 'lucide-react';
@@ -29,9 +28,7 @@ const processContentWithLinks = (content: string): string => {
   });
 };
 
-// Format all content with a consistent, digestible style similar to webcam troubleshooting
 const formatGeneralContent = (content: string, query: string): string => {
-  // Skip if the content is already formatted with colored sections
   if (content.includes('bg-blue-50') || 
       content.includes('bg-green-50') || 
       content.includes('bg-purple-50') ||
@@ -40,7 +37,6 @@ const formatGeneralContent = (content: string, query: string): string => {
     return content;
   }
   
-  // Determine content topic and color theme
   let headerTitle = "Solution Guide";
   let headerColor = "blue";
   let headerDescription = "Follow these steps to resolve your issue.";
@@ -67,10 +63,8 @@ const formatGeneralContent = (content: string, query: string): string => {
     headerDescription = "Enhance performance with these optimization steps.";
   }
   
-  // Convert regular content into formatted sections
   const sections = content.split('\n\n').filter(section => section.trim() !== '');
   
-  // Create the colored header section
   let formattedHTML = `
     <div class="space-y-4">
       <div class="bg-${headerColor}-50 border-l-4 border-${headerColor}-500 p-4 rounded-r">
@@ -79,22 +73,17 @@ const formatGeneralContent = (content: string, query: string): string => {
       </div>
   `;
   
-  // Add the main white container with step-by-step solution
   formattedHTML += `
     <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
       <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
       <ol class="list-decimal pl-5 space-y-2">
   `;
   
-  // Process each section into list items
   sections.forEach((section, index) => {
-    // Extract any links and format them properly
     const processedSection = processContentWithLinks(section);
     
-    // Format section content into list items
     let stepContent = processedSection;
     
-    // Handle bullet points within steps
     if (section.includes('- ')) {
       const mainContent = section.split('- ')[0];
       const bulletPoints = section.split('- ').slice(1).filter(point => point.trim() !== '');
@@ -104,17 +93,14 @@ const formatGeneralContent = (content: string, query: string): string => {
         </ul>`;
     }
     
-    // Add the step to the list
     formattedHTML += `<li>${stepContent}</li>`;
   });
   
-  // Close the ordered list and white container
   formattedHTML += `
       </ol>
     </div>
   `;
   
-  // Add a pro tip if appropriate
   if (sections.length > 1) {
     let tipContent = "Bookmark this solution for future reference. Many users find these steps helpful for similar issues.";
     
@@ -127,7 +113,6 @@ const formatGeneralContent = (content: string, query: string): string => {
     formattedHTML += createProTip(tipContent);
   }
   
-  // Add a warning if relevant keywords are found
   if (content.toLowerCase().includes('caution') || 
       content.toLowerCase().includes('warning') || 
       content.toLowerCase().includes('important')) {
@@ -139,7 +124,6 @@ const formatGeneralContent = (content: string, query: string): string => {
   return formattedHTML;
 };
 
-// Specialized formatter for Dell graphics performance content
 const formatDellGraphicsContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('dell') && 
       (content.toLowerCase().includes('graphics') || content.toLowerCase().includes('performance'))) {
@@ -216,7 +200,6 @@ const formatDellGraphicsContent = (content: string, query: string): string => {
   return content;
 };
 
-// Specialized formatter for webcam troubleshooting content
 const formatWebcamContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('webcam') || content.toLowerCase().includes('webcam') || 
       content.toLowerCase().includes('camera') || content.toLowerCase().includes('teams')) {
@@ -303,7 +286,6 @@ const formatWebcamContent = (content: string, query: string): string => {
   return content;
 };
 
-// Specialized formatter for computer slowness content
 const formatComputerSlowContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('slow') || 
       (content.toLowerCase().includes('slow') && content.toLowerCase().includes('computer'))) {
@@ -366,6 +348,67 @@ const formatComputerSlowContent = (content: string, query: string): string => {
   return content;
 };
 
+const formatPerformanceDiagnosis = (content: string, query: string): string => {
+  if (query.toLowerCase().includes('performance diagnosis') || 
+      (content.toLowerCase().includes('benchmark') && content.toLowerCase().includes('diagnosis'))) {
+    return `
+      <div class="space-y-4">
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
+          <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
+            <Activity size={20} className="text-blue-600" />
+            Performance Diagnosis
+          </h3>
+          <p class="text-blue-700 mb-2">Analyze your system performance with these diagnostic steps.</p>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
+          <ol class="list-decimal pl-5 space-y-2">
+            <li>
+              <span class="font-medium">Run System Diagnostics</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Press ${formatKeyboardShortcut(["Win", "R"])} and type "dxdiag" to check system info</li>
+                <li>Note your ${createStatusBadge("CPU", "info")} and ${createStatusBadge("GPU", "info")} models</li>
+                <li>Check ${createStatusBadge("RAM", "info")} amount under System tab</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Benchmark Your System</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Download ${createExternalLink("https://www.userbenchmark.com/", "UserBenchmark")}</li>
+                <li>Close all other applications before running</li>
+                <li>Compare your results to similar systems</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Monitor Resource Usage</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Press ${formatKeyboardShortcut(["Ctrl", "Shift", "Esc"])} to open Task Manager</li>
+                <li>Check the Performance tab</li>
+                <li>Look for components with high usage (${createStatusBadge("90%+", "warning")})</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Check Thermal Performance</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Download ${createExternalLink("https://www.techpowerup.com/download/techpowerup-throttlestop/", "ThrottleStop")} or ${createExternalLink("https://www.hwinfo.com/", "HWiNFO")}</li>
+                <li>Monitor temps during intensive tasks</li>
+                <li>CPU temps above ${createStatusBadge("90°C", "warning")} indicate thermal throttling</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        
+        ${createProTip("Run these diagnostics under normal conditions and again when performance issues occur to identify specific bottlenecks.")}
+        
+        ${createWarningBox("If benchmarks show significantly lower performance than expected, consider updating drivers or checking for hardware issues.")}
+      </div>
+    `;
+  }
+  
+  return content;
+};
+
 const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({ 
   content,
   sources,
@@ -386,7 +429,6 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   
   let processedContent = processContentWithLinks(content);
   
-  // Apply specialized formatting based on content type
   if (currentQuery.toLowerCase().includes('dell') && 
       (currentQuery.toLowerCase().includes('graphics') || currentQuery.toLowerCase().includes('performance'))) {
     processedContent = formatDellGraphicsContent(processedContent, currentQuery);
@@ -396,8 +438,11 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   } else if (currentQuery.toLowerCase().includes('slow') || 
             (processedContent.toLowerCase().includes('slow') && processedContent.toLowerCase().includes('computer'))) {
     processedContent = formatComputerSlowContent(processedContent, currentQuery);
+  } else if (currentQuery.toLowerCase().includes('performance diagnosis') || 
+            processedContent.toLowerCase().includes('benchmark') || 
+            processedContent.toLowerCase().includes('performance diagnosis')) {
+    processedContent = formatPerformanceDiagnosis(processedContent, currentQuery);
   } else {
-    // Apply general formatting for all other content
     processedContent = formatGeneralContent(processedContent, currentQuery);
   }
 
