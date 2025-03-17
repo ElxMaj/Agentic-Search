@@ -35,7 +35,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
       const randomIndex = Math.floor(Math.random() * suggestedQueries.length);
       return `e.g., ${suggestedQueries[randomIndex]}`;
     }
-    return "e.g., How do I improve my software's performance?";
+    return "e.g., My computer is slow";
   };
 
   return (
