@@ -90,7 +90,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
             <button
               type="button" 
               onClick={handleClearSearch}
-              className="flex items-center justify-center h-12 w-12 mr-1 rounded-md bg-red-500 text-white hover:bg-red-600 transition-all"
+              className="flex items-center justify-center h-12 w-12 mr-1 rounded-md bg-[#D3E4FD] text-[#0076CE] hover:bg-[#B2D0F9] transition-all"
               aria-label="Clear search"
             >
               <X size={18} />
