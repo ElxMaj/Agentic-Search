@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database, Wifi } from 'lucide-react';
@@ -620,3 +621,264 @@ const formatComputerSlowContent = (content: string, query: string): string => {
               </ul>
             </li>
             <li>
+              <span class="font-medium">Disk Optimization</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>For HDD users:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Press ${formatKeyboardShortcut(["Win", "E"])} to open File Explorer</li>
+                    <li>Right-click on your system drive (C:) > Properties</li>
+                    <li>Select the "Tools" tab > click "Optimize"</li>
+                    <li>Select your drive and click "Optimize"</li>
+                  </ul>
+                </li>
+                <li>For SSD users:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Ensure TRIM is enabled: Open Command Prompt as Administrator</li>
+                    <li>Type: <code>fsutil behavior query DisableDeleteNotify</code></li>
+                    <li>If result is 1, enable TRIM with: <code>fsutil behavior set DisableDeleteNotify 0</code></li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("10-30% faster file operations", "success")}</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        
+        ${createWarningBox("If your computer is more than 5 years old, hardware upgrades (adding RAM or replacing HDD with SSD) may provide the most significant performance improvement.")}
+        
+        ${createSuccessBox("Implementing all these optimizations typically results in 40-60% overall system performance improvement for most users.")}
+        
+        ${createProTip("Schedule a monthly maintenance routine using Task Scheduler to keep your system running optimally.")}
+      </div>
+    `;
+  }
+  
+  return content;
+};
+
+const formatWifiUnstableContent = (content: string, query: string): string => {
+  if (query.toLowerCase().includes('wifi') && 
+      (query.toLowerCase().includes('unstable') || query.toLowerCase().includes('drops') || 
+       query.toLowerCase().includes('slow') || query.toLowerCase().includes('disconnecting'))) {
+    return `
+      <div class="space-y-6">
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
+          <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
+            <Wifi size={20} />
+            WiFi Stability Improvement Guide
+          </h3>
+          <p class="text-blue-700 mb-2">Comprehensive solutions to fix unstable WiFi connections and improve network performance.</p>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-2">Connection Diagnostics:</h4>
+          <div class="bg-blue-50 p-4 rounded-lg mb-4">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Signal strength: ${createStatusBadge("Fluctuating signal", "warning")} causing intermittent connectivity</li>
+              <li>Network drivers: ${createStatusBadge("Outdated or conflicting", "warning")} drivers detected</li>
+              <li>Router configuration: Possible ${createStatusBadge("channel congestion", "warning")} affecting stability</li>
+              <li>Interference: Multiple potential sources in environment</li>
+            </ul>
+          </div>
+          
+          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step WiFi Optimization:</h4>
+          <ol class="list-decimal pl-5 space-y-4">
+            <li>
+              <span class="font-medium">Update Network Drivers</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Open Device Manager: Press ${formatKeyboardShortcut(["Win", "X"])} and select "Device Manager"</li>
+                <li>Expand "Network adapters" category</li>
+                <li>Right-click on your WiFi adapter > "Update driver"</li>
+                <li>Choose "Search automatically for updated driver software"</li>
+                <li>For Dell systems:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Visit ${createExternalLink("https://www.dell.com/support/home", "Dell Support")} and enter your Service Tag</li>
+                    <li>Go to "Drivers & Downloads" > Filter by "Network"</li>
+                    <li>Download and install the latest WiFi driver</li>
+                    <li>Use ${createExternalLink("https://www.dell.com/support/home/en-us/product-support/product/dell-supportassist-pcs-tablets/docs", "Dell SupportAssist")} for automatic driver updates</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("25-40% more stable connection", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Optimize Router Placement & Settings</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Position your router:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Centrally located in your home/office</li>
+                    <li>Elevated position (on shelf or desk)</li>
+                    <li>Away from metal objects, thick walls, and appliances</li>
+                    <li>At least 3-6 feet from other electronic devices</li>
+                  </ul>
+                </li>
+                <li>Router configuration:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Access your router's admin page (typically http://192.168.1.1 or http://192.168.0.1)</li>
+                    <li>Update router firmware to latest version</li>
+                    <li>Change WiFi channel to avoid congestion:
+                      <ul class="list-disc pl-5 mt-1">
+                        <li>For 2.4GHz: Try channels 1, 6, or 11</li>
+                        <li>For 5GHz: Try channels 36, 40, 44, or 48</li>
+                      </ul>
+                    </li>
+                    <li>Enable "Auto Channel Selection" if available</li>
+                    <li>Set bandwidth to "20MHz" for 2.4GHz and "80MHz" for 5GHz</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("30-50% signal strength improvement", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Advanced WiFi Adapter Configuration</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Open Device Manager > Network adapters</li>
+                <li>Right-click your WiFi adapter > Properties > Advanced tab</li>
+                <li>Optimize these settings:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>"Roaming Aggressiveness" or "Roaming Sensitivity": Set to Medium or High</li>
+                    <li>"Preferred Band": Set to "5GHz" if your router supports it</li>
+                    <li>"Power Saving Mode" or "Power Management": Set to Maximum Performance when plugged in</li>
+                    <li>"Transmit Power": Set to Highest or 100%</li>
+                    <li>"802.11n Channel Width for 2.4GHz/5GHz": Set to Auto</li>
+                  </ul>
+                </li>
+                <li>Disable power management for network adapter:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Go to adapter Properties > Power Management tab</li>
+                    <li>Uncheck "Allow the computer to turn off this device to save power"</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("15-35% connection stability", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Reduce Network Interference</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Identify and relocate interfering devices:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Bluetooth devices (headphones, speakers, etc.)</li>
+                    <li>Microwave ovens</li>
+                    <li>Cordless phones</li>
+                    <li>Baby monitors</li>
+                    <li>Neighboring WiFi networks</li>
+                  </ul>
+                </li>
+                <li>Use a WiFi analyzer app to detect channel congestion:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>${createExternalLink("https://www.microsoft.com/store/productId/9NBLGGH33N0N", "WiFi Analyzer (Windows Store)")}</li>
+                    <li>${createExternalLink("https://play.google.com/store/apps/details?id=com.farproc.wifi.analyzer", "WiFi Analyzer (Android)")}</li>
+                  </ul>
+                </li>
+                <li>Consider using a WiFi mesh system for larger spaces:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>${createExternalLink("https://www.dell.com/en-us/shop/networking/sr/networking-wireless", "Dell Recommended Mesh Systems")}</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("20-40% fewer disconnections", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">System Network Stack Reset</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>For persistent issues, reset Windows network components:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Run Command Prompt as Administrator</li>
+                    <li>Execute these commands in sequence:
+                      <div class="bg-gray-100 p-2 rounded mt-1 mb-1 font-mono text-sm">
+                        ipconfig /release<br>
+                        ipconfig /flushdns<br>
+                        ipconfig /renew<br>
+                        netsh winsock reset<br>
+                        netsh int ip reset<br>
+                        netsh interface tcp set heuristics disabled<br>
+                        netsh interface tcp set global autotuninglevel=normal<br>
+                        netsh interface tcp set global rss=enabled
+                      </div>
+                    </li>
+                    <li>Restart your computer</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("Resolves 60% of persistent issues", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Consider Hardware Solutions</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>For laptops with persistently weak connections:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Use a USB WiFi adapter with external antenna</li>
+                    <li>Consider ${createExternalLink("https://www.dell.com/en-us/shop/dell-adapter-usb-c-to-ethernet-pxe-boot/apd/470-abnd/", "Dell USB-C to Ethernet Adapter")} for wired connection</li>
+                    <li>Add a WiFi extender or mesh node near your work area</li>
+                  </ul>
+                </li>
+                <li>If router is over 3-4 years old:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Consider upgrading to a modern WiFi 6 (802.11ax) router</li>
+                    <li>Ensure your new router supports both 2.4GHz and 5GHz bands</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("50-80% overall connection quality", "success")}</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        
+        ${createWarningBox("If you're experiencing issues only with specific online services while your general WiFi connection is stable, the problem might be with those services rather than your WiFi.")}
+        
+        ${createSuccessBox("After implementing these optimizations, most users report 70-90% improvement in WiFi stability and significantly fewer disconnections.")}
+        
+        ${createProTip("For mission-critical work, always keep a mobile hotspot or ethernet connection as backup in case of WiFi issues.")}
+      </div>
+    `;
+  }
+  
+  return content;
+};
+
+const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({ content, sources, isVisible }) => {
+  if (!isVisible) {
+    return null;
+  }
+
+  const processContentBasedOnQuery = (rawContent: string, query: string): string => {
+    let processedContent = rawContent;
+    
+    // Check for specific query scenarios and format content accordingly
+    processedContent = formatDellBatteryDrainContent(processedContent, query);
+    processedContent = formatDellGraphicsContent(processedContent, query);
+    processedContent = formatWebcamContent(processedContent, query);
+    processedContent = formatComputerSlowContent(processedContent, query);
+    processedContent = formatWifiUnstableContent(processedContent, query);
+    
+    // If no specific formatting was applied, use standard format
+    if (processedContent === rawContent) {
+      processedContent = formatStandardAnswer(processedContent, query);
+    }
+    
+    return processedContent;
+  };
+
+  const query = content.split('\n')[0]; // Use first line as query
+  const processedContent = processContentBasedOnQuery(content, query);
+  
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3 }}
+      className="mt-10 px-4 md:px-6 py-6 rounded-lg bg-white shadow-sm"
+    >
+      <AnimatedTransition>
+        <div 
+          className="prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: processedContent }}
+        />
+      </AnimatedTransition>
+      
+      <SourcesList sources={sources} isVisible={isVisible} />
+    </motion.div>
+  );
+};
+
+export default AIGeneratedAnswer;
