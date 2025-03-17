@@ -1,3 +1,4 @@
+
 // Mock data for DELL DeepResolution prototype
 
 export interface Source {
@@ -401,6 +402,12 @@ export const mockQueries: MockQueryData[] = [
     interpretation: {
       steps: [
         {
+          description: "Detected <strong>Dell XPS 13</strong> from your system configuration",
+          entities: [
+            { text: "Dell XPS 13", type: "DEVICE" }
+          ]
+        },
+        {
           description: "Identified <strong>webcam</strong> as the device with issues during a <strong>Microsoft Teams</strong> call",
           entities: [
             { text: "webcam", type: "DEVICE" },
@@ -787,15 +794,20 @@ export const mockQueries: MockQueryData[] = [
     interpretation: {
       steps: [
         {
+          description: "Detected <strong>Dell XPS 13</strong> from your system configuration",
+          entities: [
+            { text: "Dell XPS 13", type: "DEVICE" }
+          ]
+        },
+        {
           description: "Identified <strong>slow application loading</strong> as the performance issue",
           entities: [
             { text: "slow application loading", type: "PERFORMANCE_ISSUE" }
           ]
         },
         {
-          description: "Detected your <strong>Dell XPS</strong> system with <strong>Windows 11</strong> and <strong>8GB RAM</strong>",
+          description: "Detected your system with <strong>Windows 11</strong> and <strong>8GB RAM</strong>",
           entities: [
-            { text: "Dell XPS", type: "DEVICE" },
             { text: "Windows 11", type: "OS" },
             { text: "8GB RAM", type: "SPECIFICATION" }
           ]
@@ -1273,4 +1285,3 @@ export const suggestedQueries = [
   "Optimize CPU usage on my Dell",
   "Fix webcam not detected in Zoom"
 ];
-
