@@ -46,8 +46,8 @@ const Index: React.FC = () => {
                 detail = "Physical or USB connection issues detected";
               } else if (key === "drivers") {
                 detail = "Driver conflicts or outdated software identified";
-              } else if (key === "teams") {
-                detail = "Teams configuration and cache issues detected";
+              } else if (key === "teamsConfig") {
+                detail = "Teams settings and configuration problems identified";
               }
             } else if (matchedQuery.query.includes("Dell graphics")) {
               if (key === "software") {
@@ -80,8 +80,8 @@ const Index: React.FC = () => {
               description = "Troubleshoot physical connections and USB ports";
             } else if (key === "drivers") {
               description = "Update or reinstall webcam and USB drivers";
-            } else if (key === "teams") {
-              description = "Update and troubleshoot Teams application issues";
+            } else if (key === "teamsConfig") {
+              description = "Fix Teams settings, cache and configuration issues";
             } else if (key === "software") {
               description = "Free software and driver updates";
             } else if (key === "hardware") {
@@ -110,7 +110,7 @@ const Index: React.FC = () => {
           });
           
           if (matchedQuery.query.includes("Webcam problem")) {
-            options = options.filter(option => option.key !== "connection");
+            options = options.filter(option => option.key !== "teams");
           }
           
           if (matchedQuery.query.includes("My computer is slow")) {
@@ -496,6 +496,151 @@ const Index: React.FC = () => {
         <p class="font-medium">Technical Insight:</p>
         <p class="text-sm">Modern webcams use complex DirectShow or Media Foundation frameworks that can experience conflicts between different software layers. This comprehensive approach addresses issues at all levels of the driver stack, from hardware interfacing to application integration, ensuring maximum compatibility with Teams' video processing pipeline.</p>
       </div>`;
+    } else if (selectedPathKey === "teamsConfig") {
+      return `<h3 class="text-lg font-medium mb-3">Teams Webcam Issues: Teams Configuration & Settings</h3>
+      
+      <p class="mb-3">After analyzing your Microsoft Teams setup, I've identified several configuration issues that are likely causing your webcam problems:</p>
+      
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+        <p class="font-medium">Teams Configuration Analysis:</p>
+        <ul class="list-disc pl-5 mt-1">
+          <li>Teams version: <span class="text-yellow-600 font-medium">2.1.00.34160 (3 updates behind)</span></li>
+          <li>Device settings status: <span class="text-red-600 font-medium">Incorrect default device selected</span></li>
+          <li>Background effects: <span class="text-yellow-600 font-medium">Causing increased CPU usage (98%)</span></li>
+          <li>Cache status: <span class="text-red-600 font-medium">Corrupted media cache detected</span></li>
+        </ul>
+      </div>
+      
+      <h4 class="font-medium mt-4 mb-2">Step-by-Step Configuration Fixes:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Verify and Reset Teams Camera Settings</p>
+            <p class="mb-2 text-sm">Teams may be using incorrect device settings or configurations:</p>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">For Windows Users:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Open Microsoft Teams</li>
+                <li>Click your profile picture in the top-right and select <strong>Settings</strong></li>
+                <li>Go to <strong>Devices</strong></li>
+                <li>Under <strong>Camera</strong>, ensure your webcam is selected from the dropdown</li>
+                <li>Check the camera preview - if it's black or frozen, click the <strong>Reset camera</strong> option</li>
+                <li>Toggle <strong>Hardware acceleration</strong> off if it's currently enabled</li>
+                <li>Click <strong>Apply</strong> and restart Teams</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">For Mac Users:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Open Microsoft Teams</li>
+                <li>Click on your profile picture and select <strong>Settings</strong></li>
+                <li>Select <strong>Devices</strong></li>
+                <li>Under <strong>Camera</strong>, select your webcam from the dropdown</li>
+                <li>If using an external webcam, ensure macOS camera permissions are granted</li>
+                <li>If preview is blank, quit Teams completely (right-click Teams dock icon > Quit)</li>
+                <li>Restart Teams and check settings again</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Clear Teams Cache</p>
+            <p class="mb-2 text-sm">Corrupted cache files frequently cause webcam initialization problems:</p>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">For Windows Users:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Completely exit Teams (check Task Manager to ensure it's closed)</li>
+                <li>Press <strong>Win+R</strong> to open Run dialog</li>
+                <li>Type <code>%appdata%\\Microsoft\\Teams</code> and click OK</li>
+                <li>Delete these folders:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Cache</li>
+                    <li>blob_storage</li>
+                    <li>databases</li>
+                    <li>GPUCache</li>
+                    <li>IndexedDB</li>
+                    <li>Local Storage</li>
+                    <li>tmp</li>
+                  </ul>
+                </li>
+                <li>Restart your computer</li>
+                <li>Open Teams and test your camera</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">For Mac Users:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Quit Microsoft Teams completely</li>
+                <li>Open Finder and click <strong>Go</strong> in the menu bar</li>
+                <li>Hold the Option key to reveal <strong>Library</strong> and click on it</li>
+                <li>Navigate to <strong>Application Support > Microsoft > Teams</strong></li>
+                <li>Delete the folders listed above</li>
+                <li>Restart your Mac</li>
+                <li>Open Teams and sign in again</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Disable Resource-Intensive Features</p>
+            <p class="mb-2 text-sm">Some Teams features can consume excessive resources and affect webcam performance:</p>
+            <ol class="list-decimal pl-5 text-sm space-y-1">
+              <li>In Teams Settings, go to <strong>Devices</strong></li>
+              <li>Disable <strong>GPU hardware acceleration</strong> if enabled</li>
+              <li>Under <strong>Appearance and accessibility</strong>, disable animations</li>
+              <li>During calls, avoid using background effects or use the simple blur option</li>
+              <li>If problems occur in large meetings, disable incoming video for other participants</li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+          <div>
+            <p class="font-medium">Update or Reinstall Teams</p>
+            <p class="mb-2 text-sm">Your Teams version is outdated, which could be causing compatibility issues:</p>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">Update Teams:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>In Teams, click your profile picture</li>
+                <li>Select <strong>Check for updates</strong></li>
+                <li>If updates are available, let Teams install them</li>
+                <li>Restart Teams when prompted</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">Reinstall Teams (if updating doesn't help):</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Uninstall Teams from Control Panel/Settings</li>
+                <li>Clear the Teams cache folders (as described above)</li>
+                <li>Download the latest Teams installer from Microsoft's website</li>
+                <li>Install the application</li>
+                <li>Sign in with your credentials</li>
+                <li>Configure camera settings before joining your first call</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-blue-50 p-3 rounded-md">
+        <p class="font-medium">Technical Insight: Teams Architecture</p>
+        <p class="text-sm">Microsoft Teams uses the Electron framework, which combines Chromium and Node.js. This architecture can sometimes cause conflicts with the WebRTC components that handle video. The cache-clearing steps reset the media subsystem components without affecting your user data or chat history. Recent Teams updates have improved webcam compatibility, particularly for USB devices on Windows 11.</p>
+      </div>`;
     } else if (selectedPathKey === "diskOptimization") {
       return `<h3 class="text-lg font-medium mb-3">Slow Application Loading: Disk Optimization Solutions</h3>
       
@@ -800,7 +945,8 @@ const Index: React.FC = () => {
     return path?.sources || [];
   };
 
-  return <div className="flex flex-col min-h-screen">
+  return (
+    <div className="flex flex-col min-h-screen">
       <Header />
       
       <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
@@ -812,10 +958,21 @@ const Index: React.FC = () => {
           <section className="w-full flex flex-col items-center">
             <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
             
-            {currentQueryData && showQueryInterpretation && <div className="w-full max-w-5xl mx-auto mt-8">
-                <QueryInterpretation steps={currentQueryData.interpretation.steps} isVisible={showQueryInterpretation} />
+            {currentQueryData && showQueryInterpretation && (
+              <div className="w-full max-w-5xl mx-auto mt-8">
+                <QueryInterpretation 
+                  steps={currentQueryData.interpretation.steps} 
+                  isVisible={showQueryInterpretation} 
+                />
                 
-                {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
+                {showResolutionOptions && (
+                  <ResolutionOptions 
+                    options={resolutionOptions} 
+                    onSelectPath={handleSelectPath} 
+                    selectedPath={selectedPathKey} 
+                    isVisible={showResolutionOptions} 
+                  />
+                )}
                 
                 {showAnswer && selectedPathKey && (
                   <AIGeneratedAnswer 
@@ -824,13 +981,15 @@ const Index: React.FC = () => {
                     isVisible={showAnswer} 
                   />
                 )}
-              </div>}
+              </div>
+            )}
           </section>
         </div>
       </main>
       
       <Footer />
-    </div>;
+    </div>
+  );
 };
 
 export default Index;
