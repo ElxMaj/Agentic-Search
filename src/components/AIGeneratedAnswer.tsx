@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database } from 'lucide-react';
@@ -17,6 +18,127 @@ const processContentWithLinks = (content: string): string => {
   return content.replace(urlRegex, (url) => {
     return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline flex items-center gap-1">${url}<ExternalLink size={14} /></a>`;
   });
+};
+
+// Format all content with consistent styling similar to webcam troubleshooting
+const formatGeneralContent = (content: string, query: string): string => {
+  // Skip if the content is already formatted with colored sections
+  if (content.includes('bg-blue-50') || 
+      content.includes('bg-green-50') || 
+      content.includes('bg-purple-50') ||
+      content.includes('bg-indigo-50') ||
+      content.includes('bg-yellow-50')) {
+    return content;
+  }
+  
+  // Determine content topic and color theme
+  let headerTitle = "Solution Guide";
+  let headerColor = "blue";
+  let headerIcon = "Info";
+  let headerDescription = "Follow these steps to resolve your issue.";
+  
+  if (query.toLowerCase().includes('error') || content.toLowerCase().includes('error')) {
+    headerTitle = "Error Resolution";
+    headerColor = "red";
+    headerIcon = "AlertTriangle";
+    headerDescription = "Follow these steps to fix the error and get back on track.";
+  } else if (query.toLowerCase().includes('setup') || content.toLowerCase().includes('setup')) {
+    headerTitle = "Setup Guide";
+    headerColor = "green";
+    headerIcon = "Settings";
+    headerDescription = "Complete setup with these step-by-step instructions.";
+  } else if (query.toLowerCase().includes('connect') || content.toLowerCase().includes('connect')) {
+    headerTitle = "Connection Troubleshooting";
+    headerColor = "purple";
+    headerIcon = "Activity";
+    headerDescription = "Follow these steps to establish a stable connection.";
+  } else if (query.toLowerCase().includes('install') || content.toLowerCase().includes('install')) {
+    headerTitle = "Installation Guide";
+    headerColor = "emerald";
+    headerIcon = "Download";
+    headerDescription = "Complete the installation with these steps.";
+  }
+  
+  // Convert regular content into formatted sections
+  const sections = content.split('\n\n').filter(section => section.trim() !== '');
+  
+  // Prepare formatted HTML
+  let formattedHTML = `
+    <div class="space-y-4">
+      <div class="bg-${headerColor}-50 border-l-4 border-${headerColor}-500 p-4 rounded-r">
+        <h3 class="font-bold text-lg text-${headerColor}-800">${headerTitle}</h3>
+        <p class="text-${headerColor}-700 mb-2">${headerDescription}</p>
+      </div>
+  `;
+  
+  // Format the sections
+  sections.forEach((section, index) => {
+    // Create a title based on content or index
+    let sectionTitle = `Step ${index + 1}`;
+    
+    if (section.toLowerCase().includes('first') || section.toLowerCase().includes('start')) {
+      sectionTitle = "Getting Started";
+    } else if (section.toLowerCase().includes('check') || section.toLowerCase().includes('verify')) {
+      sectionTitle = "Verification Step";
+    } else if (section.toLowerCase().includes('troubleshoot')) {
+      sectionTitle = "Troubleshooting";
+    } else if (section.toLowerCase().includes('update') || section.toLowerCase().includes('upgrade')) {
+      sectionTitle = "Update Process";
+    } else if (section.toLowerCase().includes('settings') || section.toLowerCase().includes('configure')) {
+      sectionTitle = "Configuration";
+    } else if (section.toLowerCase().includes('restart') || section.toLowerCase().includes('reboot')) {
+      sectionTitle = "System Restart";
+    }
+    
+    // Format section content
+    let sectionContent = section;
+    
+    // Convert bullet points to proper list format
+    if (section.includes('- ')) {
+      const bulletPoints = section.split('- ').filter(point => point.trim() !== '');
+      sectionContent = `<ul class="list-disc pl-5 space-y-2">${bulletPoints.map(point => `<li>${point.trim()}</li>`).join('')}</ul>`;
+    }
+    
+    // Convert numbered points to proper list format
+    else if (section.match(/\d+\.\s/)) {
+      const numberPoints = section.split(/\d+\.\s/).filter(point => point.trim() !== '');
+      sectionContent = `<ol class="list-decimal pl-5 space-y-2">${numberPoints.map(point => `<li>${point.trim()}</li>`).join('')}</ol>`;
+    }
+    
+    // Add section to formatted HTML
+    formattedHTML += `
+      <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+        <h4 class="font-semibold text-gray-800 mb-2">${sectionTitle}:</h4>
+        <div class="text-gray-700">
+          ${sectionContent}
+        </div>
+      </div>
+    `;
+  });
+  
+  // Add a tips or warnings section if relevant keywords are found
+  if (content.toLowerCase().includes('caution') || 
+      content.toLowerCase().includes('warning') || 
+      content.toLowerCase().includes('important')) {
+    formattedHTML += `
+      <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200 text-sm">
+        <p class="text-yellow-800"><span class="font-medium">⚠️ Important:</span> Take your time with these steps and make sure to follow them in order for best results.</p>
+      </div>
+    `;
+  }
+  
+  // Add a pro tip if it's a longer content piece
+  if (sections.length > 2) {
+    formattedHTML += `
+      <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 text-sm">
+        <p class="text-gray-700"><span class="font-medium">💡 Pro tip:</span> Bookmark this solution for future reference. Many users find these steps helpful for similar issues.</p>
+      </div>
+    `;
+  }
+  
+  formattedHTML += `</div>`;
+  
+  return formattedHTML;
 };
 
 const formatDellGraphicsContent = (content: string, query: string): string => {
@@ -302,6 +424,7 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   
   let processedContent = processContentWithLinks(content);
   
+  // Check for specific content types first
   if (currentQuery.toLowerCase().includes('dell') && 
       (currentQuery.toLowerCase().includes('graphics') || currentQuery.toLowerCase().includes('performance'))) {
     processedContent = formatDellGraphicsContent(processedContent, currentQuery);
@@ -311,6 +434,9 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   } else if (currentQuery.toLowerCase().includes('slow') || 
             (processedContent.toLowerCase().includes('slow') && processedContent.toLowerCase().includes('computer'))) {
     processedContent = formatComputerSlowContent(processedContent, currentQuery);
+  } else {
+    // Apply general formatting for all other content
+    processedContent = formatGeneralContent(processedContent, currentQuery);
   }
 
   return (
