@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -35,6 +36,7 @@ const Index: React.FC = () => {
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
+    setSelectedPathKey(""); // Reset selected path on new search
     
     setTimeout(() => {
       const matchedQuery = mockQueries.find(q => 

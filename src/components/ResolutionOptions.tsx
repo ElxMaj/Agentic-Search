@@ -66,7 +66,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
                 <div className="text-2xl mr-3">{option.icon}</div>
                 <div className="flex-1">
                   <h3 className="font-medium text-black mb-1">{option.name}</h3>
-                  <p className="text-gray-600 text-sm">{option.description}</p>
+                  <p className="text-sm text-gray-600">{option.description}</p>
                 </div>
               </div>
               
