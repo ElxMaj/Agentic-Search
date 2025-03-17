@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database } from 'lucide-react';
@@ -350,58 +351,59 @@ const formatComputerSlowContent = (content: string, query: string): string => {
 
 const formatPerformanceDiagnosis = (content: string, query: string): string => {
   if (query.toLowerCase().includes('performance diagnosis') || 
-      (content.toLowerCase().includes('benchmark') && content.toLowerCase().includes('diagnosis'))) {
+      query.toLowerCase().includes('diagnos') ||
+      (content.toLowerCase().includes('benchmark') && content.toLowerCase().includes('diagnosis')) ||
+      (content.toLowerCase().includes('dell') && content.toLowerCase().includes('graphics') && content.toLowerCase().includes('performance'))) {
     return `
       <div class="space-y-4">
         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
           <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
             <Activity size={20} className="text-blue-600" />
-            Performance Diagnosis
+            Dell Graphics Performance: Diagnostic Analysis
           </h3>
-          <p class="text-blue-700 mb-2">Analyze your system performance with these diagnostic steps.</p>
+          <p class="text-blue-700 mb-2">Personalized analysis of your system's graphics performance.</p>
         </div>
         
         <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
-          <ol class="list-decimal pl-5 space-y-2">
+          <h4 class="font-semibold text-gray-800 mb-2">System Analysis Summary:</h4>
+          <div class="bg-blue-50 p-4 rounded-lg mb-4">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>CPU: Operating at ${createStatusBadge("76% capacity", "warning")} during graphics tasks</li>
+              <li>RAM: ${createStatusBadge("85% utilization", "warning")} during application launches</li>
+              <li>GPU: Temperature reaching ${createStatusBadge("82°C", "warning")} under load</li>
+              <li>Storage: Read speeds below optimal range for your SSD model</li>
+            </ul>
+          </div>
+          
+          <h4 class="font-semibold text-gray-800 mb-2">Application-Specific Recommendations:</h4>
+          <ol class="list-decimal pl-5 space-y-4">
             <li>
-              <span class="font-medium">Run System Diagnostics</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Press ${formatKeyboardShortcut(["Win", "R"])} and type "dxdiag" to check system info</li>
-                <li>Note your ${createStatusBadge("CPU", "info")} and ${createStatusBadge("GPU", "info")} models</li>
-                <li>Check ${createStatusBadge("RAM", "info")} amount under System tab</li>
-              </ul>
+              <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+                <span class="font-medium">Chrome Browser</span>
+              </div>
+              <p class="mt-1 ml-8">Disable hardware acceleration during video calls to reduce memory conflicts</p>
             </li>
             <li>
-              <span class="font-medium">Benchmark Your System</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Download ${createExternalLink("https://www.userbenchmark.com/", "UserBenchmark")}</li>
-                <li>Close all other applications before running</li>
-                <li>Compare your results to similar systems</li>
-              </ul>
+              <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+                <span class="font-medium">Adobe Applications</span>
+              </div>
+              <p class="mt-1 ml-8">Enable GPU acceleration in Performance settings for up to ${createStatusBadge("40% faster", "success")} rendering</p>
             </li>
             <li>
-              <span class="font-medium">Monitor Resource Usage</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Press ${formatKeyboardShortcut(["Ctrl", "Shift", "Esc"])} to open Task Manager</li>
-                <li>Check the Performance tab</li>
-                <li>Look for components with high usage (${createStatusBadge("90%+", "warning")})</li>
-              </ul>
-            </li>
-            <li>
-              <span class="font-medium">Check Thermal Performance</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Download ${createExternalLink("https://www.techpowerup.com/download/techpowerup-throttlestop/", "ThrottleStop")} or ${createExternalLink("https://www.hwinfo.com/", "HWiNFO")}</li>
-                <li>Monitor temps during intensive tasks</li>
-                <li>CPU temps above ${createStatusBadge("90°C", "warning")} indicate thermal throttling</li>
-              </ul>
+              <div class="flex items-center gap-2">
+                <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+                <span class="font-medium">Windows Settings</span>
+              </div>
+              <p class="mt-1 ml-8">Set Graphics preference to ${createStatusBadge("High performance", "success")} for your creative applications</p>
             </li>
           </ol>
         </div>
         
-        ${createProTip("Run these diagnostics under normal conditions and again when performance issues occur to identify specific bottlenecks.")}
+        ${createSuccessBox("Implementing these optimization settings could improve your graphics performance by up to 25% with your current hardware configuration.")}
         
-        ${createWarningBox("If benchmarks show significantly lower performance than expected, consider updating drivers or checking for hardware issues.")}
+        ${createProTip("For more detailed performance analysis, run the Intel Graphics Command Center diagnostic tool and share the results with Dell Support.")}
       </div>
     `;
   }
@@ -431,7 +433,13 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   
   if (currentQuery.toLowerCase().includes('dell') && 
       (currentQuery.toLowerCase().includes('graphics') || currentQuery.toLowerCase().includes('performance'))) {
-    processedContent = formatDellGraphicsContent(processedContent, currentQuery);
+    if (currentQuery.toLowerCase().includes('diagnosis') || 
+        processedContent.toLowerCase().includes('diagnosis') ||
+        processedContent.toLowerCase().includes('diagnostic')) {
+      processedContent = formatPerformanceDiagnosis(processedContent, currentQuery);
+    } else {
+      processedContent = formatDellGraphicsContent(processedContent, currentQuery);
+    }
   } else if (currentQuery.toLowerCase().includes('webcam') || processedContent.toLowerCase().includes('webcam') || 
             processedContent.toLowerCase().includes('camera') || processedContent.toLowerCase().includes('teams')) {
     processedContent = formatWebcamContent(processedContent, currentQuery);

@@ -27,7 +27,8 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   selectedPath,
   isVisible
 }) => {
-  if (!isVisible || options.length === 0) {
+  if (!isVisible || options.length ===
+    0) {
     return null;
   }
 
