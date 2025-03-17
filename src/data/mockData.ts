@@ -1,4 +1,3 @@
-
 // Mock data for DELL DeepResolution prototype
 
 export interface Source {
@@ -58,9 +57,9 @@ export const mockQueries: MockQueryData[] = [
           ]
         },
         {
-          description: "Identified <strong>graphics performance</strong> concerns",
+          description: "Identified <strong>Intel Iris Xe Graphics</strong> as your GPU",
           entities: [
-            { text: "graphics performance", type: "ISSUE" }
+            { text: "Intel Iris Xe Graphics", type: "HARDWARE" }
           ]
         },
         {
