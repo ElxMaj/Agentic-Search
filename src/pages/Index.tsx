@@ -20,6 +20,17 @@ const Index: React.FC = () => {
 
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
+    
+    if (!searchQuery.trim()) {
+      setIsLoading(false);
+      setShowQueryInterpretation(false);
+      setShowResolutionOptions(false);
+      setShowAnswer(false);
+      setCurrentQueryData(null);
+      setSelectedPathKey("");
+      return;
+    }
+    
     setIsLoading(true);
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
