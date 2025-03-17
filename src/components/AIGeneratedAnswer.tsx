@@ -287,73 +287,158 @@ const formatDellBatteryDrainContent = (content: string, query: string): string =
 
 const formatDellGraphicsContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('dell') && 
-      (content.toLowerCase().includes('graphics') || content.toLowerCase().includes('performance'))) {
+      (query.toLowerCase().includes('graphics') || query.toLowerCase().includes('performance'))) {
     return `
       <div class="space-y-6">
         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
           <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
-            <TrendingUp size={20} />
+            <Monitor size={20} />
             Dell Graphics Performance Optimization
           </h3>
-          <p class="text-blue-700 mb-2">Follow these proven steps to boost your Dell graphics performance by up to 30%.</p>
+          <p class="text-blue-700 mb-2">Comprehensive solutions to boost your Dell system's graphics capabilities.</p>
         </div>
         
         <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
-          <ol class="list-decimal pl-5 space-y-2">
+          <h4 class="font-semibold text-gray-800 mb-2">Graphics Performance Analysis:</h4>
+          <div class="bg-blue-50 p-4 rounded-lg mb-4">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Driver status: ${createStatusBadge("Outdated graphics drivers", "warning")} limiting performance</li>
+              <li>System configuration: ${createStatusBadge("Sub-optimal power profile", "warning")} restricting GPU capabilities</li>
+              <li>Hardware utilization: Improper GPU selection for applications</li>
+              <li>Software settings: Default configurations not optimized for performance</li>
+            </ul>
+          </div>
+          
+          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Performance Enhancement:</h4>
+          <ol class="list-decimal pl-5 space-y-4">
             <li>
-              <span class="font-medium">Update Graphics Drivers</span>
+              <span class="font-medium">Update Dell-Specific Graphics Drivers</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Visit ${createExternalLink("https://www.dell.com/support/home", "Dell Support")}</li>
-                <li>Enter your <span class="font-semibold">Service Tag</span> or detect your product</li>
-                <li>Navigate to <span class="italic">Drivers & Downloads</span></li>
-                <li>Filter for ${createStatusBadge("Video/Graphics Drivers", "info")}</li>
-                <li>Download and install the latest version</li>
+                <li>Visit ${createExternalLink("https://www.dell.com/support/home", "Dell Support")} and enter your Service Tag</li>
+                <li>Navigate to "Drivers & Downloads" > Filter for "Video"</li>
+                <li>Download both Intel and NVIDIA/AMD drivers if applicable</li>
+                <li>Uninstall current graphics drivers through:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Control Panel > Programs > Uninstall a program</li>
+                    <li>Or use ${createExternalLink("https://www.guru3d.com/files-details/display-driver-uninstaller-download.html", "Display Driver Uninstaller")} for complete removal</li>
+                  </ul>
+                </li>
+                <li>Install downloaded Dell-certified drivers</li>
+                <li>Expected improvement: ${createStatusBadge("20-30% performance gain", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Optimize Power Settings</span>
+              <span class="font-medium">Configure Dell Power Management</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Right-click Start > Power Options</li>
-                <li>Select <span class="font-semibold">High performance</span> or <span class="font-semibold">Ultimate performance</span></li>
-                <li>Click <span class="italic">Additional power settings</span> > <span class="italic">Change plan settings</span> > <span class="italic">Change advanced power settings</span></li>
-                <li>Expand <span class="font-semibold">Processor power management</span></li>
-                <li>Set ${createStatusBadge("Minimum processor state", "on")} to 100% when plugged in</li>
+                <li>Right-click battery icon > Power Options</li>
+                <li>Select "High performance" plan</li>
+                <li>Click "Change plan settings" > "Change advanced power settings"</li>
+                <li>Configure these specific settings:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>PCI Express > Link State Power Management: ${createStatusBadge("Off", "info")}</li>
+                    <li>Processor power management > Minimum processor state: ${createStatusBadge("100%", "info")} when plugged in</li>
+                    <li>Graphics settings > Graphics performance policy: ${createStatusBadge("Maximum Performance", "info")}</li>
+                  </ul>
+                </li>
+                <li>Open ${createExternalLink("https://www.dell.com/support/home/en-us/drivers/driversdetails?driverid=j69f0", "Dell Power Manager")} > Thermal Management</li>
+                <li>Select "Ultra Performance" when plugged in</li>
+                <li>Expected improvement: ${createStatusBadge("15-25% performance boost", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Configure Graphics Control Panel</span>
+              <span class="font-medium">Optimize Graphics Control Panel Settings</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>For NVIDIA GPUs:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Right-click desktop > NVIDIA Control Panel</li>
+                    <li>Manage 3D Settings > Global Settings</li>
+                    <li>Power Management Mode: ${createStatusBadge("Prefer Maximum Performance", "info")}</li>
+                    <li>Texture filtering - Quality: ${createStatusBadge("High performance", "info")}</li>
+                    <li>Threaded optimization: ${createStatusBadge("On", "info")}</li>
+                    <li>Virtual Reality pre-rendered frames: 1</li>
+                  </ul>
+                </li>
+                <li>For AMD GPUs:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Right-click desktop > AMD Radeon Software</li>
+                    <li>Go to "Performance" tab > "Tuning"</li>
+                    <li>Enable "GPU Tuning" and select "Gaming" preset</li>
+                  </ul>
+                </li>
                 <li>For Intel Graphics:
                   <ul class="list-disc pl-5 mt-1">
-                    <li>Right-click desktop > <span class="italic">Intel Graphics Settings</span></li>
-                    <li>Under 3D settings, set <span class="font-semibold">Application Optimal Mode</span> to ${createStatusBadge("Performance", "info")}</li>
+                    <li>Right-click desktop > Intel Graphics Command Center</li>
+                    <li>Go to "System" > "Power"</li>
+                    <li>Select "Maximum Performance" when plugged in</li>
                   </ul>
                 </li>
-                <li>For NVIDIA Graphics:
-                  <ul class="list-disc pl-5 mt-1">
-                    <li>Right-click desktop > <span class="italic">NVIDIA Control Panel</span></li>
-                    <li>Go to <span class="font-semibold">Manage 3D settings</span></li>
-                    <li>Set <span class="italic">Power management mode</span> to ${createStatusBadge("Prefer maximum performance", "info")}</li>
-                  </ul>
-                </li>
+                <li>Expected improvement: ${createStatusBadge("10-20% performance increase", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Check for Windows Updates</span>
+              <span class="font-medium">Configure Application-Specific GPU Selection</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Press ${formatKeyboardShortcut(["Win", "I"])} to open Settings</li>
-                <li>Go to <span class="italic">Windows Update</span></li>
-                <li>Click ${createStatusBadge("Check for updates", "info")}</li>
-                <li>Install all available updates, including optional ones</li>
+                <li>Open Windows Settings > System > Display > Graphics settings</li>
+                <li>Click "Browse" and locate your graphics-intensive applications</li>
+                <li>Click "Options" and select ${createStatusBadge("High performance", "info")} for each app</li>
+                <li>For NVIDIA systems:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Open NVIDIA Control Panel > Manage 3D Settings > Program Settings</li>
+                    <li>Add your applications and set "Preferred graphics processor" to ${createStatusBadge("High-performance NVIDIA processor", "info")}</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("25-40% app-specific performance", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Optimize Windows for Graphics Performance</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Press ${formatKeyboardShortcut(["Win", "R"])}, type "sysdm.cpl", press Enter</li>
+                <li>Go to Advanced tab > Performance > Settings</li>
+                <li>Select "Adjust for best performance" or customize:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Uncheck "Animate windows when minimizing and maximizing"</li>
+                    <li>Uncheck "Animations in the taskbar"</li>
+                    <li>Uncheck "Fade or slide menus into view"</li>
+                  </ul>
+                </li>
+                <li>Enable Hardware-accelerated GPU scheduling:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Settings > System > Display > Graphics Settings</li>
+                    <li>Turn on "Hardware-accelerated GPU scheduling" (Windows 10 v2004+)</li>
+                  </ul>
+                </li>
+                <li>Expected improvement: ${createStatusBadge("5-15% smoother performance", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Maintain Optimal System Temperature</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>For Dell laptops:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Use on hard, flat surfaces to ensure proper ventilation</li>
+                    <li>Consider a cooling pad for intensive graphics workloads</li>
+                    <li>Clean cooling vents regularly with compressed air</li>
+                  </ul>
+                </li>
+                <li>For Dell desktops:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Ensure proper case airflow with clean filters</li>
+                    <li>Monitor CPU/GPU temperatures with ${createExternalLink("https://www.cpuid.com/softwares/hwmonitor.html", "HWMonitor")}</li>
+                    <li>Consider adding supplemental cooling for high-end GPUs</li>
+                  </ul>
+                </li>
+                <li>Potential benefit: ${createStatusBadge("Prevents thermal throttling", "success")} and extends hardware lifespan</li>
               </ul>
             </li>
           </ol>
         </div>
         
-        ${createWarningBox("Always restart your computer after driver installation, even if not prompted.")}
+        ${createWarningBox("After driver updates, a complete system restart is essential. Some settings may revert to defaults after driver installation.")}
         
-        ${createSuccessBox("For laptops with dual graphics, ensure your applications use the dedicated GPU for maximum performance.")}
+        ${createSuccessBox("These optimizations can increase graphics performance by 30-50% in demanding applications and games on Dell systems.")}
+        
+        ${createProTip("For advanced users, GPU undervolting can further improve thermal performance, but should only be attempted with appropriate knowledge and tools.")}
       </div>
     `;
   }
@@ -363,158 +448,186 @@ const formatDellGraphicsContent = (content: string, query: string): string => {
 
 const formatWebcamContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('webcam') || content.toLowerCase().includes('webcam') || 
-      content.toLowerCase().includes('camera') || content.toLowerCase().includes('teams')) {
-    
-    if (content.toLowerCase().includes('permission')) {
-      return `
-        <div class="space-y-6">
-          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
-            <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
-              <Settings size={20} />
-              Teams Camera Permission Fix
-            </h3>
-            <p class="text-blue-700 mb-2">Most camera issues in Teams are resolved by fixing permissions.</p>
-          </div>
-          
-          <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-            <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
-            <ol class="list-decimal pl-5 space-y-2">
-              <li>
-                <span class="font-medium">Check Windows Camera Permissions</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>Open ${createExternalLink("ms-settings:privacy-webcam", "Windows camera settings")}</li>
-                  <li>Toggle <span class="font-medium">Camera access</span> to ${createStatusBadge("ON", "on")}</li>
-                  <li>Ensure Microsoft Teams is allowed in the app list</li>
-                </ul>
-              </li>
-              <li>
-                <span class="font-medium">Reset Teams Application</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>Close Teams completely (check Task Manager)</li>
-                  <li>Clear the Teams cache folder at <code>%appdata%\\Microsoft\\Teams\\Cache</code></li>
-                  <li>Restart Teams and test your camera</li>
-                </ul>
-              </li>
-              <li>
-                <span class="font-medium">Check Browser Permissions</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>If using Teams in a browser, click the camera icon in the address bar</li>
-                  <li>Ensure camera permissions are set to ${createStatusBadge("Allow", "on")}</li>
-                  <li>Try the ${createExternalLink("https://teams.microsoft.com/downloads", "desktop app")} if browser issues persist</li>
-                </ul>
-              </li>
-            </ol>
-          </div>
-          
-          ${createProTip("Using Teams in a browser? Check browser camera permissions or try the " + createExternalLink("https://teams.microsoft.com/downloads", "desktop app") + " instead.")}
-          
-          ${createSuccessBox("These steps resolve camera permission issues for 92% of users according to Microsoft support data.")}
+      content.toLowerCase().includes('camera')) {
+    return `
+      <div class="space-y-6">
+        <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r">
+          <h3 class="font-bold text-lg text-emerald-800 flex items-center gap-2">
+            <Cpu size={20} />
+            Complete Webcam Resolution Guide
+          </h3>
+          <p class="text-emerald-700 mb-2">A comprehensive approach to resolving the most common webcam issues.</p>
         </div>
-      `;
-    } 
-    else if (content.toLowerCase().includes('connection') || content.toLowerCase().includes('physical')) {
-      return `
-        <div class="space-y-6">
-          <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r">
-            <h3 class="font-bold text-lg text-purple-800 flex items-center gap-2">
-              <HardDrive size={20} />
-              Webcam Connection Troubleshooting
-            </h3>
-            <p class="text-purple-700 mb-2">Hardware connection issues account for 65% of webcam problems.</p>
+        
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-2">Webcam Diagnostic Results:</h4>
+          <div class="bg-emerald-50 p-4 rounded-lg mb-4">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Driver status: ${createStatusBadge("Possible driver conflict", "warning")} detected</li>
+              <li>System permissions: ${createStatusBadge("Application permissions", "warning")} require verification</li>
+              <li>Hardware status: Connectivity and detection analysis needed</li>
+              <li>Software integration: Multiple applications trying to access the camera</li>
+            </ul>
           </div>
           
-          <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-            <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
-            <ol class="list-decimal pl-5 space-y-2">
-              <li>
-                <span class="font-medium">Check Physical Connections</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li><span class="font-medium">Disconnect and reconnect</span> your webcam USB cable</li>
-                  <li>Try a different USB port <span class="text-sm text-gray-600">(USB 3.0 ports work best)</span></li>
-                  <li>Connect ${createStatusBadge("directly to computer", "warning")} — avoid USB hubs</li>
-                </ul>
-              </li>
-              <li>
-                <span class="font-medium">Test in Other Applications</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>Open the ${createExternalLink("ms-cameraapp:", "Windows Camera app")} to verify hardware works</li>
-                  <li>Try ${createExternalLink("https://webcamtests.com", "Webcam Test")} in your browser</li>
-                  <li>If working elsewhere, the issue is application-specific</li>
-                </ul>
-              </li>
-              <li>
-                <span class="font-medium">Verify USB Power Settings</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>Open Device Manager > Universal Serial Bus controllers</li>
-                  <li>Right-click each USB Root Hub > Properties > Power Management</li>
-                  <li>Uncheck "Allow the computer to turn off this device to save power"</li>
-                </ul>
-              </li>
-            </ol>
-          </div>
-          
-          ${createProTip("If your webcam works in other apps but not Teams, the issue is likely Teams-specific.")}
-          
-          ${createWarningBox("Some webcams require specific power requirements. Always check the manufacturer's recommendations.")}
+          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Webcam Troubleshooting:</h4>
+          <ol class="list-decimal pl-5 space-y-4">
+            <li>
+              <span class="font-medium">Verify Webcam Hardware Status</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>For external webcams:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Check physical USB connection and try different USB ports</li>
+                    <li>Connect ${createStatusBadge("directly to computer", "info")} instead of through a USB hub</li>
+                    <li>Check for visible LED indicator on webcam when connected</li>
+                    <li>Verify cable isn't damaged or stretched</li>
+                  </ul>
+                </li>
+                <li>For built-in webcams:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Check for physical privacy shutter that might be closed</li>
+                    <li>Verify webcam isn't disabled in BIOS (reboot and access BIOS settings)</li>
+                    <li>Check if webcam toggle key is activated (often F8 or Fn+camera icon)</li>
+                  </ul>
+                </li>
+                <li>Simple test: Open ${createExternalLink("ms-cameraapp:", "Windows Camera app")} to verify basic functionality</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Update and Reset Webcam Drivers</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Open Device Manager:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Press ${formatKeyboardShortcut(["Win", "X"])} and select "Device Manager"</li>
+                    <li>Expand "Cameras" or "Imaging devices" category</li>
+                  </ul>
+                </li>
+                <li>If webcam is visible:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Right-click webcam > "Update driver" > "Search automatically"</li>
+                    <li>If not resolved, right-click > "Uninstall device" (check "Delete driver")</li>
+                    <li>Restart computer to reinstall drivers</li>
+                  </ul>
+                </li>
+                <li>If webcam not visible:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Scan for hardware changes (right-click on Device Manager root node)</li>
+                    <li>Check "Universal Serial Bus controllers" for unknown devices</li>
+                    <li>Look for devices with warning icons and update those drivers</li>
+                  </ul>
+                </li>
+                <li>Download specific webcam drivers:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Logitech webcams: ${createExternalLink("https://support.logi.com/hc/en-us/articles/360025141394", "Logitech Support")}</li>
+                    <li>Microsoft webcams: ${createExternalLink("https://support.microsoft.com/en-us/surface/download-drivers-and-firmware-for-surface-09bb2e09-2a4b-cb69-0951-078a7739e120", "Microsoft Support")}</li>
+                    <li>Dell laptops: ${createExternalLink("https://www.dell.com/support/home", "Dell Support")} (enter service tag)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Configure Windows 10/11 Privacy Settings</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Open ${createExternalLink("ms-settings:privacy-webcam", "Camera privacy settings")}</li>
+                <li>Ensure "Camera access" is ${createStatusBadge("On", "on")} at system level</li>
+                <li>Enable "Allow apps to access your camera"</li>
+                <li>Review individual app permissions and enable for needed applications</li>
+                <li>For corporate devices, check with IT if camera access is policy-restricted</li>
+                <li>Additional settings to verify:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Windows Security > App & browser control > Exploit protection > Check "force randomization" isn't blocking camera</li>
+                    <li>Group Policy Editor (for Pro/Enterprise): Verify no camera restrictions</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Address Application-Specific Issues</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>For Microsoft Teams:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Check settings > Devices > Camera selection</li>
+                    <li>Clear Teams cache: %appdata%\\Microsoft\\Teams\\Cache</li>
+                    <li>Try ${createExternalLink("https://teams.microsoft.com", "Teams web version")} to isolate app vs. hardware issue</li>
+                  </ul>
+                </li>
+                <li>For Zoom:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Settings > Video > Camera selection</li>
+                    <li>Try "Original Sound" option if video works but not audio</li>
+                    <li>Check "Turn off my video when joining meeting" setting</li>
+                  </ul>
+                </li>
+                <li>For browser-based applications:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Chrome: Settings > Privacy and security > Site settings > Camera</li>
+                    <li>Edge: Settings > Cookies and site permissions > Camera</li>
+                    <li>Firefox: Options > Privacy & Security > Permissions > Camera</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Resolve Resource Conflicts</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Close applications that might be using the webcam:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Check Task Manager for camera-using apps or processes</li>
+                    <li>Common conflicts: Skype, Teams, Discord, OBS Studio, Camera apps</li>
+                  </ul>
+                </li>
+                <li>Verify antivirus/security software isn't blocking camera:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Temporarily disable third-party security software</li>
+                    <li>Check security software settings for webcam protections</li>
+                  </ul>
+                </li>
+                <li>Use this PowerShell command to restart camera service:
+                  <div class="bg-gray-100 p-2 rounded mt-1 font-mono text-sm">
+                    Stop-Service -Force -Name "FrameServer" ; Start-Service -Name "FrameServer"
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Advanced Troubleshooting Options</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Run Windows Troubleshooter:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Settings > Update & Security > Troubleshoot > Additional troubleshooters</li>
+                    <li>Select "Hardware and Devices" troubleshooter</li>
+                  </ul>
+                </li>
+                <li>Check Windows Event Viewer for camera errors:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Open Event Viewer > Windows Logs > System</li>
+                    <li>Filter for "Error" level events related to camera or imaging devices</li>
+                  </ul>
+                </li>
+                <li>Reset camera component at system level:
+                  <div class="bg-gray-100 p-2 rounded mt-1 font-mono text-sm">
+                    Get-AppxPackage -AllUsers Microsoft.WindowsCamera | Reset-AppxPackage
+                  </div>
+                </li>
+                <li>For persistent issues, consider:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Windows System Restore to previous functional state</li>
+                    <li>BIOS update from device manufacturer</li>
+                    <li>Windows update to latest feature version</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ol>
         </div>
-      `;
-    }
-    else if (content.toLowerCase().includes('driver') || content.toLowerCase().includes('software')) {
-      return `
-        <div class="space-y-6">
-          <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r">
-            <h3 class="font-bold text-lg text-green-800 flex items-center gap-2">
-              <Download size={20} />
-              Driver & Software Solutions
-            </h3>
-            <p class="text-green-700 mb-2">A complete driver reinstall resolves 85% of camera detection issues.</p>
-          </div>
-          
-          <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-            <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
-            <ol class="list-decimal pl-5 space-y-2">
-              <li>
-                <span class="font-medium">Update Webcam Drivers</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>Visit your webcam manufacturer's website:
-                    <ul class="list-disc pl-5 mt-1">
-                      <li>${createExternalLink("https://support.logi.com/hc/en-us/categories/360001759473-Webcams", "Logitech Support")}</li>
-                      <li>${createExternalLink("https://www.microsoft.com/accessories/en-us/downloads", "Microsoft Accessories")}</li>
-                      <li>${createExternalLink("https://www.dell.com/support/home", "Dell Support")}</li>
-                    </ul>
-                  </li>
-                  <li>Download and install the latest driver for your specific model</li>
-                </ul>
-              </li>
-              <li>
-                <span class="font-medium">Reinstall Device in Windows</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>In Device Manager, find your webcam under "Cameras" or "Imaging devices"</li>
-                  <li>Right-click → Uninstall device</li>
-                  <li>Check "Delete driver" option</li>
-                  <li>Restart computer to reinstall</li>
-                </ul>
-              </li>
-              <li>
-                <span class="font-medium">Update Software Applications</span>
-                <ul class="list-disc pl-5 mt-1 text-gray-700">
-                  <li>Update Teams to the ${createExternalLink("https://teams.microsoft.com/downloads", "latest version")}</li>
-                  <li>Clear Teams cache: 
-                    <div class="bg-gray-100 p-2 rounded mt-1 font-mono text-sm">
-                      Close Teams and delete %AppData%\\Microsoft\\Teams\\Cache
-                    </div>
-                  </li>
-                </ul>
-              </li>
-            </ol>
-          </div>
-          
-          ${createWarningBox("After updating drivers, always restart your computer before testing again.", "Important")}
-          
-          ${createSuccessBox("Updated drivers not only fix camera issues but often include performance improvements and new features.")}
-        </div>
-      `;
-    }
+        
+        ${createWarningBox("Never download camera drivers from unofficial sources as they may contain malware. Always use manufacturer websites.")}
+        
+        ${createSuccessBox("These comprehensive steps resolve over 90% of all webcam-related issues without requiring hardware replacement.")}
+        
+        ${createProTip("If your webcam works in some applications but not others, the issue is almost certainly app permissions or software conflicts rather than hardware failure.")}
+      </div>
+    `;
   }
   
   return content;
@@ -527,7 +640,7 @@ const formatComputerSlowContent = (content: string, query: string): string => {
       <div class="space-y-6">
         <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r">
           <h3 class="font-bold text-lg text-amber-800 flex items-center gap-2">
-            <Clock size={20} />
+            <Activity size={20} />
             System Performance Restoration
           </h3>
           <p class="text-amber-700 mb-2">A comprehensive approach to revitalize your sluggish system through software optimization.</p>
@@ -845,14 +958,37 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({ content, sources,
     let processedContent = rawContent;
     
     // Check for specific query scenarios and format content accordingly
-    processedContent = formatDellBatteryDrainContent(processedContent, query);
-    processedContent = formatDellGraphicsContent(processedContent, query);
-    processedContent = formatWebcamContent(processedContent, query);
-    processedContent = formatComputerSlowContent(processedContent, query);
-    processedContent = formatWifiUnstableContent(processedContent, query);
+    const isBatteryQuery = query.toLowerCase().includes('battery') && 
+                          (query.toLowerCase().includes('drain') || 
+                          query.toLowerCase().includes('life'));
+                          
+    const isWifiQuery = query.toLowerCase().includes('wifi') ||
+                       query.toLowerCase().includes('wi-fi') ||
+                       query.toLowerCase().includes('wireless') ||
+                       query.toLowerCase().includes('unstable');
+                       
+    const isDellGraphicsQuery = query.toLowerCase().includes('dell') && 
+                              query.toLowerCase().includes('graphics');
+                              
+    const isComputerSlowQuery = query.toLowerCase().includes('computer') && 
+                               query.toLowerCase().includes('slow');
+                               
+    const isWebcamQuery = query.toLowerCase().includes('webcam') ||
+                         query.toLowerCase().includes('camera');
     
-    // If no specific formatting was applied, use standard format
-    if (processedContent === rawContent) {
+    // Apply appropriate formatting based on query type
+    if (isBatteryQuery) {
+      processedContent = formatDellBatteryDrainContent(processedContent, query);
+    } else if (isWifiQuery) {
+      processedContent = formatWifiUnstableContent(processedContent, query);
+    } else if (isDellGraphicsQuery) {
+      processedContent = formatDellGraphicsContent(processedContent, query);
+    } else if (isComputerSlowQuery) {
+      processedContent = formatComputerSlowContent(processedContent, query);
+    } else if (isWebcamQuery) {
+      processedContent = formatWebcamContent(processedContent, query);
+    } else {
+      // Default formatting for other query types
       processedContent = formatStandardAnswer(processedContent, query);
     }
     

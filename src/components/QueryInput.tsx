@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2, X, Battery, Wifi } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X, Battery, Wifi, Monitor, Activity, Camera } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -57,9 +57,30 @@ const QueryInput: React.FC<QueryInputProps> = ({
   };
 
   const handleWifiUnstableClick = () => {
-    const wifiQuery = "Wifi unstable";
+    const wifiQuery = "Wifi unstable on my laptop";
     setQuery(wifiQuery);
     onSearch(wifiQuery);
+    setHasSearched(true);
+  };
+  
+  const handleDellGraphicsClick = () => {
+    const graphicsQuery = "Dell graphics performance issues";
+    setQuery(graphicsQuery);
+    onSearch(graphicsQuery);
+    setHasSearched(true);
+  };
+  
+  const handleSlowComputerClick = () => {
+    const slowQuery = "My computer is slow and unresponsive";
+    setQuery(slowQuery);
+    onSearch(slowQuery);
+    setHasSearched(true);
+  };
+  
+  const handleWebcamIssueClick = () => {
+    const webcamQuery = "Webcam not working in Teams";
+    setQuery(webcamQuery);
+    onSearch(webcamQuery);
     setHasSearched(true);
   };
 
@@ -149,6 +170,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
           ))}
         </motion.div>
         
+        {/* Dell Battery Issue Button */}
         <motion.button
           onClick={handleBatteryDrainClick}
           className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#F0F7E8] hover:bg-[#E3EDD8] text-[#538234] transition-colors"
@@ -161,6 +183,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
           Dell battery drain
         </motion.button>
         
+        {/* Wifi Unstable Button */}
         <motion.button
           onClick={handleWifiUnstableClick}
           className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#EEF1FB] hover:bg-[#DFE3F7] text-[#445bc5] transition-colors"
@@ -171,6 +194,45 @@ const QueryInput: React.FC<QueryInputProps> = ({
         >
           <Wifi size={14} className="text-[#445bc5]" />
           Wifi unstable
+        </motion.button>
+        
+        {/* Dell Graphics Button */}
+        <motion.button
+          onClick={handleDellGraphicsClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#E6F1F8] hover:bg-[#D1E4F1] text-[#0076CE] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          <Monitor size={14} className="text-[#0076CE]" />
+          Dell graphics issues
+        </motion.button>
+        
+        {/* Slow Computer Button */}
+        <motion.button
+          onClick={handleSlowComputerClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#FEF3C7] hover:bg-[#FDE68A] text-[#d97706] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <Activity size={14} className="text-[#d97706]" />
+          Slow computer
+        </motion.button>
+        
+        {/* Webcam Issue Button */}
+        <motion.button
+          onClick={handleWebcamIssueClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#D1FAE5] hover:bg-[#A7F3D0] text-[#10b981] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+        >
+          <Camera size={14} className="text-[#10b981]" />
+          Webcam issues
         </motion.button>
       </div>
     </div>
