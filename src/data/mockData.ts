@@ -1,4 +1,3 @@
-
 // Mock data for DELL DeepResolution prototype
 
 export interface Source {
@@ -780,111 +779,6 @@ export const mockQueries: MockQueryData[] = [
             excerpt: "Windows camera driver architecture changes in recent updates require application-specific permissions that can affect Teams access."
           }
         ]
-      },
-      "application": {
-        name: "Teams Application Issues",
-        icon: "📱",
-        steps: [
-          {
-            id: "app-step1",
-            title: "Teams Application Troubleshooting",
-            description: "Let's address issues with the Teams application itself that may affect webcam functionality.",
-            options: [
-              { id: "app-opt1", text: "Reset Teams application cache", nextStepId: "app-step2" },
-              { id: "app-opt2", text: "Reinstall Teams", nextStepId: "app-step3" },
-              { id: "app-opt3", text: "Check Teams version compatibility", nextStepId: "app-step4" }
-            ]
-          },
-          {
-            id: "app-step2",
-            title: "Reset Teams Cache",
-            description: "Let's clear the Teams cache to resolve potential configuration issues.",
-            options: [
-              { id: "app-opt4", text: "Clear Teams cache files", nextStepId: "app-step5" },
-              { id: "app-opt5", text: "Reset Teams settings", nextStepId: "app-step6" }
-            ]
-          },
-          {
-            id: "app-step3",
-            title: "Reinstall Microsoft Teams",
-            description: "Let's completely reinstall Teams to resolve potential installation issues.",
-            options: [
-              { id: "app-opt6", text: "Uninstall Teams completely", nextStepId: "app-step7" },
-              { id: "app-opt7", text: "Install the latest Teams version", nextStepId: "app-step8" }
-            ]
-          },
-          {
-            id: "app-step4",
-            title: "Teams Version Compatibility",
-            description: "Let's check if your Teams version is compatible with your system and webcam.",
-            options: [
-              { id: "app-opt8", text: "Check Teams version", nextStepId: "app-step9" },
-              { id: "app-opt9", text: "Verify system requirements", nextStepId: "app-step10" }
-            ]
-          },
-          {
-            id: "app-step5",
-            title: "Clear Teams Cache Files",
-            description: "Here's how to clear the Teams cache files:",
-            options: []
-          },
-          {
-            id: "app-step6",
-            title: "Reset Teams Settings",
-            description: "Here's how to reset Teams settings to default:",
-            options: []
-          },
-          {
-            id: "app-step7",
-            title: "Uninstall Teams Completely",
-            description: "Here's how to completely uninstall Microsoft Teams:",
-            options: []
-          },
-          {
-            id: "app-step8",
-            title: "Install Latest Teams Version",
-            description: "Here's how to install the latest version of Microsoft Teams:",
-            options: []
-          },
-          {
-            id: "app-step9",
-            title: "Check Teams Version",
-            description: "Here's how to check your current Teams version:",
-            options: []
-          },
-          {
-            id: "app-step10",
-            title: "Verify System Requirements",
-            description: "Here's how to verify your system meets Teams requirements:",
-            options: []
-          }
-        ],
-        sources: [
-          {
-            type: "official",
-            title: "Microsoft Teams Troubleshooting Guide",
-            date: "Updated May 2024",
-            metadata: "Microsoft Support",
-            confidence: 92,
-            excerpt: "Many camera issues in Teams can be resolved by clearing the application cache, which removes corrupted settings and cached credentials."
-          },
-          {
-            type: "knowledge-base",
-            title: "Teams Application Architecture",
-            date: "Updated Mar 2024",
-            metadata: "Technical Documentation",
-            confidence: 81,
-            excerpt: "Teams desktop applications use multiple components that each require separate camera access permissions."
-          },
-          {
-            type: "community",
-            title: "Teams Version History Issues",
-            date: "Thread from Feb 2024",
-            metadata: "User Reports",
-            confidence: 69,
-            excerpt: "Some users report that rolling back to previous Teams versions resolved camera issues introduced in recent updates."
-          }
-        ]
       }
     }
   },
@@ -1379,3 +1273,4 @@ export const suggestedQueries = [
   "Optimize CPU usage on my Dell",
   "Fix webcam not detected in Zoom"
 ];
+
