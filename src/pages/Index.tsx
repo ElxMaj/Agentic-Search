@@ -602,4 +602,287 @@ const Index: React.FC = () => {
       
       <h4 class="font-medium mt-4 mb-2">Step-by-Step Optimization Plan:</h4>
       
-      <div class="space-y-
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Disable Unnecessary Startup Items</p>
+            <p class="mb-2 text-sm">I've identified 12 applications that don't need to start with Windows:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">How to disable:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Press <code class="bg-gray-200 px-1">Ctrl+Shift+Esc</code> to open Task Manager</li>
+                <li>Click the <strong>Startup</strong> tab</li>
+                <li>Select each unnecessary application and click <strong>Disable</strong></li>
+                <li>Focus on items with "High" startup impact first</li>
+                <li>Restart your computer to apply changes</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Optimize Windows Services</p>
+            <p class="mb-2 text-sm">38 non-essential services are running that can be optimized:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Service Optimization:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Press <code class="bg-gray-200 px-1">Win+R</code> and type <code class="bg-gray-200 px-1">services.msc</code></li>
+                <li>For each non-essential service (like Adobe, game services):</li>
+                <li>Double-click the service and change "Startup type" to <strong>Manual</strong></li>
+                <li>Click <strong>Apply</strong> then <strong>OK</strong></li>
+                <li>Use caution - only modify services you recognize</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Enable Fast Startup</p>
+            <p class="mb-2 text-sm">This feature is currently disabled on your system:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">How to enable:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Open <strong>Control Panel</strong> > <strong>Hardware and Sound</strong> > <strong>Power Options</strong></li>
+                <li>Click <strong>Choose what the power buttons do</strong></li>
+                <li>Click <strong>Change settings that are currently unavailable</strong></li>
+                <li>Check <strong>Turn on fast startup</strong></li>
+                <li>Click <strong>Save changes</strong></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+          <div>
+            <p class="font-medium">Configure Application Launch Priority</p>
+            <p class="mb-2 text-sm">Set CPU priority for your most important applications:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Manual Priority Setting:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Launch your important application</li>
+                <li>Press <code class="bg-gray-200 px-1">Ctrl+Shift+Esc</code> to open Task Manager</li>
+                <li>Go to the <strong>Details</strong> tab</li>
+                <li>Right-click on your application's process</li>
+                <li>Select <strong>Set priority</strong> > <strong>Above normal</strong></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-blue-50 p-3 rounded-md">
+        <p class="font-medium">Expected Improvement:</p>
+        <p class="text-sm">Implementing these four optimization steps should reduce your startup time by approximately 65% (from 47 to 17 seconds) and improve overall application loading by 30-40%. These changes address both system initialization and application launch performance by ensuring system resources are correctly prioritized.</p>
+      </div>`;
+    } else if (selectedPathKey === "teams") {
+      return `<h3 class="text-lg font-medium mb-3">Teams Webcam Issues: Application Troubleshooting</h3>
+      
+      <p class="mb-3">After analyzing your system logs and Teams configuration, I've identified several application-specific issues affecting your webcam during Teams calls:</p>
+      
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+        <p class="font-medium">Technical Analysis:</p>
+        <ul class="list-disc pl-5 mt-1">
+          <li>Teams version: <span class="text-red-600 font-medium">2.0.22 (3 versions behind)</span></li>
+          <li>Cache size: <span class="text-red-600 font-medium">3.2GB (excessive)</span></li>
+          <li>Configuration conflicts: <span class="text-yellow-600 font-medium">Media settings inconsistency</span></li>
+          <li>Background processes: <span class="text-yellow-600 font-medium">7 conflicting services</span></li>
+        </ul>
+      </div>
+      
+      <h4 class="font-medium mt-4 mb-2">Comprehensive Teams Fixes:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Update Microsoft Teams</p>
+            <p class="mb-2 text-sm">Your current version is outdated and has known webcam compatibility issues:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+              <div class="bg-gray-100 p-2 rounded-md text-xs">
+                <p class="font-medium">Windows:</p>
+                <ol class="list-decimal pl-4 space-y-1">
+                  <li>Close Teams completely</li>
+                  <li>Click your profile picture > <strong>Check for updates</strong></li>
+                  <li>If no update appears, download the latest version from the Microsoft website</li>
+                  <li>Uninstall current Teams version</li>
+                  <li>Install the downloaded version</li>
+                </ol>
+              </div>
+              
+              <div class="bg-gray-100 p-2 rounded-md text-xs">
+                <p class="font-medium">Mac:</p>
+                <ol class="list-decimal pl-4 space-y-1">
+                  <li>Quit Teams completely</li>
+                  <li>Open the App Store</li>
+                  <li>Go to the Updates tab</li>
+                  <li>Update Microsoft Teams</li>
+                  <li>Alternatively, download the latest version from Microsoft's website</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Clear Teams Cache</p>
+            <p class="mb-2 text-sm">Your Teams cache has grown to 3.2GB, which can cause media handling issues:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+              <div class="bg-gray-100 p-2 rounded-md text-xs">
+                <p class="font-medium">Windows:</p>
+                <ol class="list-decimal pl-4 space-y-1">
+                  <li>Close Teams completely</li>
+                  <li>Press <strong>Win+R</strong>, type: <code>%appdata%\\Microsoft\\Teams</code></li>
+                  <li>Delete these folders:
+                    <ul class="list-disc pl-4">
+                      <li>Cache</li>
+                      <li>blob_storage</li>
+                      <li>databases</li>
+                      <li>GPUcache</li>
+                      <li>IndexedDB</li>
+                      <li>Local Storage</li>
+                      <li>tmp</li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+              
+              <div class="bg-gray-100 p-2 rounded-md text-xs">
+                <p class="font-medium">Mac:</p>
+                <ol class="list-decimal pl-4 space-y-1">
+                  <li>Quit Teams completely</li>
+                  <li>Open Finder, press <strong>Shift+Cmd+G</strong></li>
+                  <li>Enter: <code>~/Library/Application Support/Microsoft/Teams</code></li>
+                  <li>Delete the same folders as listed for Windows</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Reset Teams Media Settings</p>
+            <p class="mb-2 text-sm">Your current Teams media configuration has inconsistencies:</p>
+            
+            <ol class="list-decimal pl-5 text-sm space-y-2">
+              <li>Open Teams and go to <strong>Settings</strong> (via your profile picture)</li>
+              <li>Select <strong>Devices</strong> in the left sidebar</li>
+              <li>Under Camera:
+                <ul class="list-disc pl-4 mt-1">
+                  <li>Select your webcam from the dropdown if it's available</li>
+                  <li>If multiple options exist, try each one</li>
+                  <li>Toggle <strong>Apply background effects</strong> off temporarily</li>
+                </ul>
+              </li>
+              <li>Click <strong>Make a test call</strong> to verify your settings</li>
+              <li>If issues persist, try the <strong>Hardware acceleration</strong> setting:
+                <ul class="list-disc pl-4 mt-1">
+                  <li>Go to <strong>Settings > General</strong></li>
+                  <li>Scroll down to <strong>Application</strong></li>
+                  <li>Toggle <strong>Disable GPU hardware acceleration</strong></li>
+                  <li>Restart Teams and test again</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+          <div>
+            <p class="font-medium">Resolve Conflicting Background Services</p>
+            <p class="mb-2 text-sm">We detected 7 processes that may be interfering with Teams' camera access:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+              <div class="bg-gray-100 p-2 rounded-md text-xs">
+                <p class="font-medium">Windows:</p>
+                <ol class="list-decimal pl-4 space-y-1">
+                  <li>Press <strong>Ctrl+Shift+Esc</strong> to open Task Manager</li>
+                  <li>Check for and end these processes if running:
+                    <ul class="list-disc pl-4">
+                      <li>Zoom</li>
+                      <li>Webex</li>
+                      <li>GoToMeeting</li>
+                      <li>Skype</li>
+                      <li>OBS Studio</li>
+                      <li>Logitech Capture</li>
+                      <li>Any other webcam or video capture software</li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+              
+              <div class="bg-gray-100 p-2 rounded-md text-xs">
+                <p class="font-medium">Mac:</p>
+                <ol class="list-decimal pl-4 space-y-1">
+                  <li>Press <strong>Option+Command+Esc</strong> or check Activity Monitor</li>
+                  <li>Quit the same applications listed for Windows</li>
+                  <li>Also check for camera extensions in System Preferences</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-blue-50 p-3 rounded-md">
+        <p class="font-medium">Technical Insight:</p>
+        <p class="text-sm">Teams 2.0 has a completely redesigned media stack compared to previous versions. When corrupted cache files exist, the application may load old cached settings that conflict with the new framework. Clearing these and resetting media devices forces Teams to rebuild its configuration database with consistent settings, resolving the majority of webcam access and quality issues.</p>
+      </div>`;
+    } else {
+      return "";
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      
+      <main className="flex-grow container mx-auto px-4 pt-8 pb-16">
+        <QueryInput 
+          onSearch={handleSearch} 
+          isLoading={isLoading}
+          suggestedQueries={suggestedQueries}
+        />
+        
+        {query && (
+          <>
+            <QueryInterpretation 
+              query={query}
+              steps={currentQueryData?.queryInterpretation.steps || []}
+              isVisible={showQueryInterpretation}
+            />
+            
+            <ResolutionOptions
+              options={resolutionOptions}
+              isVisible={showResolutionOptions}
+              onSelectPath={handleSelectPath}
+              selectedPath={selectedPathKey}
+            />
+            
+            <AIGeneratedAnswer 
+              content={selectedPathKey ? getAnswerContent() : ""}
+              sources={selectedPathKey && currentQueryData ? currentQueryData.resolutionPaths[selectedPathKey].sources || [] : []}
+              isVisible={showAnswer}
+            />
+          </>
+        )}
+      </main>
+      
+      <Footer />
+    </div>
+  );
+};
+
+export default Index;
