@@ -17,7 +17,7 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
-  
+
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
     setIsLoading(true);
@@ -607,15 +607,23 @@ const Index: React.FC = () => {
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
           <div>
-            <p class="font-medium">Disable Unnecessary Startup Programs</p>
-            <p class="mb-2 text-sm">Your system has 12 non-essential programs starting automatically:</p>
+            <p class="font-medium">Manage Startup Applications</p>
+            <p class="mb-2">Disable unnecessary applications that start automatically with Windows:</p>
             <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">How to Disable:</p>
+              <p class="font-medium">Using Task Manager:</p>
               <ol class="list-decimal pl-4">
-                <li>Press <strong>Ctrl+Shift+Esc</strong> to open Task Manager</li>
-                <li>Click the <strong>Startup</strong> tab</li>
-                <li>Select unnecessary programs and click <strong>Disable</strong></li>
-                <li>Focus on items with "High" impact and programs you rarely use</li>
+                <li>Press Ctrl+Shift+Esc to open Task Manager</li>
+                <li>Go to the "Startup" tab</li>
+                <li>Disable these high-impact, non-essential items:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Adobe Creative Cloud</li>
+                    <li>Spotify</li>
+                    <li>Steam</li>
+                    <li>Discord</li>
+                    <li>Skype</li>
+                    <li>OneDrive (unless frequently used)</li>
+                  </ul>
+                </li>
               </ol>
             </div>
           </div>
@@ -624,16 +632,20 @@ const Index: React.FC = () => {
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
           <div>
-            <p class="font-medium">Optimize Services Configuration</p>
-            <p class="mb-2 text-sm">38 non-essential services are running in the background:</p>
+            <p class="font-medium">Optimize Background Services</p>
+            <p class="mb-2">Configure Windows services for better performance:</p>
             <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">Safe Optimization Steps:</p>
+              <p class="font-medium">Using Services Manager:</p>
               <ol class="list-decimal pl-4">
-                <li>Press <strong>Win+R</strong>, type <strong>services.msc</strong> and press Enter</li>
-                <li>Look for services with "Automatic" startup type that you don't need</li>
-                <li>Double-click the service, change Startup type to <strong>Manual</strong></li>
-                <li>Click <strong>Stop</strong> to end the current service session</li>
-                <li>Focus on services like Bluetooth, Print Spooler (if not printing), and various "helper" services</li>
+                <li>Press Win+R and type <code class="bg-gray-200 px-1">services.msc</code></li>
+                <li>Set these services to Manual start:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Print Spooler (if you don't print regularly)</li>
+                    <li>Windows Search (reduces indexing overhead)</li>
+                    <li>Bluetooth Support Service (if not using Bluetooth)</li>
+                    <li>Connected User Experiences and Telemetry</li>
+                  </ul>
+                </li>
               </ol>
             </div>
           </div>
@@ -642,70 +654,54 @@ const Index: React.FC = () => {
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
           <div>
-            <p class="font-medium">Configure Fast Startup</p>
-            <p class="mb-2 text-sm">Your current Windows configuration lacks optimized boot settings:</p>
+            <p class="font-medium">Address Application Conflicts</p>
+            <p class="mb-2">Resolve conflicts between applications that are competing for resources:</p>
             <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">Enable Fast Startup:</p>
-              <ol class="list-decimal pl-4">
-                <li>Open Control Panel > Power Options</li>
-                <li>Click <strong>Choose what the power button does</strong></li>
-                <li>Click <strong>Change settings that are currently unavailable</strong></li>
-                <li>Check <strong>Turn on fast startup</strong></li>
-                <li>Click <strong>Save changes</strong></li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        
-        <div class="flex items-start">
-          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
-          <div>
-            <p class="font-medium">Implement Delayed Start for Essential Programs</p>
-            <p class="mb-2 text-sm">Programs currently start simultaneously, causing CPU/disk bottlenecks:</p>
-            <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">Solution Options:</p>
-              <ol class="list-decimal pl-4">
-                <li>For applications you need but not immediately:
-                  <ul class="list-disc pl-4 mt-1">
-                    <li>Create shortcuts in <code>%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup</code></li>
-                    <li>Create a batch file that uses the <code>timeout</code> command to delay launch</li>
-                    <li>Or use Task Scheduler to delay program start by 1-3 minutes after login</li>
-                  </ul>
-                </li>
-                <li>For necessary services, change startup type from "Automatic" to "Automatic (Delayed Start)"</li>
-              </ol>
+              <p class="font-medium">Identified Conflicts:</p>
+              <ul class="list-disc pl-4">
+                <li><strong>McAfee and Windows Defender</strong> - Multiple active antivirus solutions causing scanning conflicts</li>
+                <li><strong>Multiple cloud storage services</strong> - Dropbox, Google Drive, and OneDrive all syncing at startup</li>
+                <li><strong>Duplicate media services</strong> - iTunes and Windows Media Player services both running</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
       
-      <div class="bg-blue-50 p-3 rounded-md">
-        <p class="font-medium">Performance Impact:</p>
-        <p class="text-sm">Implementing these optimizations can reduce your startup time by 60-70% and improve overall system responsiveness. The most significant gains will come from disabling unnecessary startup programs and optimizing background services.</p>
-      </div>`;
+      <div class="bg-green-50 p-3 rounded-md mb-4">
+        <p class="font-medium text-green-700">Expected Results:</p>
+        <ul class="list-disc pl-5 mt-1">
+          <li>Reduced startup time by 50-65%</li>
+          <li>Faster application launch times by 25-40%</li>
+          <li>Reduced background CPU usage by 15-20%</li>
+          <li>More responsive system throughout work sessions</li>
+        </ul>
+      </div>
+      
+      <p>Would you like assistance implementing any of these optimizations? I can provide step-by-step guidance for your specific system configuration.</p>`;
     } else if (selectedPathKey === "memoryManagement") {
       return `<h3 class="text-lg font-medium mb-3">Slow Application Loading: Memory Optimization</h3>
       
-      <p class="mb-3">After analyzing your system's memory usage patterns, I've identified several optimization opportunities that can significantly improve application performance:</p>
+      <p class="mb-3">After analyzing your Dell XPS system with 8GB RAM, I've identified several memory optimization opportunities to improve application loading times:</p>
       
       <div class="bg-blue-100 p-3 rounded-md mb-4">
-        <p class="font-medium">Memory Analysis Results:</p>
+        <p class="font-medium">Memory Usage Analysis:</p>
         <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
           <div>
-            <p class="font-medium">Total Physical RAM:</p>
-            <p>8GB (67% utilized at idle)</p>
+            <p class="font-medium">Idle Memory Usage:</p>
+            <p>3.2GB (40% of total)</p>
           </div>
           <div>
-            <p class="font-medium">Available RAM:</p>
-            <p>2.6GB (Critical - below 33% threshold)</p>
+            <p class="font-medium">Peak Memory Usage:</p>
+            <p>7.6GB (95% of total)</p>
           </div>
           <div>
             <p class="font-medium">Memory-Intensive Apps:</p>
-            <p>Chrome (1.2GB), Outlook (420MB)</p>
+            <p>Chrome, Photoshop, Outlook</p>
           </div>
           <div>
-            <p class="font-medium">Page File Usage:</p>
-            <p>1.8GB (High - indicating RAM pressure)</p>
+            <p class="font-medium">Page File Activity:</p>
+            <p>High (indicating memory shortage)</p>
           </div>
         </div>
       </div>
@@ -716,23 +712,26 @@ const Index: React.FC = () => {
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
           <div>
-            <p class="font-medium">Close Memory-Intensive Background Applications</p>
-            <p class="mb-2 text-sm">Your system has several high-memory applications running in the background:</p>
-            <div class="bg-gray-100 p-2 rounded-md text-sm mb-1">
-              <p class="font-medium">Chrome Browser (1.2GB):</p>
-              <ul class="list-disc pl-4">
-                <li>Reduce open tabs (currently 14 tabs consuming ~85MB each)</li>
-                <li>Use The Great Suspender extension to freeze inactive tabs</li>
-                <li>Disable unnecessary extensions (8 active extensions found)</li>
-              </ul>
-            </div>
+            <p class="font-medium">Optimize Current Memory Usage</p>
+            <p class="mb-2">Implement these techniques to reduce memory consumption:</p>
             <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">General Application Management:</p>
+              <p class="font-medium">Browser Optimization:</p>
               <ul class="list-disc pl-4">
-                <li>Press <strong>Ctrl+Shift+Esc</strong> to open Task Manager</li>
-                <li>Sort by Memory usage to identify high-usage applications</li>
-                <li>Close applications you're not actively using</li>
-                <li>For applications needed later, save work and restart them when needed</li>
+                <li>Install a tab manager extension (like OneTab) to reduce Chrome's memory usage</li>
+                <li>Limit extensions to essential ones only (currently using 12 extensions)</li>
+                <li>Enable browser tab discarding for inactive tabs</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Application Management:</p>
+              <ul class="list-disc pl-4">
+                <li>Close resource-intensive applications when not in use</li>
+                <li>Use lighter alternatives when possible (e.g., Photopea instead of Photoshop for simple edits)</li>
+                <li>Adjust application settings to reduce memory usage:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Reduce Photoshop memory allocation to 60%</li>
+                    <li>Limit Outlook mail sync to 1 month</li>
+                  </ul>
+                </li>
               </ul>
             </div>
           </div>
@@ -741,271 +740,97 @@ const Index: React.FC = () => {
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
           <div>
-            <p class="font-medium">Clear System Cache</p>
-            <p class="mb-2 text-sm">System and application caches are consuming significant memory:</p>
+            <p class="font-medium">Memory Leak Detection and Resolution</p>
+            <p class="mb-2">Address memory leaks that gradually consume system resources:</p>
             <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">Cache Clearing Steps:</p>
-              <ol class="list-decimal pl-4">
-                <li>Temporary Files:
-                  <ul class="list-disc pl-4 mt-1">
-                    <li>Press <strong>Win+R</strong>, type <strong>%temp%</strong>, and press Enter</li>
-                    <li>Select all files (Ctrl+A) and delete them</li>
-                    <li>Empty the Recycle Bin afterward</li>
-                  </ul>
-                </li>
-                <li>DNS Cache:
-                  <ul class="list-disc pl-4 mt-1">
-                    <li>Open Command Prompt as administrator</li>
-                    <li>Type <code>ipconfig /flushdns</code> and press Enter</li>
-                  </ul>
-                </li>
-                <li>Windows Store Cache:
-                  <ul class="list-disc pl-4 mt-1">
-                    <li>Press <strong>Win+R</strong>, type <strong>wsreset.exe</strong>, and press Enter</li>
-                  </ul>
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        
-        <div class="flex items-start">
-          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
-          <div>
-            <p class="font-medium">Optimize Running Services</p>
-            <p class="mb-2 text-sm">Several system services are consuming excessive memory:</p>
-            <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">Service Optimization:</p>
-              <ol class="list-decimal pl-4">
-                <li>Open Command Prompt as administrator</li>
-                <li>Type <code>services.msc</code> and press Enter</li>
-                <li>High-memory services that can be safely disabled when not in use:
-                  <ul class="list-disc pl-4 mt-1">
-                    <li>Windows Search (if not actively searching)</li>
-                    <li>Superfetch/SysMain (on SSD systems)</li>
-                    <li>Print Spooler (if not printing)</li>
-                    <li>Bluetooth Support Service (if not using Bluetooth)</li>
-                  </ul>
-                </li>
-                <li>Double-click each service, set Startup type to Manual, click Stop, then OK</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        
-        <div class="flex items-start">
-          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
-          <div>
-            <p class="font-medium">Hardware Solution: Increase RAM</p>
-            <p class="mb-2 text-sm">Your current 8GB of RAM is insufficient for your usage patterns:</p>
-            <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">Upgrade Options:</p>
+              <p class="font-medium">Detected Memory Leaks:</p>
               <ul class="list-disc pl-4">
-                <li>Based on your motherboard specifications, you can upgrade to:
-                  <ul class="list-disc pl-4 mt-1">
-                    <li>16GB (2x8GB) DDR4-3200 - Recommended for most users</li>
-                    <li>32GB (2x16GB) DDR4-3200 - For heavy multitasking and professional applications</li>
-                  </ul>
-                </li>
-                <li>Expected performance improvement:
-                  <ul class="list-disc pl-4 mt-1">
-                    <li>50-70% faster application loading times</li>
-                    <li>Smoother multitasking with multiple applications</li>
-                    <li>Reduced reliance on slower disk-based virtual memory</li>
-                  </ul>
-                </li>
+                <li><strong>Microsoft Teams</strong> - Exhibits a known memory leak after running for 4+ hours</li>
+                <li><strong>Windows Explorer</strong> - Memory usage increases gradually when browsing large folders</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Mitigation Strategies:</p>
+              <ul class="list-disc pl-4">
+                <li>Restart memory-leaking applications periodically</li>
+                <li>Install latest updates that may contain fixes</li>
+                <li>Use Task Manager to monitor and identify other potential memory leaks</li>
               </ul>
             </div>
           </div>
         </div>
-      </div>
-      
-      <div class="bg-blue-50 p-3 rounded-md">
-        <p class="font-medium">Quick Win:</p>
-        <p class="text-sm">If you're not ready for a hardware upgrade, implementing the software-based optimizations above can free up to 30-40% of your current memory usage, providing a significant performance boost while using your existing hardware.</p>
-      </div>`;
-    } else if (selectedPathKey === "teams") {
-      return `<h3 class="text-lg font-medium mb-3">Teams Webcam Issues: Teams Application Solutions</h3>
-      
-      <p class="mb-3">After analyzing your system's Teams configuration, I've identified application-specific issues that are affecting your webcam during video calls:</p>
-      
-      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
-        <p class="font-medium">Teams Diagnostic Results:</p>
-        <ul class="list-disc pl-5 mt-1">
-          <li>Teams version: <span class="text-red-600 font-medium">2.0.14 (3 versions behind)</span></li>
-          <li>Cache size: <span class="text-red-600 font-medium">3.2GB (excessive)</span></li>
-          <li>Media configuration: <span class="text-yellow-600 font-medium">Suboptimal settings detected</span></li>
-          <li>App-specific webcam conflicts: <span class="text-red-600 font-medium">3 conflicts found</span></li>
-        </ul>
-      </div>
-      
-      <h4 class="font-medium mt-4 mb-2">Step-by-Step Resolution Plan:</h4>
-      
-      <div class="space-y-4 mb-4">
-        <div class="flex items-start">
-          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
-          <div>
-            <p class="font-medium">Update Microsoft Teams</p>
-            <p class="mb-2 text-sm">Your Teams version is outdated and missing critical camera compatibility fixes:</p>
-            
-            <div class="bg-gray-100 p-2 rounded-md text-sm mb-2">
-              <p class="font-medium">For Teams Desktop App:</p>
-              <ol class="list-decimal pl-4 space-y-1">
-                <li>Open Microsoft Teams</li>
-                <li>Click your <strong>profile picture</strong> in the top-right corner</li>
-                <li>Select <strong>Check for updates</strong></li>
-                <li>If updates are available, Teams will download and install them</li>
-                <li>Restart Teams when prompted</li>
-              </ol>
-            </div>
-            
-            <div class="bg-gray-100 p-2 rounded-md text-sm">
-              <p class="font-medium">Manual Update (If Auto-Update Fails):</p>
-              <ol class="list-decimal pl-4 space-y-1">
-                <li>Close Teams completely (check Task Manager to ensure it's not running)</li>
-                <li>Download the latest Teams client from the Microsoft website</li>
-                <li>Uninstall your current Teams version from Control Panel</li>
-                <li>Install the newly downloaded version</li>
-                <li>Sign in and configure your camera before joining calls</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        
-        <div class="flex items-start">
-          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
-          <div>
-            <p class="font-medium">Clear Teams Cache</p>
-            <p class="mb-2 text-sm">Your Teams cache is oversized and may contain corrupted camera configurations:</p>
-            <ol class="list-decimal pl-5 text-sm space-y-1">
-              <li>Completely close Microsoft Teams (right-click the Teams icon in the system tray and select <strong>Quit</strong>)</li>
-              <li>Press <strong>Win + R</strong> to open the Run dialog</li>
-              <li>Type one of these paths depending on your Teams version:
-                <ul class="list-disc pl-4 mt-1">
-                  <li>For personal Teams: <code>%appdata%\\Microsoft\\Teams</code></li>
-                  <li>For work Teams: <code>%appdata%\\Microsoft\\Teams\\meeting-addin\\Cache</code></li>
-                </ul>
-              </li>
-              <li>In the opened folder, delete these folders:
-                <ul class="list-disc pl-4 mt-1">
-                  <li><code>Cache</code></li>
-                  <li><code>blob_storage</code></li>
-                  <li><code>databases</code></li>
-                  <li><code>GPUCache</code></li>
-                  <li><code>IndexedDB</code></li>
-                  <li><code>Local Storage</code></li>
-                  <li><code>tmp</code></li>
-                </ul>
-              </li>
-              <li>Restart your computer</li>
-              <li>Open Teams and sign in again</li>
-            </ol>
-          </div>
-        </div>
         
         <div class="flex items-start">
           <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
           <div>
-            <p class="font-medium">Reset Teams Media Configuration</p>
-            <p class="mb-2 text-sm">Your current media settings may be conflicting with your webcam:</p>
-            <ol class="list-decimal pl-5 text-sm space-y-1">
-              <li>Open Microsoft Teams</li>
-              <li>Click your <strong>profile picture</strong> in the top-right corner</li>
-              <li>Select <strong>Settings</strong></li>
-              <li>Go to <strong>Devices</strong></li>
-              <li>Under Camera, ensure your webcam is selected</li>
-              <li>Toggle off any camera filters or effects</li>
-              <li>Click the <strong>Make a test call</strong> button to verify settings</li>
-            </ol>
-          </div>
-        </div>
-        
-        <div class="flex items-start">
-          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
-          <div>
-            <p class="font-medium">Resolve Application Conflicts</p>
-            <p class="mb-2 text-sm">Other applications may be conflicting with Teams' access to your webcam:</p>
-            <ol class="list-decimal pl-5 text-sm space-y-1">
-              <li>Before starting a Teams call, close these applications that were detected as problematic:
-                <ul class="list-disc pl-4 mt-1">
-                  <li>Zoom</li>
-                  <li>Skype</li>
-                  <li>Windows Camera app</li>
-                  <li>Any browser tabs with active camera access</li>
-                  <li>Webcam utility software</li>
-                </ul>
-              </li>
-              <li>Disable hardware acceleration in Teams:
-                <ul class="list-disc pl-4 mt-1">
-                  <li>In Teams, click your profile picture > Settings</li>
-                  <li>Select <strong>General</strong></li>
-                  <li>Uncheck <strong>Disable GPU hardware acceleration</strong></li>
-                  <li>Restart Teams for changes to take effect</li>
-                </ul>
-              </li>
-            </ol>
+            <p class="font-medium">Hardware Upgrade Recommendations</p>
+            <p class="mb-2">Based on your usage patterns, a memory upgrade would significantly improve performance:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Compatible RAM Upgrades:</p>
+              <ul class="list-disc pl-4">
+                <li><strong>Recommended</strong>: Upgrade to 16GB (2x8GB) DDR4-3200 SODIMM</li>
+                <li><strong>Optimal</strong>: Upgrade to 32GB (2x16GB) DDR4-3200 SODIMM</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Expected Performance Improvement:</p>
+              <ul class="list-disc pl-4">
+                <li>25-40% faster application loading times</li>
+                <li>50-70% reduction in system freezes during multitasking</li>
+                <li>Near elimination of disk paging for most workloads</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Installation Difficulty:</p>
+              <p>Medium - Requires opening laptop bottom panel and replacing SODIMMs</p>
+            </div>
           </div>
         </div>
       </div>
       
-      <div class="bg-blue-50 p-3 rounded-md">
-        <p class="font-medium">Why These Solutions Work:</p>
-        <p class="text-sm">Teams stores device configurations in its cache, which can become corrupted over time. Clearing the cache forces Teams to create fresh configuration files. Additionally, newer versions of Teams contain fixes for known webcam compatibility issues, particularly with Windows security updates and third-party camera drivers. The combination of updating, cache clearing, and optimized settings addresses the most common causes of Teams-specific camera issues.</p>
+      <div class="bg-green-50 p-3 rounded-md">
+        <p class="font-medium">Performance Impact Analysis:</p>
+        <p class="text-sm">Based on your system's current memory usage patterns, implementing the software optimizations alone could improve application loading times by 15-20%. Adding a hardware upgrade would deliver a 25-40% overall performance boost for memory-intensive applications.</p>
       </div>`;
+    } else {
+      return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
     }
-    
-    return path.answer || "";
   };
 
-  const getCurrentSources = () => {
+  const getSelectedPathSources = (): Source[] => {
     if (!currentQueryData || !selectedPathKey) return [];
     const path = currentQueryData.resolutionPaths[selectedPathKey];
-    if (!path) return [];
-    return path.sources || [];
+    return path?.sources || [];
   };
 
-  return (
-    <div className="min-h-screen flex flex-col bg-white">
+  return <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="container mx-auto px-4 flex-grow max-w-5xl">
-        <div className="py-8 md:py-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-900">
-            Coveo DeepResolution
+      <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
+        <div className="max-w-7xl w-full flex flex-col items-center">
+          <h1 className="text-4xl font-bold text-center mb-8 text-neutral-900">
+            Ask anything
           </h1>
           
-          <div className="max-w-2xl mx-auto mb-12">
-            <QueryInput 
-              onSearch={handleSearch} 
-              isLoading={isLoading} 
-              suggestedQueries={suggestedQueries}
-            />
-          </div>
-          
-          <QueryInterpretation 
-            isVisible={showQueryInterpretation}
-            query={query} 
-            steps={currentQueryData?.interpretationSteps || []}
-          />
-          
-          <ResolutionOptions 
-            isVisible={showResolutionOptions}
-            options={resolutionOptions}
-            onSelectPath={handleSelectPath}
-            selectedPathKey={selectedPathKey}
-          />
-          
-          <AIGeneratedAnswer 
-            content={getAnswerContent()}
-            sources={getCurrentSources()}
-            isVisible={showAnswer}
-          />
+          <section className="w-full flex flex-col items-center">
+            <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
+            
+            {currentQueryData && showQueryInterpretation && <div className="w-full max-w-5xl mx-auto mt-8">
+                <QueryInterpretation steps={currentQueryData.interpretation.steps} isVisible={showQueryInterpretation} />
+                
+                {showResolutionOptions && <ResolutionOptions options={resolutionOptions} onSelectPath={handleSelectPath} selectedPath={selectedPathKey} isVisible={showResolutionOptions} />}
+                
+                {showAnswer && selectedPathKey && (
+                  <AIGeneratedAnswer 
+                    content={getAnswerContent()} 
+                    sources={getSelectedPathSources()} 
+                    isVisible={showAnswer} 
+                  />
+                )}
+              </div>}
+          </section>
         </div>
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
 
 export default Index;
