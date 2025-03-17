@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, CheckCircle2, Info, Cpu, ExternalLink } from 'lucide-react';
+import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 import SourcesList from './SourcesList';
 import { Source } from '../data/mockData';
+import { createExternalLink } from '../lib/utils';
 
 interface AIGeneratedAnswerProps {
   content: string;
@@ -23,9 +23,112 @@ const processContentWithLinks = (content: string): string => {
   });
 };
 
-// Function to format webcam-related content
-const formatWebcamContent = (content: string, query: string): string => {
-  // Check if this is webcam-related content
+// Format Dell graphics performance content
+const formatDellGraphicsContent = (content: string, query: string): string => {
+  if (query.toLowerCase().includes('dell') && 
+      (content.toLowerCase().includes('graphics') || content.toLowerCase().includes('performance'))) {
+    return `
+      <div class="space-y-6">
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
+          <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
+            <TrendingUp size={20} />
+            Dell Graphics Performance Optimization
+          </h3>
+          <p class="text-blue-700 mb-2">Follow these proven steps to boost your Dell graphics performance by up to 30%.</p>
+        </div>
+        
+        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <Download size={18} />
+            Step 1: Update Graphics Drivers
+          </h4>
+          <div class="ml-7 space-y-3">
+            <p class="text-gray-700">Updated drivers often provide significant performance improvements and fix known issues.</p>
+            <div class="bg-gray-50 p-3 rounded border border-gray-200">
+              <ol class="list-decimal pl-5 space-y-2">
+                <li>Visit ${createExternalLink("https://www.dell.com/support/home", "Dell Support")}</li>
+                <li>Enter your <span class="font-semibold">Service Tag</span> or detect your product</li>
+                <li>Navigate to <span class="italic">Drivers & Downloads</span></li>
+                <li>Filter for <span class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">Video/Graphics Drivers</span></li>
+                <li>Download and install the latest version</li>
+              </ol>
+            </div>
+            <div class="bg-yellow-50 p-3 rounded flex items-start gap-2 border border-yellow-200">
+              <AlertTriangle size={18} className="text-yellow-600 mt-0.5 flex-shrink-0" />
+              <p class="text-yellow-800 text-sm">Always restart your computer after driver installation, even if not prompted.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <Settings size={18} />
+            Step 2: Optimize Power Settings
+          </h4>
+          <div class="ml-7 space-y-3">
+            <p class="text-gray-700">Windows power settings can limit graphics performance to save battery.</p>
+            <div class="bg-gray-50 p-3 rounded border border-gray-200">
+              <ol class="list-decimal pl-5 space-y-2">
+                <li>Right-click Start > Power Options</li>
+                <li>Select <span class="font-semibold">High performance</span> or <span class="font-semibold">Ultimate performance</span></li>
+                <li>Click <span class="italic">Additional power settings</span> > <span class="italic">Change plan settings</span> > <span class="italic">Change advanced power settings</span></li>
+                <li>Expand <span class="font-semibold">Processor power management</span></li>
+                <li>Set <span class="bg-green-100 text-green-800 px-1.5 py-0.5 rounded">Minimum processor state</span> to 100% when plugged in</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <Cpu size={18} />
+            Step 3: Configure Graphics Control Panel
+          </h4>
+          <div class="ml-7 space-y-3">
+            <p class="text-gray-700">Tune your graphics settings for optimal performance.</p>
+            <div class="bg-gray-50 p-3 rounded border border-gray-200">
+              <p class="mb-2 font-medium">For Intel Graphics:</p>
+              <ol class="list-decimal pl-5 space-y-2">
+                <li>Right-click desktop > <span class="italic">Intel Graphics Settings</span></li>
+                <li>Under 3D settings, set <span class="font-semibold">Application Optimal Mode</span> to <span class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">Performance</span></li>
+              </ol>
+              
+              <p class="mt-4 mb-2 font-medium">For NVIDIA Graphics:</p>
+              <ol class="list-decimal pl-5 space-y-2">
+                <li>Right-click desktop > <span class="italic">NVIDIA Control Panel</span></li>
+                <li>Go to <span class="font-semibold">Manage 3D settings</span></li>
+                <li>Set <span class="italic">Power management mode</span> to <span class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">Prefer maximum performance</span></li>
+              </ol>
+            </div>
+            <div class="bg-green-50 p-3 rounded flex items-start gap-2 border border-green-200">
+              <CheckCircle2 size={18} className="text-green-600 mt-0.5 flex-shrink-0" />
+              <p class="text-green-800 text-sm">For laptops with dual graphics, ensure your applications use the dedicated GPU for maximum performance.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <TrendingUp size={18} />
+            Step 4: Check for Windows Updates
+          </h4>
+          <div class="ml-7 space-y-3">
+            <p class="text-gray-700">Windows updates often include performance enhancements and bug fixes.</p>
+            <div class="bg-gray-50 p-3 rounded border border-gray-200">
+              <ol class="list-decimal pl-5 space-y-2">
+                <li>Press <kbd>Win</kbd>+<kbd>I</kbd> to open Settings</li>
+                <li>Go to <span class="italic">Windows Update</span></li>
+                <li>Click <span class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded">Check for updates</span></li>
+                <li>Install all available updates, including optional ones</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  
+  // Format webcam content
   if (query.toLowerCase().includes('webcam') || content.toLowerCase().includes('webcam') || 
       content.toLowerCase().includes('camera') || content.toLowerCase().includes('teams')) {
     
@@ -115,61 +218,6 @@ const formatWebcamContent = (content: string, query: string): string => {
     }
   }
   
-  // Format Dell graphics performance content
-  if (query.toLowerCase().includes('dell') && 
-      (content.toLowerCase().includes('graphics') || content.toLowerCase().includes('performance'))) {
-    return `
-      <div class="space-y-4">
-        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
-          <h3 class="font-bold text-lg text-blue-800">Dell Graphics Performance Optimization</h3>
-          <p class="text-blue-700 mb-2">Follow these steps to improve your Dell graphics performance:</p>
-        </div>
-        
-        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
-          <ol class="list-decimal pl-5 space-y-3">
-            <li>
-              <span class="font-medium">Update your graphics drivers</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Visit <a href="https://www.dell.com/support/home" class="text-blue-600 hover:underline inline-flex items-center">Dell Support <ExternalLink size={12} className="ml-1" /></a></li>
-                <li>Enter your Service Tag or detect your product</li>
-                <li>Download and install the latest Intel/NVIDIA/AMD graphics drivers</li>
-              </ul>
-            </li>
-            <li>
-              <span class="font-medium">Adjust power settings for better performance</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Right-click Start > Power Options</li>
-                <li>Select "High performance" or "Ultimate performance"</li>
-                <li>Click "Additional power settings" > "Change plan settings" > "Change advanced power settings"</li>
-                <li>Set "Graphics settings" to "Maximum Performance"</li>
-              </ul>
-            </li>
-            <li>
-              <span class="font-medium">Optimize Intel Graphics settings</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Right-click desktop > Intel Graphics Settings</li>
-                <li>Under 3D settings, set "Application Optimal Mode" to "Performance"</li>
-                <li>Adjust quality settings based on your needs</li>
-              </ul>
-            </li>
-            <li>
-              <span class="font-medium">Check for Windows updates</span>
-              <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Go to <a href="ms-settings:windowsupdate" class="text-blue-600 hover:underline inline-flex items-center">Windows Update <ExternalLink size={12} className="ml-1" /></a></li>
-                <li>Install all available updates, including optional ones</li>
-              </ul>
-            </li>
-          </ol>
-        </div>
-        
-        <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200 text-sm mt-2">
-          <p class="text-yellow-800"><span class="font-medium">❗ Important:</span> If your Dell laptop has dual graphics (Intel + NVIDIA/AMD), ensure applications are using the dedicated GPU by configuring it in the graphics control panel.</p>
-        </div>
-      </div>
-    `;
-  }
-  
   // Format computer slowness content
   if (query.toLowerCase().includes('slow') || 
       (content.toLowerCase().includes('slow') && content.toLowerCase().includes('computer'))) {
@@ -255,7 +303,16 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   let processedContent = processContentWithLinks(content);
   
   // Format content based on query type
-  processedContent = formatWebcamContent(processedContent, currentQuery);
+  if (currentQuery.toLowerCase().includes('dell') && 
+      (currentQuery.toLowerCase().includes('graphics') || currentQuery.toLowerCase().includes('performance'))) {
+    processedContent = formatDellGraphicsContent(processedContent, currentQuery);
+  } else if (currentQuery.toLowerCase().includes('webcam') || processedContent.toLowerCase().includes('webcam') || 
+            processedContent.toLowerCase().includes('camera') || processedContent.toLowerCase().includes('teams')) {
+    processedContent = formatWebcamContent(processedContent, currentQuery);
+  } else if (currentQuery.toLowerCase().includes('slow') || 
+            (processedContent.toLowerCase().includes('slow') && processedContent.toLowerCase().includes('computer'))) {
+    processedContent = formatWebcamContent(processedContent, currentQuery);
+  }
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.4}>
