@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap } from 'lucide-react';
@@ -36,7 +35,7 @@ const QueryInterpretation: React.FC<QueryInterpretationProps> = ({
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ 
-              duration: 3.5, 
+              duration: 2.5, 
               repeat: Infinity, 
               ease: "linear" 
             }}
@@ -51,7 +50,7 @@ const QueryInterpretation: React.FC<QueryInterpretationProps> = ({
             <motion.div
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ 
-                duration: 2.5, 
+                duration: 1.8, 
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
