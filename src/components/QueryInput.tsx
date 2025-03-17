@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2, X } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X, Laptop, Battery, Wifi, Clock, Camera } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -56,6 +56,37 @@ const QueryInput: React.FC<QueryInputProps> = ({
       return `e.g., ${suggestedQueries[randomIndex]}`;
     }
     return "e.g., How do I improve my software's performance?";
+  };
+
+  // Get the appropriate icon and background color for a suggestion
+  const getSuggestionStyle = (suggestion: string) => {
+    let icon = <Laptop size={16} />;
+    let bgColor = "bg-[#E6F1F8]"; // Default color
+    let textColor = "text-[#0076CE]"; // Default text color
+    
+    if (suggestion.toLowerCase().includes("graphics") || suggestion === "How to improve Dell graphics performance?") {
+      icon = <Laptop size={16} />;
+      bgColor = "bg-[#E6F1F8]";
+      textColor = "text-[#0076CE]";
+    } else if (suggestion.toLowerCase().includes("battery") || suggestion === "Why is my Dell battery draining fast?") {
+      icon = <Battery size={16} />;
+      bgColor = "bg-[#E5DEFF]";
+      textColor = "text-[#6941C6]";
+    } else if (suggestion.toLowerCase().includes("wifi") || suggestion === "My WiFi keeps disconnecting") {
+      icon = <Wifi size={16} />;
+      bgColor = "bg-[#FDE1D3]";
+      textColor = "text-[#C4320A]";
+    } else if (suggestion.toLowerCase().includes("slow") || suggestion === "Troubleshoot slow application loading" || suggestion === "My computer is slow") {
+      icon = <Clock size={16} />;
+      bgColor = "bg-[#FEF7CD]";
+      textColor = "text-[#854A0E]";
+    } else if (suggestion.toLowerCase().includes("webcam") || suggestion === "Webcam not working after update") {
+      icon = <Camera size={16} />;
+      bgColor = "bg-[#F2FCE2]";
+      textColor = "text-[#3F621A]";
+    }
+    
+    return { icon, bgColor, textColor };
   };
 
   return (
@@ -123,16 +154,22 @@ const QueryInput: React.FC<QueryInputProps> = ({
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          {suggestedQueries.slice(0, 3).map((suggestion, index) => (
-            <button
-              key={index}
-              onClick={() => handleSuggestionClick(suggestion)}
-              className="text-sm px-3 py-1.5 rounded-full bg-[#E6F1F8] hover:bg-[#D1E4F1] text-[#0076CE] transition-colors"
-              disabled={isLoading}
-            >
-              {suggestion === "Troubleshoot slow application loading" ? "My computer is slow" : suggestion}
-            </button>
-          ))}
+          {suggestedQueries.slice(0, 5).map((suggestion, index) => {
+            const { icon, bgColor, textColor } = getSuggestionStyle(suggestion);
+            const displayText = suggestion === "Troubleshoot slow application loading" ? "My computer is slow" : suggestion;
+            
+            return (
+              <button
+                key={index}
+                onClick={() => handleSuggestionClick(suggestion)}
+                className={`flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full ${bgColor} ${textColor} hover:opacity-90 transition-colors font-medium`}
+                disabled={isLoading}
+              >
+                {icon}
+                {displayText}
+              </button>
+            );
+          })}
         </motion.div>
       )}
     </div>
