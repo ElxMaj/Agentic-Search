@@ -36,7 +36,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     if (key === "application") {
       return {
         description: "Resolves Teams webcam issues by addressing cache corruption and application-level problems",
-        detail: "84% success rate for webcam detection issues. Targets Teams' internal configuration."
+        detail: "There could a problem in the Teams camera settings"
       };
     }
     if (key === "permissions") {
