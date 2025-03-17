@@ -1,4 +1,3 @@
-
 // Mock data for DELL DeepResolution prototype
 
 export interface Source {
@@ -788,7 +787,7 @@ export const mockQueries: MockQueryData[] = [
           {
             id: "app-step1",
             title: "Teams Application Troubleshooting",
-            description: "Let's address issues with the Teams application itself that may affect webcam functionality.",
+            description: "Let's address issues with the Microsoft Teams application that may be affecting your webcam functionality during calls.",
             options: [
               { id: "app-opt1", text: "Reset Teams application cache", nextStepId: "app-step2" },
               { id: "app-opt2", text: "Reinstall Teams", nextStepId: "app-step3" },
@@ -798,7 +797,7 @@ export const mockQueries: MockQueryData[] = [
           {
             id: "app-step2",
             title: "Reset Teams Cache",
-            description: "Let's clear the Teams cache to resolve potential configuration issues.",
+            description: "Clearing the Teams cache can resolve many webcam and permission issues by removing corrupted settings files and temporary data.",
             options: [
               { id: "app-opt4", text: "Clear Teams cache files", nextStepId: "app-step5" },
               { id: "app-opt5", text: "Reset Teams settings", nextStepId: "app-step6" }
@@ -807,7 +806,7 @@ export const mockQueries: MockQueryData[] = [
           {
             id: "app-step3",
             title: "Reinstall Microsoft Teams",
-            description: "Let's completely reinstall Teams to resolve potential installation issues.",
+            description: "A complete reinstallation of Teams can fix issues caused by corrupted or improperly configured application files, especially after major Windows or Teams updates.",
             options: [
               { id: "app-opt6", text: "Uninstall Teams completely", nextStepId: "app-step7" },
               { id: "app-opt7", text: "Install the latest Teams version", nextStepId: "app-step8" }
@@ -816,7 +815,7 @@ export const mockQueries: MockQueryData[] = [
           {
             id: "app-step4",
             title: "Teams Version Compatibility",
-            description: "Let's check if your Teams version is compatible with your system and webcam.",
+            description: "Teams releases regular updates that can affect webcam compatibility. Some versions work better with specific hardware than others, and checking your version can help identify compatibility issues.",
             options: [
               { id: "app-opt8", text: "Check Teams version", nextStepId: "app-step9" },
               { id: "app-opt9", text: "Verify system requirements", nextStepId: "app-step10" }
@@ -825,37 +824,37 @@ export const mockQueries: MockQueryData[] = [
           {
             id: "app-step5",
             title: "Clear Teams Cache Files",
-            description: "Here's how to clear the Teams cache files:",
+            description: "Teams stores configuration data and temporary files that can become corrupted. Clearing these files often resolves camera detection issues without affecting your account settings or conversation history.",
             options: []
           },
           {
             id: "app-step6",
             title: "Reset Teams Settings",
-            description: "Here's how to reset Teams settings to default:",
+            description: "You can reset Teams to its default settings while preserving your account data. This can resolve issues with camera configurations, notification settings, and other preferences that might be affecting performance.",
             options: []
           },
           {
             id: "app-step7",
             title: "Uninstall Teams Completely",
-            description: "Here's how to completely uninstall Microsoft Teams:",
+            description: "For a clean slate, you should remove all Teams components including cached profiles and registry entries. This thorough uninstallation ensures no problematic configurations remain before reinstalling.",
             options: []
           },
           {
             id: "app-step8",
             title: "Install Latest Teams Version",
-            description: "Here's how to install the latest version of Microsoft Teams:",
+            description: "The latest version of Teams includes the most recent bug fixes and compatibility improvements. Microsoft regularly addresses webcam issues in their updates, especially for common webcam models and configurations.",
             options: []
           },
           {
             id: "app-step9",
             title: "Check Teams Version",
-            description: "Here's how to check your current Teams version:",
+            description: "Different Teams versions have different webcam handling capabilities. Version 1.5.00.11163 and later include significant improvements to camera detection and performance during video calls.",
             options: []
           },
           {
             id: "app-step10",
             title: "Verify System Requirements",
-            description: "Here's how to verify your system meets Teams requirements:",
+            description: "Teams' webcam functionality requires specific system capabilities. Modern webcams generally work best with at least 8GB RAM, a multi-core processor, and Windows 10/11 with the latest updates installed.",
             options: []
           }
         ],
@@ -866,7 +865,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated May 2024",
             metadata: "Microsoft Support",
             confidence: 92,
-            excerpt: "Many camera issues in Teams can be resolved by clearing the application cache, which removes corrupted settings and cached credentials."
+            excerpt: "Clearing the Teams application cache resolves approximately 65% of all camera-related issues by removing corrupted settings and cached credentials that can interfere with device recognition."
           },
           {
             type: "knowledge-base",
@@ -874,7 +873,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Mar 2024",
             metadata: "Technical Documentation",
             confidence: 81,
-            excerpt: "Teams desktop applications use multiple components that each require separate camera access permissions."
+            excerpt: "Teams desktop applications use a multi-process architecture where camera access is managed by a separate media process. Issues with this process often require a complete application restart or cache reset to resolve."
           },
           {
             type: "community",
@@ -882,7 +881,15 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Feb 2024",
             metadata: "User Reports",
             confidence: 69,
-            excerpt: "Some users report that rolling back to previous Teams versions resolved camera issues introduced in recent updates."
+            excerpt: "Version 1.5.00.11163 significantly improved camera reliability by implementing a new device enumeration system that better handles hotplugging and device switching during active calls."
+          },
+          {
+            type: "official",
+            title: "Microsoft Teams Update Notes",
+            date: "Released Apr 2024",
+            metadata: "Release Documentation",
+            confidence: 88,
+            excerpt: "The latest Teams update includes enhanced camera diagnostic tools that automatically detect and report common configuration issues that may prevent proper camera functionality."
           }
         ]
       }
@@ -1379,3 +1386,4 @@ export const suggestedQueries = [
   "Optimize CPU usage on my Dell",
   "Fix webcam not detected in Zoom"
 ];
+
