@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, CheckCircle2, Info } from 'lucide-react';
+import { Zap, CheckCircle2, Info, Cpu } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 import SourcesList from './SourcesList';
 import { Source } from '../data/mockData';
@@ -25,6 +25,9 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   const averageConfidence = sources.length > 0 
     ? Math.round(sources.reduce((sum, source) => sum + source.confidence, 0) / sources.length) 
     : 0;
+    
+  // Check if content contains Intel Iris Xe Graphics
+  const hasGPUInfo = content.includes("Intel Iris Xe Graphics");
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.4}>
@@ -48,6 +51,13 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
           <CheckCircle2 size={16} className="text-green-500 mr-2" />
           <p className="text-sm text-gray-600">Generated with high confidence based on verified sources</p>
         </div>
+        
+        {hasGPUInfo && (
+          <div className="flex items-center mb-2">
+            <Cpu size={16} className="text-blue-500 mr-2" />
+            <p className="text-sm text-gray-600">Optimized for Intel Iris Xe Graphics on your Dell XPS 13</p>
+          </div>
+        )}
         
         <div className="flex items-center mb-6">
           <Info size={16} className="text-blue-500 mr-2" />

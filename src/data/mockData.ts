@@ -1,4 +1,3 @@
-
 // Mock data for DELL DeepResolution prototype
 
 export interface Source {
@@ -158,7 +157,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Feb 2023",
             metadata: "Official Source",
             confidence: 98,
-            excerpt: "The NVIDIA Driver 535.98 is recommended for all Dell XPS systems with dedicated graphics for optimal performance."
+            excerpt: "The latest Intel Iris Xe Graphics drivers are recommended for all Dell XPS systems for optimal performance."
           },
           {
             type: "knowledge-base",
@@ -166,7 +165,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Dec 2022",
             metadata: "Knowledge Base",
             confidence: 95,
-            excerpt: "Regular driver updates can resolve many common performance issues and improve compatibility with the latest games and applications."
+            excerpt: "Regular driver updates for Intel Iris Xe Graphics can resolve many common performance issues and improve compatibility with the latest games and applications."
           },
           {
             type: "community",
@@ -174,7 +173,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Jan 2023",
             metadata: "Community Discussion",
             confidence: 88,
-            excerpt: "Users report significant performance gains after updating to the latest graphics drivers and optimizing power settings."
+            excerpt: "Users report significant performance gains after updating to the latest Intel Iris Xe Graphics drivers and optimizing power settings."
           }
         ]
       },
@@ -263,7 +262,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Mar 2023",
             metadata: "Official Documentation",
             confidence: 97,
-            excerpt: "Most Dell XPS and Alienware systems support graphics card upgrades, while Dell Inspiron desktops may have power supply limitations."
+            excerpt: "While the Intel Iris Xe Graphics in your Dell XPS 13 cannot be upgraded, external GPU options via Thunderbolt are available for demanding graphics workloads."
           },
           {
             type: "community",
@@ -271,7 +270,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Jan 2023",
             metadata: "Community Resources",
             confidence: 85,
-            excerpt: "Users report successful graphics upgrades in Dell XPS 8950 systems with cards up to NVIDIA RTX 3070 without power supply upgrades."
+            excerpt: "Users with Dell XPS 13 with Intel Iris Xe Graphics report 2-3x performance improvements when connecting compatible external GPUs via Thunderbolt."
           }
         ]
       },
@@ -367,7 +366,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Apr 2023",
             metadata: "Knowledge Base",
             confidence: 74,
-            excerpt: "Dell systems with high-performance graphics cards may require additional cooling to prevent thermal throttling during intensive tasks."
+            excerpt: "Dell systems with Intel Iris Xe Graphics may benefit from thermal management optimization to prevent throttling during intensive tasks."
           },
           {
             type: "community",
@@ -375,7 +374,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Nov 2022",
             metadata: "Community Guide",
             confidence: 68,
-            excerpt: "Many users report 15-20% performance improvements after addressing thermal issues and updating power management settings."
+            excerpt: "Many users report 15-20% performance improvements in Intel Iris Xe Graphics after addressing thermal issues and updating power management settings."
           },
           {
             type: "community",
@@ -383,7 +382,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Collected Data Oct 2022 - Mar 2023",
             metadata: "User Benchmarks",
             confidence: 73,
-            excerpt: "Benchmark data shows that thermal management has the biggest impact on sustained graphics performance in Dell XPS laptops."
+            excerpt: "Benchmark data shows that thermal management has the biggest impact on sustained Intel Iris Xe Graphics performance in Dell XPS laptops."
           },
           {
             type: "knowledge-base",
@@ -391,7 +390,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Jan 2023",
             metadata: "Technical Guide",
             confidence: 79,
-            excerpt: "Systematic diagnosis can identify whether CPU, memory, or thermal constraints are limiting graphics performance in Dell systems."
+            excerpt: "Systematic diagnosis can identify whether CPU, memory, or thermal constraints are limiting Intel Iris Xe Graphics performance in Dell XPS systems."
           }
         ]
       }
