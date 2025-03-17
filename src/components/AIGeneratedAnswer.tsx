@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle } from 'lucide-react';
@@ -128,7 +129,12 @@ const formatDellGraphicsContent = (content: string, query: string): string => {
     `;
   }
   
-  // Format webcam content
+  // If not any of the above scenarios, return original content
+  return content;
+};
+
+// Format webcam content
+const formatWebcamContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('webcam') || content.toLowerCase().includes('webcam') || 
       content.toLowerCase().includes('camera') || content.toLowerCase().includes('teams')) {
     
@@ -218,7 +224,11 @@ const formatDellGraphicsContent = (content: string, query: string): string => {
     }
   }
   
-  // Format computer slowness content
+  return content;
+};
+
+// Format computer slowness content
+const formatComputerSlowContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('slow') || 
       (content.toLowerCase().includes('slow') && content.toLowerCase().includes('computer'))) {
     return `
@@ -311,7 +321,7 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
     processedContent = formatWebcamContent(processedContent, currentQuery);
   } else if (currentQuery.toLowerCase().includes('slow') || 
             (processedContent.toLowerCase().includes('slow') && processedContent.toLowerCase().includes('computer'))) {
-    processedContent = formatWebcamContent(processedContent, currentQuery);
+    processedContent = formatComputerSlowContent(processedContent, currentQuery);
   }
 
   return (
@@ -363,3 +373,4 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
 };
 
 export default AIGeneratedAnswer;
+
