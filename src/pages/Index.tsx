@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -876,7 +877,7 @@ const Index: React.FC = () => {
               <li>For a complete reinstall (if needed):
                 <ol class="list-decimal pl-4 mt-1">
                   <li>Uninstall Teams from Control Panel/Settings</li>
-                  <li>Download the latest version from <a href="#" class="text-blue-600">the Microsoft website</a></li>
+                  <li>Download the latest version from the Microsoft website</li>
                   <li>Install the new version and sign in</li>
                 </ol>
               </li>
@@ -890,17 +891,17 @@ const Index: React.FC = () => {
             <p class="font-medium">Investigate Background Process Conflicts</p>
             <p class="text-sm mb-2">Some applications may be interfering with Teams' access to your camera:</p>
             <ul class="list-disc pl-5 text-sm">
-              <li>Close other video conferencing applications like Zoom, Skype, and WebEx</li>
-              <li>Check browser tabs that might be using your camera</li>
-              <li>Temporarily disable camera enhancement software (e.g., Logitech Capture, NVIDIA Broadcast)</li>
-              <li>Check if Teams is running in compatibility mode (right-click Teams shortcut > Properties > Compatibility tab)</li>
+              <li><strong>Close competing video applications</strong> (Zoom, Skype, and WebEx)</li>
+              <li><strong>Check browser tabs</strong> that might be using your camera</li>
+              <li><strong>Temporarily disable camera enhancement software</strong> (e.g., Logitech Capture, NVIDIA Broadcast)</li>
+              <li><strong>Check if Teams is running in compatibility mode</strong> (right-click Teams shortcut > Properties > Compatibility tab)</li>
             </ul>
           </div>
         </div>
       </div>
       
       <div class="bg-blue-50 p-3 rounded-md">
-        <p class="font-medium">Technical Details:</p>
+        <p class="font-medium">Technical Insight:</p>
         <p class="text-sm">Teams uses Electron framework which can experience memory management issues that affect webcam access. When the application cache becomes corrupted, it often interferes with the Video Media Capture pipeline. Clearing the cache forces Teams to rebuild these communication paths and re-establish proper access to your camera's DirectShow/Media Foundation interfaces.</p>
         <p class="text-sm mt-2">The latest Teams builds have significantly improved the robustness of camera detection and switching, especially after Windows Updates that modify underlying DirectX components.</p>
       </div>`;
