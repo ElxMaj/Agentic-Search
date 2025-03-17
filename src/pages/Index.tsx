@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -668,7 +667,7 @@ const Index: React.FC = () => {
         </div>
       </div>
       
-      <div class="bg-green-50 p-3 rounded-md mb-4">
+      <div class="bg-green-50 p-3 rounded-md">
         <p class="font-medium text-green-700">Expected Results:</p>
         <ul class="list-disc pl-5 mt-1">
           <li>Reduced startup time by 50-65%</li>
@@ -950,3 +949,4 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+
