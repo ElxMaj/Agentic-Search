@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 import SourcesList from './SourcesList';
 import { Source } from '../data/mockData';
@@ -13,18 +12,13 @@ interface AIGeneratedAnswerProps {
   isVisible: boolean;
 }
 
-// Function to make URLs clickable in the content
 const processContentWithLinks = (content: string): string => {
-  // This regex looks for URLs that aren't already wrapped in anchor tags
   const urlRegex = /(?<!<a[^>]*href=["'])https?:\/\/[^\s<>"']+/g;
-  
-  // Replace URLs with anchor tags
   return content.replace(urlRegex, (url) => {
     return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline flex items-center gap-1">${url}<ExternalLink size={14} /></a>`;
   });
 };
 
-// Format Dell graphics performance content
 const formatDellGraphicsContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('dell') && 
       (content.toLowerCase().includes('graphics') || content.toLowerCase().includes('performance'))) {
@@ -129,16 +123,13 @@ const formatDellGraphicsContent = (content: string, query: string): string => {
     `;
   }
   
-  // If not any of the above scenarios, return original content
   return content;
 };
 
-// Format webcam content
 const formatWebcamContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('webcam') || content.toLowerCase().includes('webcam') || 
       content.toLowerCase().includes('camera') || content.toLowerCase().includes('teams')) {
     
-    // Examples of concise, actionable webcam troubleshooting content
     if (content.toLowerCase().includes('permission')) {
       return `
         <div class="space-y-4">
@@ -227,15 +218,19 @@ const formatWebcamContent = (content: string, query: string): string => {
   return content;
 };
 
-// Format computer slowness content
 const formatComputerSlowContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('slow') || 
       (content.toLowerCase().includes('slow') && content.toLowerCase().includes('computer'))) {
     return `
-      <div class="space-y-4">
-        <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r">
-          <h3 class="font-bold text-lg text-purple-800">Computer Speed Optimization</h3>
-          <p class="text-purple-700 mb-2">These steps can help improve your computer's performance:</p>
+      <div class="space-y-6">
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r">
+          <h3 class="font-bold text-lg text-indigo-800 flex items-center gap-2">
+            <span class="text-indigo-600">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </span>
+            Computer Performance Optimization
+          </h3>
+          <p class="text-indigo-700 mb-2">Follow these steps to significantly improve your computer's overall performance and application load times.</p>
         </div>
         
         <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
@@ -284,7 +279,6 @@ const formatComputerSlowContent = (content: string, query: string): string => {
     `;
   }
   
-  // If not any of the above scenarios, return original content
   return content;
 };
 
@@ -297,22 +291,17 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
     return null;
   }
 
-  // Calculate overall confidence based on sources
   const averageConfidence = sources.length > 0 
     ? Math.round(sources.reduce((sum, source) => sum + source.confidence, 0) / sources.length) 
     : 0;
     
-  // Check if content contains Intel Iris Xe Graphics
   const hasGPUInfo = content.includes("Intel Iris Xe Graphics");
   
-  // Get current query from URL params
   const urlParams = new URLSearchParams(window.location.search);
   const currentQuery = urlParams.get('q') || '';
   
-  // Process content to add hyperlinks if not already present
   let processedContent = processContentWithLinks(content);
   
-  // Format content based on query type
   if (currentQuery.toLowerCase().includes('dell') && 
       (currentQuery.toLowerCase().includes('graphics') || currentQuery.toLowerCase().includes('performance'))) {
     processedContent = formatDellGraphicsContent(processedContent, currentQuery);
@@ -373,4 +362,3 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
 };
 
 export default AIGeneratedAnswer;
-
