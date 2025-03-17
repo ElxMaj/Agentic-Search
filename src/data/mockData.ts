@@ -1283,4 +1283,3 @@ export const suggestedQueries = [
   "Optimize CPU usage on my Dell",
   "Fix webcam not detected in Zoom"
 ];
-
