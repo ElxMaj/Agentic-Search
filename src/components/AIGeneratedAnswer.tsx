@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database } from 'lucide-react';
@@ -29,15 +28,12 @@ const processContentWithLinks = (content: string): string => {
   });
 };
 
-// Common format structure for all answers
 const formatStandardAnswer = (content: string, query: string, type: string = "blue"): string => {
-  // Default values
   let headerTitle = "Solution Guide";
   let headerIcon = "<TrendingUp size={20} />";
   let headerColor = type;
   let headerDescription = "Follow these step-by-step instructions to resolve your issue.";
   
-  // Determine the appropriate header based on content/query type
   if (type === "red" || query.toLowerCase().includes('error') || content.toLowerCase().includes('error')) {
     headerTitle = "Error Resolution";
     headerIcon = "<AlertTriangle size={20} />";
@@ -78,10 +74,8 @@ const formatStandardAnswer = (content: string, query: string, type: string = "bl
   `;
   
   sections.forEach((section) => {
-    // Process for links
     const processedSection = processContentWithLinks(section);
     
-    // Check if this section has bullet points
     if (section.includes('- ')) {
       const parts = section.split('- ');
       const mainContent = parts[0].trim();
@@ -96,7 +90,6 @@ const formatStandardAnswer = (content: string, query: string, type: string = "bl
         </li>
       `;
     } else {
-      // Simple paragraph
       formattedHTML += `
         <li>
           <span class="font-medium">${processedSection}</span>
@@ -110,7 +103,6 @@ const formatStandardAnswer = (content: string, query: string, type: string = "bl
       </div>
   `;
   
-  // Add a Pro Tip box for most answers
   let tipContent = "Bookmark this solution for future reference. Many users find these steps helpful for similar issues.";
   
   if (query.toLowerCase().includes('browser') || content.toLowerCase().includes('browser')) {
@@ -125,14 +117,12 @@ const formatStandardAnswer = (content: string, query: string, type: string = "bl
   
   formattedHTML += createProTip(tipContent);
   
-  // Add Warning box if content seems to need it
   if (content.toLowerCase().includes('caution') || 
       content.toLowerCase().includes('warning') || 
       content.toLowerCase().includes('important')) {
     formattedHTML += createWarningBox("Take your time with these steps and make sure to follow them in order for best results.");
   }
   
-  // Add Success box with additional helpful information
   if (sections.length > 2) {
     let successContent = "These steps resolve the issue for 95% of users. If you still encounter problems, contact support.";
     
@@ -458,64 +448,70 @@ const formatPerformanceDiagnosis = (content: string, query: string): string => {
         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
           <h3 class="font-bold text-lg text-blue-800 flex items-center gap-2">
             <Activity size={20} />
-            Dell Graphics Performance: Diagnostic Analysis
+            Software Performance Optimization
           </h3>
-          <p class="text-blue-700 mb-2">Personalized analysis of your system's graphics performance.</p>
+          <p class="text-blue-700 mb-2">Expert software tweaks to boost your system performance without hardware changes.</p>
         </div>
         
         <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
           <h4 class="font-semibold text-gray-800 mb-2">System Analysis Summary:</h4>
           <div class="bg-blue-50 p-4 rounded-lg mb-4">
             <ul class="list-disc pl-5 space-y-2">
-              <li>CPU: Operating at ${createStatusBadge("76% capacity", "warning")} during graphics tasks</li>
-              <li>RAM: ${createStatusBadge("85% utilization", "warning")} during application launches</li>
-              <li>GPU: Temperature reaching ${createStatusBadge("82°C", "warning")} under load</li>
-              <li>Storage: Read speeds below optimal range for your SSD model</li>
+              <li>Background processes: ${createStatusBadge("27 unnecessary services", "warning")} consuming resources</li>
+              <li>Startup items: ${createStatusBadge("12 non-essential programs", "warning")} slowing boot time</li>
+              <li>Disk fragmentation: ${createStatusBadge("23% fragmented", "warning")} affecting read/write speeds</li>
+              <li>OS optimization: Several Windows settings not configured for performance</li>
             </ul>
           </div>
           
-          <h4 class="font-semibold text-gray-800 mb-2">Application-Specific Recommendations:</h4>
+          <h4 class="font-semibold text-gray-800 mb-2">Software Optimization Recommendations:</h4>
           <ol class="list-decimal pl-5 space-y-4">
             <li>
-              <span class="font-medium">Browser Optimization</span>
+              <span class="font-medium">Clean System Startup</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Disable hardware acceleration in ${createExternalLink("chrome://settings/system", "Chrome settings")} during video calls</li>
-                <li>Limit active extensions to essential ones only</li>
-                <li>Consider using ${createExternalLink("https://www.mozilla.org/firefox/new/", "Firefox")} for better resource management</li>
+                <li>Open ${createExternalLink("ms-settings:startupapps", "Windows Startup Settings")}</li>
+                <li>Disable non-essential startup programs</li>
+                <li>Use ${createExternalLink("https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns", "Microsoft Autoruns")} for advanced startup configuration</li>
+                <li>Potential gain: ${createStatusBadge("35% faster boot time", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Creative Applications</span>
+              <span class="font-medium">Windows Performance Tuning</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Enable GPU acceleration in Adobe applications for up to ${createStatusBadge("40% faster", "success")} rendering</li>
-                <li>Increase cache size in video editing software</li>
-                <li>Install the ${createExternalLink("https://www.amd.com/en/technologies/radeon-pro-software", "AMD Pro drivers")} for professional applications</li>
+                <li>Open ${createExternalLink("ms-settings:gaming-gamemode", "Game Mode settings")} and enable for all applications</li>
+                <li>Adjust visual effects: Right-click on 'This PC' → Properties → Advanced system settings → Performance → Settings → Adjust for best performance</li>
+                <li>Disable transparency effects in ${createExternalLink("ms-settings:personalization-colors", "Personalization")} settings</li>
+                <li>Potential gain: ${createStatusBadge("15-20% improved responsiveness", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">System Settings</span>
+              <span class="font-medium">Disk Optimization</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Access ${createExternalLink("ms-settings:display-advancedgraphics", "Graphics settings")} in Windows</li>
-                <li>Set your creative applications to ${createStatusBadge("High performance", "success")}</li>
-                <li>Enable hardware-accelerated GPU scheduling</li>
+                <li>Run Disk Cleanup utility with system files included</li>
+                <li>Use ${createExternalLink("ms-settings:storagesense", "Storage Sense")} to automatically free up space</li>
+                <li>Disable hibernate: Run Command Prompt as administrator → Type 'powercfg -h off'</li>
+                <li>Schedule automatic disk optimization: This PC → right-click drive → Properties → Tools → Optimize</li>
+                <li>Potential gain: ${createStatusBadge("Up to 25% faster disk access", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Thermal Management</span>
+              <span class="font-medium">Advanced System Configuration</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Clean cooling vents with compressed air monthly</li>
-                <li>Use a ${createExternalLink("https://www.amazon.com/s?k=laptop+cooling+pad", "cooling pad")} for extended high-performance sessions</li>
-                <li>Ensure your workspace has adequate ventilation</li>
+                <li>Modify Windows Virtual Memory: System Properties → Advanced → Performance → Advanced → Virtual Memory</li>
+                <li>Recommended setting: ${createStatusBadge("1.5x your physical RAM", "info")}</li>
+                <li>Use ${createExternalLink("https://www.wisecleaner.com/wise-registry-cleaner.html", "Registry Cleaner")} to fix registry issues</li>
+                <li>Enable hardware-accelerated GPU scheduling in ${createExternalLink("ms-settings:display-advancedgraphics", "Graphics Settings")}</li>
+                <li>Potential gain: ${createStatusBadge("10-15% overall system improvement", "success")}</li>
               </ul>
             </li>
           </ol>
         </div>
         
-        ${createWarningBox("High temperatures can significantly reduce GPU lifespan. Monitor temps with " + createExternalLink("https://www.hwinfo.com/download/", "HWiNFO") + " regularly.", "Temperature Warning")}
+        ${createWarningBox("Be careful when modifying registry or system files. Consider creating a system restore point before making advanced changes.", "System Modification Warning")}
         
-        ${createSuccessBox("Implementing these optimization settings could improve your graphics performance by up to 25% with your current hardware configuration.")}
+        ${createSuccessBox("These software optimizations are likely to improve your system performance by 15-40% without any hardware upgrades.")}
         
-        ${createProTip("For more detailed performance analysis, run the " + createExternalLink("https://www.intel.com/content/www/us/en/download/19344/intel-graphics-command-center.html", "Intel Graphics Command Center") + " diagnostic tool and share the results with Dell Support.")}
+        ${createProTip("Schedule a monthly maintenance routine using Task Scheduler to keep your system running optimally. Combine with " + createExternalLink("https://www.ccleaner.com/", "CCleaner") + " for automated cleanup.")}
       </div>
     `;
   }
@@ -611,7 +607,6 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   
   let processedContent = processContentWithLinks(content);
   
-  // Apply appropriate formatting based on the query and content context
   if (currentQuery.toLowerCase().includes('hardware') || 
       processedContent.toLowerCase().includes('hardware solution') ||
       processedContent.toLowerCase().includes('upgrade')) {
@@ -636,7 +631,6 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
             processedContent.toLowerCase().includes('performance diagnosis')) {
     processedContent = formatPerformanceDiagnosis(processedContent, currentQuery);
   } else {
-    // Use the standard format for any other types of content
     processedContent = formatStandardAnswer(processedContent, currentQuery);
   }
 
