@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -788,6 +787,122 @@ const Index: React.FC = () => {
       <div class="bg-green-50 p-3 rounded-md">
         <p class="font-medium">Performance Impact Analysis:</p>
         <p class="text-sm">Based on your system's current memory usage patterns, implementing the software optimizations alone could improve application loading times by 15-20%. Adding a hardware upgrade would deliver a 25-40% overall performance boost for memory-intensive applications.</p>
+      </div>`;
+    } else if (selectedPathKey === "teams") {
+      return `<h3 class="text-lg font-medium mb-3">Microsoft Teams Webcam Issues: Application Configuration</h3>
+      
+      <p class="mb-3">After analyzing your Microsoft Teams webcam issue, we've identified that your problem is likely related to Teams' application configuration rather than hardware or driver issues. This determination is based on the fact that your webcam works correctly in other applications but fails specifically during Teams calls.</p>
+      
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+        <p class="font-medium">Technical Analysis:</p>
+        <ul class="list-disc pl-5 mt-1">
+          <li>Teams version: <span class="text-yellow-600 font-medium">Outdated (version 1.4.00.32771)</span></li>
+          <li>Teams cache: <span class="text-red-600 font-medium">Signs of corruption detected</span></li>
+          <li>Teams camera settings: <span class="text-red-600 font-medium">Incorrect device selected</span></li>
+          <li>Recent system updates: <span class="text-yellow-600 font-medium">Windows update KB5025239 installed (known to affect Teams)</span></li>
+        </ul>
+      </div>
+      
+      <h4 class="font-medium mt-4 mb-2">Step-by-Step Resolution Plan:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Reset Teams Camera Settings</p>
+            <ol class="list-decimal pl-5 mt-1 space-y-1 text-sm">
+              <li>Open Microsoft Teams</li>
+              <li>Click on your profile picture in the top-right corner</li>
+              <li>Select <strong>Settings</strong></li>
+              <li>Go to <strong>Devices</strong></li>
+              <li>Under <strong>Camera</strong>, click the dropdown and select your webcam</li>
+              <li>Verify that your webcam preview appears in the preview window</li>
+              <li>If the preview appears, test making a call to check if the issue is resolved</li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Clear Teams Cache (Most Effective Solution)</p>
+            <p class="text-sm mb-2">Our analysis indicates cache corruption is the most likely cause (78% probability):</p>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">For Windows:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Close Teams completely (check Task Manager to ensure it's not running)</li>
+                <li>Press <code>Win + R</code> to open the Run dialog</li>
+                <li>Type <code>%appdata%\\Microsoft\\Teams</code> and press Enter</li>
+                <li>Delete the contents of these folders:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li><code>Cache</code></li>
+                    <li><code>blob_storage</code></li>
+                    <li><code>databases</code></li>
+                    <li><code>GPUCache</code></li>
+                    <li><code>IndexedDB</code></li>
+                    <li><code>Local Storage</code></li>
+                    <li><code>tmp</code></li>
+                  </ul>
+                </li>
+                <li>Restart your computer</li>
+                <li>Open Teams and test your camera</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">For Mac:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Quit Teams completely (right-click the icon in the dock and select Quit)</li>
+                <li>Open Finder and press <code>Cmd + Shift + G</code></li>
+                <li>Type <code>~/Library/Application Support/Microsoft/Teams</code> and press Enter</li>
+                <li>Delete the contents of the folders listed above</li>
+                <li>Restart your Mac</li>
+                <li>Open Teams and test your camera</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Update Microsoft Teams</p>
+            <p class="text-sm mb-2">Your Teams version is outdated and missing several camera compatibility fixes:</p>
+            <ol class="list-decimal pl-5 text-sm space-y-1">
+              <li>Open Teams</li>
+              <li>Click your profile picture and select <strong>Check for updates</strong></li>
+              <li>If updates are available, allow Teams to download and install them</li>
+              <li>For a complete reinstall (if needed):
+                <ol class="list-decimal pl-4 mt-1">
+                  <li>Uninstall Teams from Control Panel/Settings</li>
+                  <li>Download the latest version from <a href="#" class="text-blue-600">the Microsoft website</a></li>
+                  <li>Install the new version and sign in</li>
+                </ol>
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+          <div>
+            <p class="font-medium">Investigate Background Process Conflicts</p>
+            <p class="text-sm mb-2">Some applications may be interfering with Teams' access to your camera:</p>
+            <ul class="list-disc pl-5 text-sm">
+              <li>Close other video conferencing applications like Zoom, Skype, and WebEx</li>
+              <li>Check browser tabs that might be using your camera</li>
+              <li>Temporarily disable camera enhancement software (e.g., Logitech Capture, NVIDIA Broadcast)</li>
+              <li>Check if Teams is running in compatibility mode (right-click Teams shortcut > Properties > Compatibility tab)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-blue-50 p-3 rounded-md">
+        <p class="font-medium">Technical Details:</p>
+        <p class="text-sm">Teams uses Electron framework which can experience memory management issues that affect webcam access. When the application cache becomes corrupted, it often interferes with the Video Media Capture pipeline. Clearing the cache forces Teams to rebuild these communication paths and re-establish proper access to your camera's DirectShow/Media Foundation interfaces.</p>
+        <p class="text-sm mt-2">The latest Teams builds have significantly improved the robustness of camera detection and switching, especially after Windows Updates that modify underlying DirectX components.</p>
       </div>`;
     } else {
       return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
