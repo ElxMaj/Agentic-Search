@@ -1,3 +1,4 @@
+
 // Mock data for DELL DeepResolution prototype
 
 export interface Source {
@@ -407,9 +408,9 @@ export const mockQueries: MockQueryData[] = [
           ]
         },
         {
-          description: "Identified <strong>webcam</strong> as the device with issues during a <strong>Microsoft Teams</strong> call",
+          description: "Identified <strong>Logitech C920 webcam</strong> as the device with issues during a <strong>Microsoft Teams</strong> call",
           entities: [
-            { text: "webcam", type: "DEVICE" },
+            { text: "Logitech C920 webcam", type: "DEVICE" },
             { text: "Microsoft Teams", type: "APPLICATION" }
           ]
         },
