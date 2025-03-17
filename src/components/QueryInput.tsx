@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2, X, Battery } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X, Battery, Wifi } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -53,6 +53,13 @@ const QueryInput: React.FC<QueryInputProps> = ({
     const batteryQuery = "Dell battery draining too fast";
     setQuery(batteryQuery);
     onSearch(batteryQuery);
+    setHasSearched(true);
+  };
+
+  const handleWifiUnstableClick = () => {
+    const wifiQuery = "Wifi unstable";
+    setQuery(wifiQuery);
+    onSearch(wifiQuery);
     setHasSearched(true);
   };
 
@@ -152,6 +159,18 @@ const QueryInput: React.FC<QueryInputProps> = ({
         >
           <Battery size={14} className="text-[#538234]" />
           Dell battery drain
+        </motion.button>
+        
+        <motion.button
+          onClick={handleWifiUnstableClick}
+          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#EEF1FB] hover:bg-[#DFE3F7] text-[#445bc5] transition-colors"
+          disabled={isLoading}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <Wifi size={14} className="text-[#445bc5]" />
+          Wifi unstable
         </motion.button>
       </div>
     </div>

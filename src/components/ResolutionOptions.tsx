@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink, BatteryFull } from 'lucide-react';
+import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink, BatteryFull, Wifi } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
@@ -35,13 +35,17 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     return null;
   }
 
-  // Get query from URL to check if it's a battery-related query
+  // Get query from URL to check if it's a battery-related query or wifi-related query
   const urlParams = new URLSearchParams(window.location.search);
   const currentQuery = urlParams.get('q') || '';
   const isBatteryQuery = currentQuery.toLowerCase().includes('battery') && 
                          (currentQuery.toLowerCase().includes('drain') || 
                           currentQuery.toLowerCase().includes('life') || 
                           currentQuery.toLowerCase().includes('dying'));
+  const isWifiQuery = currentQuery.toLowerCase().includes('wifi') ||
+                      currentQuery.toLowerCase().includes('wi-fi') ||
+                      currentQuery.toLowerCase().includes('wireless') ||
+                      currentQuery.toLowerCase().includes('unstable');
 
   // Custom options for Dell battery drain scenario
   const batteryDrainOptions = [
@@ -92,6 +96,55 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     }
   ];
 
+  // Custom options for Wifi unstable scenario
+  const wifiUnstableOptions = [
+    {
+      key: "driver-update",
+      name: "Driver & Firmware Update",
+      icon: "📡",
+      description: "Update wireless adapter drivers and router firmware to fix compatibility issues.",
+      confidence: 94,
+      sources: 9,
+      detail: "Latest drivers often include fixes for connectivity and stability issues.",
+      links: [
+        {
+          text: "Dell Network Drivers",
+          url: "https://www.dell.com/support/home/en-us/drivers/driversdetails?driverid=57fcj"
+        }
+      ]
+    },
+    {
+      key: "wireless-optimization",
+      name: "Wireless Environment Optimization",
+      icon: "📶",
+      description: "Analyze and optimize wireless signal environment and router configuration.",
+      confidence: 89,
+      sources: 7,
+      detail: "Adjust wireless channel, band settings, and router positioning for optimal signal.",
+      links: [
+        {
+          text: "Dell Wireless Troubleshooting",
+          url: "https://www.dell.com/support/kbdoc/en-us/000132223/how-to-troubleshoot-wireless-network-connectivity-issues"
+        }
+      ]
+    },
+    {
+      key: "adapter-settings",
+      name: "Adapter Configuration",
+      icon: "⚙️",
+      description: "Optimize wireless adapter power settings and advanced properties.",
+      confidence: 92,
+      sources: 8,
+      detail: "Configure wireless adapter for reliability over power efficiency.",
+      links: [
+        {
+          text: "Windows Network Settings",
+          url: "ms-settings:network-status"
+        }
+      ]
+    }
+  ];
+
   // Function to determine color based on confidence level
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 90) return "text-green-600";
@@ -100,8 +153,17 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     return "text-orange-500";
   };
 
-  // Use battery drain options if the query is battery-related
-  const displayOptions = isBatteryQuery ? batteryDrainOptions : options;
+  // Use appropriate options based on query type
+  let displayOptions = options;
+  let headerText = "Here are the most effective approaches to resolve your issue, based on analysis of similar cases.";
+  
+  if (isBatteryQuery) {
+    displayOptions = batteryDrainOptions;
+    headerText = "Here are the most effective approaches to extend your Dell laptop's battery life.";
+  } else if (isWifiQuery) {
+    displayOptions = wifiUnstableOptions;
+    headerText = "Here are the most effective approaches to resolve your WiFi connectivity issues.";
+  }
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
@@ -111,11 +173,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
           <h2 className="text-lg font-semibold text-black">Solution Approaches</h2>
         </div>
         
-        <p className="text-gray-600 mb-6">
-          {isBatteryQuery 
-            ? "Here are the most effective approaches to extend your Dell laptop's battery life."
-            : "Here are the most effective approaches to resolve your issue, based on analysis of similar cases."}
-        </p>
+        <p className="text-gray-600 mb-6">{headerText}</p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {displayOptions.map((option) => (
