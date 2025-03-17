@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2 } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -22,6 +22,11 @@ const QueryInput: React.FC<QueryInputProps> = ({
     if (query.trim() && !isLoading) {
       onSearch(query);
     }
+  };
+
+  const handleClearSearch = () => {
+    setQuery('');
+    onSearch(''); // This will reset the search state
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -71,6 +76,19 @@ const QueryInput: React.FC<QueryInputProps> = ({
             className="flex-1 h-12 px-3 bg-transparent text-black focus:outline-none"
             disabled={isLoading}
           />
+          
+          {/* Clear search button - only show when there's a query */}
+          {query.trim() && !isLoading && (
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="h-8 w-8 flex items-center justify-center rounded-md bg-[#ea384c] text-white hover:bg-[#d9293d] transition-colors mr-2"
+              aria-label="Clear search"
+            >
+              <X size={16} />
+            </button>
+          )}
+          
           <button
             type="submit"
             disabled={!query.trim() || isLoading}
