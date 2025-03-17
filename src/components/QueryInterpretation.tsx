@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap } from 'lucide-react';
@@ -32,34 +31,32 @@ const QueryInterpretation: React.FC<QueryInterpretationProps> = ({
   if (isThinking) {
     return (
       <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.2}>
-        <div className="bg-slate-800 rounded-lg p-3 pr-5 inline-flex items-center">
+        <div className="bg-[#0076CE] rounded-lg p-3 pr-5 inline-flex items-center shadow-md">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ 
-              duration: 1.5, 
+              duration: 2.5, 
               repeat: Infinity, 
               ease: "linear" 
             }}
             className="mr-2 text-white"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" className="opacity-80">
+            <svg width="24" height="24" viewBox="0 0 24 24" className="opacity-90">
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="32" strokeLinecap="round" />
             </svg>
           </motion.div>
           <div className="flex items-center">
             <span className="text-white font-medium ml-1">Thinking...</span>
             <motion.div
-              animate={{ rotate: [0, 90] }}
+              animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ 
-                duration: 0.3, 
-                repeat: Infinity, 
-                repeatType: "reverse" 
+                duration: 1.8, 
+                repeat: Infinity,
+                ease: "easeInOut"
               }}
               className="ml-1"
             >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
-                <path d="M18 15L12 9L6 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <span className="text-white">•••</span>
             </motion.div>
           </div>
         </div>

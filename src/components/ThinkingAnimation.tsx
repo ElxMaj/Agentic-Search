@@ -15,32 +15,30 @@ const ThinkingAnimation: React.FC<ThinkingAnimationProps> = ({ isVisible }) => {
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-6" delay={0.1}>
-      <div className="bg-slate-800 rounded-lg p-3 pr-5 inline-flex items-center">
+      <div className="bg-[#0076CE] rounded-lg p-3 pr-5 inline-flex items-center shadow-md">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ 
-            duration: 1.5, 
+            duration: 2.5, 
             repeat: Infinity, 
             ease: "linear" 
           }}
           className="mr-2 text-white"
         >
-          <Loader size={20} className="opacity-80" />
+          <Loader size={20} className="opacity-90" />
         </motion.div>
         <div className="flex items-center">
           <span className="text-white font-medium ml-1">Thinking...</span>
           <motion.div
-            animate={{ rotate: [0, 90] }}
+            animate={{ opacity: [0.4, 1, 0.4] }}
             transition={{ 
-              duration: 0.3, 
-              repeat: Infinity, 
-              repeatType: "reverse" 
+              duration: 1.8, 
+              repeat: Infinity,
+              ease: "easeInOut"
             }}
             className="ml-1"
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
-              <path d="M18 15L12 9L6 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <span className="text-white">•••</span>
           </motion.div>
         </div>
       </div>
