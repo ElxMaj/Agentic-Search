@@ -39,13 +39,6 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     return "text-orange-500";
   };
 
-  // Function to get border style based on whether path is selected
-  const getBorderStyle = (isSelected: boolean) => {
-    return isSelected 
-      ? "border-[#0076CE] bg-blue-50" 
-      : "border-gray-200 hover:border-gray-300 hover:bg-gray-50";
-  };
-
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
       <div className="rounded-xl border border-gray-200 p-6 mb-6">
@@ -58,16 +51,16 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
           Here are the most effective approaches to resolve your issue, based on analysis of similar cases.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {options.map((option) => (
-            <motion.div 
+            <div 
               key={option.key}
               className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer h-full flex flex-col ${
-                getBorderStyle(selectedPath === option.key)
+                selectedPath === option.key 
+                  ? 'border-[#0076CE] bg-blue-50' 
+                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
               }`}
               onClick={() => onSelectPath(option.key)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
             >
               <div className="flex items-start mb-auto">
                 <div className="text-2xl mr-3">{option.icon}</div>
@@ -92,7 +85,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
                 
                 <p className="text-sm text-gray-600">{option.detail}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
