@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircleQuestion, ThumbsUp, Info } from 'lucide-react';
+import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
@@ -12,6 +12,10 @@ export interface ResolutionPathOption {
   confidence: number;
   sources: number;
   detail: string;
+  links?: {
+    text: string;
+    url: string;
+  }[];
 }
 
 interface ResolutionOptionsProps {
@@ -27,8 +31,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   selectedPath,
   isVisible
 }) => {
-  if (!isVisible || options.length ===
-    0) {
+  if (!isVisible || options.length === 0) {
     return null;
   }
 
@@ -79,12 +82,30 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
                   </span>
                 </div>
                 
-                <div className="flex items-center mb-4">
+                <div className="flex items-center mb-2">
                   <Info size={16} className="text-gray-400 mr-2" />
                   <span className="text-sm text-gray-600">{option.sources} Sources</span>
                 </div>
                 
-                <p className="text-sm text-gray-600">{option.detail}</p>
+                <p className="text-sm text-gray-600 mb-2">{option.detail}</p>
+                
+                {option.links && option.links.length > 0 && (
+                  <div className="mt-2">
+                    {option.links.map((link, index) => (
+                      <a 
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-sm text-blue-600 hover:text-blue-800 mt-1"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink size={14} className="mr-1" />
+                        {link.text}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}
