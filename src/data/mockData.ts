@@ -156,8 +156,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Feb 2023",
             metadata: "Official Source",
             confidence: 98,
-            excerpt: "The latest Intel Iris Xe Graphics drivers are recommended for all Dell XPS systems for optimal performance.",
-            url: "https://www.dell.com/support/drivers"
+            excerpt: "The latest Intel Iris Xe Graphics drivers are recommended for all Dell XPS systems for optimal performance."
           },
           {
             type: "knowledge-base",
@@ -165,8 +164,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Dec 2022",
             metadata: "Knowledge Base",
             confidence: 95,
-            excerpt: "Regular driver updates for Intel Iris Xe Graphics can resolve many common performance issues and improve compatibility with the latest games and applications.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-graphics-performance"
+            excerpt: "Regular driver updates for Intel Iris Xe Graphics can resolve many common performance issues and improve compatibility with the latest games and applications."
           },
           {
             type: "community",
@@ -174,8 +172,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Jan 2023",
             metadata: "Community Discussion",
             confidence: 88,
-            excerpt: "Users report significant performance gains after updating to the latest Intel Iris Xe Graphics drivers and optimizing power settings.",
-            url: "https://www.dell.com/community/forums/graphics-performance"
+            excerpt: "Users report significant performance gains after updating to the latest Intel Iris Xe Graphics drivers and optimizing power settings."
           }
         ]
       },
@@ -264,8 +261,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Mar 2023",
             metadata: "Official Documentation",
             confidence: 97,
-            excerpt: "While the Intel Iris Xe Graphics in your Dell XPS 13 cannot be upgraded, external GPU options via Thunderbolt are available for demanding graphics workloads.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000181425/hardware-upgrade-compatibility"
+            excerpt: "While the Intel Iris Xe Graphics in your Dell XPS 13 cannot be upgraded, external GPU options via Thunderbolt are available for demanding graphics workloads."
           },
           {
             type: "community",
@@ -273,8 +269,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Jan 2023",
             metadata: "Community Resources",
             confidence: 85,
-            excerpt: "Users with Dell XPS 13 with Intel Iris Xe Graphics report 2-3x performance improvements when connecting compatible external GPUs via Thunderbolt.",
-            url: "https://www.dell.com/community/forums/egpu-solutions"
+            excerpt: "Users with Dell XPS 13 with Intel Iris Xe Graphics report 2-3x performance improvements when connecting compatible external GPUs via Thunderbolt."
           }
         ]
       },
@@ -369,36 +364,32 @@ export const mockQueries: MockQueryData[] = [
             title: "Dell Support: Performance Diagnostics",
             date: "Updated Apr 2023",
             metadata: "Knowledge Base",
-            confidence: 93,
-            excerpt: "Dell systems with Intel Iris Xe Graphics may benefit from thermal management optimization to prevent throttling during intensive tasks.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000132234/performance-diagnostics"
+            confidence: 74,
+            excerpt: "Dell systems with Intel Iris Xe Graphics may benefit from thermal management optimization to prevent throttling during intensive tasks."
           },
           {
             type: "community",
             title: "Dell Community: Performance Optimization Guide",
             date: "Thread from Nov 2022",
             metadata: "Community Guide",
-            confidence: 85,
-            excerpt: "Many users report 15-20% performance improvements in Intel Iris Xe Graphics after addressing thermal issues and updating power management settings.",
-            url: "https://www.dell.com/community/forums/performance-guide"
+            confidence: 68,
+            excerpt: "Many users report 15-20% performance improvements in Intel Iris Xe Graphics after addressing thermal issues and updating power management settings."
           },
           {
             type: "community",
             title: "User Benchmarks: Dell XPS Graphics",
             date: "Collected Data Oct 2022 - Mar 2023",
             metadata: "User Benchmarks",
-            confidence: 88,
-            excerpt: "Benchmark data shows that thermal management has the biggest impact on sustained Intel Iris Xe Graphics performance in Dell XPS laptops.",
-            url: "https://www.userbenchmark.com/dell-xps-graphics"
+            confidence: 73,
+            excerpt: "Benchmark data shows that thermal management has the biggest impact on sustained Intel Iris Xe Graphics performance in Dell XPS laptops."
           },
           {
             type: "knowledge-base",
             title: "Graphics Performance Bottleneck Analysis",
             date: "Updated Jan 2023",
             metadata: "Technical Guide",
-            confidence: 91,
-            excerpt: "Systematic diagnosis can identify whether CPU, memory, or thermal constraints are limiting Intel Iris Xe Graphics performance in Dell XPS systems.",
-            url: "https://www.techdocs.com/graphics-bottleneck-analysis"
+            confidence: 79,
+            excerpt: "Systematic diagnosis can identify whether CPU, memory, or thermal constraints are limiting Intel Iris Xe Graphics performance in Dell XPS systems."
           }
         ]
       }
@@ -939,8 +930,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Jan 2024",
             metadata: "Official Documentation",
             confidence: 96,
-            excerpt: "SSD firmware updates and TRIM optimization can significantly improve application loading times on Dell XPS systems.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-storage-performance"
+            excerpt: "SSD firmware updates and TRIM optimization can significantly improve application loading times on Dell XPS systems."
           },
           {
             type: "knowledge-base",
@@ -948,8 +938,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Dec 2023",
             metadata: "Knowledge Base",
             confidence: 92,
-            excerpt: "Windows 11 storage optimization features can reduce application loading times by up to 30% compared to default settings.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-storage-performance"
+            excerpt: "Windows 11 storage optimization features can reduce application loading times by up to 30% compared to default settings."
           },
           {
             type: "community",
@@ -957,8 +946,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Mar 2024",
             metadata: "Community Discussion",
             confidence: 89,
-            excerpt: "Users report 40-60% faster application loading times after upgrading from SATA to NVMe SSDs in Dell XPS systems.",
-            url: "https://www.dell.com/community/forums/ssd-upgrades"
+            excerpt: "Users report 40-60% faster application loading times after upgrading from SATA to NVMe SSDs in Dell XPS systems."
           }
         ]
       },
@@ -1047,8 +1035,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Feb 2024",
             metadata: "Official Documentation",
             confidence: 65,
-            excerpt: "Reducing startup items can significantly improve overall system responsiveness and application loading times.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-startup-performance"
+            excerpt: "Reducing startup items can significantly improve overall system responsiveness and application loading times."
           },
           {
             type: "knowledge-base",
@@ -1056,8 +1043,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Jan 2024",
             metadata: "Knowledge Base",
             confidence: 73,
-            excerpt: "Windows 11 includes improved startup management tools that can help identify and disable unnecessary startup applications.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-startup-performance"
+            excerpt: "Windows 11 includes improved startup management tools that can help identify and disable unnecessary startup applications."
           },
           {
             type: "community",
@@ -1065,8 +1051,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Dec 2023",
             metadata: "Community Discussion",
             confidence: 62,
-            excerpt: "Users report up to 50% faster login and application startup times after disabling unnecessary startup items and services.",
-            url: "https://www.dell.com/community/forums/startup-optimization"
+            excerpt: "Users report up to 50% faster login and application startup times after disabling unnecessary startup items and services."
           }
         ]
       },
@@ -1155,8 +1140,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Mar 2024",
             metadata: "Official Documentation",
             confidence: 77,
-            excerpt: "Upgrading from 8GB to 16GB RAM can improve application loading times by 25-40% for memory-intensive applications on Dell XPS systems.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-upgrade-memory"
+            excerpt: "Upgrading from 8GB to 16GB RAM can improve application loading times by 25-40% for memory-intensive applications on Dell XPS systems."
           },
           {
             type: "knowledge-base",
@@ -1164,8 +1148,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Feb 2024",
             metadata: "Knowledge Base",
             confidence: 84,
-            excerpt: "Windows 11's improved memory management algorithms can more efficiently allocate resources for frequently used applications.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-memory-performance"
+            excerpt: "Windows 11's improved memory management algorithms can more efficiently allocate resources for frequently used applications."
           },
           {
             type: "official",
@@ -1173,8 +1156,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Real-time data",
             metadata: "System Analysis",
             confidence: 82,
-            excerpt: "Your system is currently using 85% of available memory during typical workloads, suggesting a memory upgrade would be beneficial.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-memory-performance"
+            excerpt: "Your system is currently using 85% of available memory during typical workloads, suggesting a memory upgrade would be beneficial."
           }
         ]
       },
@@ -1263,8 +1245,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Apr 2024",
             metadata: "Performance Guide",
             confidence: 58,
-            excerpt: "Removing unused applications can free up to 15% of system resources on average Windows installations.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-software-performance"
+            excerpt: "Removing unused applications can free up to 15% of system resources on average Windows installations."
           },
           {
             type: "official",
@@ -1272,8 +1253,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Mar 2024",
             metadata: "Official Documentation",
             confidence: 63,
-            excerpt: "Dell systems may include pre-installed applications that can impact performance and can safely be removed if not needed.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-remove-bloatware"
+            excerpt: "Dell systems may include pre-installed applications that can impact performance and can safely be removed if not needed."
           },
           {
             type: "community",
@@ -1281,8 +1261,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Thread from Feb 2024",
             metadata: "User Discussion",
             confidence: 61,
-            excerpt: "Browser extensions are among the most common causes of system slowdowns, with each active extension consuming memory resources.",
-            url: "https://www.dell.com/community/forums/browser-extensions"
+            excerpt: "Browser extensions are among the most common causes of system slowdowns, with each active extension consuming memory resources."
           },
           {
             type: "knowledge-base",
@@ -1290,8 +1269,7 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Jan 2024",
             metadata: "Technical Analysis",
             confidence: 69,
-            excerpt: "Outdated applications can use up to 30% more system resources than their updated counterparts due to inefficient code and compatibility layers.",
-            url: "https://www.dell.com/support/kbdoc/en-us/000128471/how-to-optimize-application-performance"
+            excerpt: "Outdated applications can use up to 30% more system resources than their updated counterparts due to inefficient code and compatibility layers."
           }
         ]
       }

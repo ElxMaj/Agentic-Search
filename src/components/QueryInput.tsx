@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2, X, Battery, Wifi, Monitor, Clock, Camera } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -47,41 +47,6 @@ const QueryInput: React.FC<QueryInputProps> = ({
     
     // Call onSearch with empty string to reset the application state
     onSearch('');
-  };
-
-  const handleBatteryDrainClick = () => {
-    const batteryQuery = "Dell battery draining too fast";
-    setQuery(batteryQuery);
-    onSearch(batteryQuery);
-    setHasSearched(true);
-  };
-
-  const handleWifiUnstableClick = () => {
-    const wifiQuery = "Wifi unstable";
-    setQuery(wifiQuery);
-    onSearch(wifiQuery);
-    setHasSearched(true);
-  };
-
-  const handleDellGraphicsClick = () => {
-    const graphicsQuery = "Dell graphics performance";
-    setQuery(graphicsQuery);
-    onSearch(graphicsQuery);
-    setHasSearched(true);
-  };
-
-  const handleComputerSlowClick = () => {
-    const slowQuery = "My computer is slow";
-    setQuery(slowQuery);
-    onSearch(slowQuery);
-    setHasSearched(true);
-  };
-
-  const handleWebcamIssueClick = () => {
-    const webcamQuery = "Logitech webcam not working";
-    setQuery(webcamQuery);
-    onSearch(webcamQuery);
-    setHasSearched(true);
   };
 
   // Get a random example query for the placeholder
@@ -151,9 +116,9 @@ const QueryInput: React.FC<QueryInputProps> = ({
         </div>
       </motion.form>
 
-      <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
+      {suggestedQueries.length > 0 && (
         <motion.div 
-          className="flex flex-wrap gap-2 justify-center"
+          className="mt-4 flex flex-wrap gap-2 justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -169,67 +134,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
             </button>
           ))}
         </motion.div>
-        
-        <motion.button
-          onClick={handleDellGraphicsClick}
-          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#FDE1D3] hover:bg-[#FACDB6] text-[#F97316] transition-colors"
-          disabled={isLoading}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Monitor size={14} className="text-[#F97316]" />
-          Dell graphics
-        </motion.button>
-        
-        <motion.button
-          onClick={handleBatteryDrainClick}
-          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#F0F7E8] hover:bg-[#E3EDD8] text-[#538234] transition-colors"
-          disabled={isLoading}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <Battery size={14} className="text-[#538234]" />
-          Dell battery drain
-        </motion.button>
-        
-        <motion.button
-          onClick={handleWifiUnstableClick}
-          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#EEF1FB] hover:bg-[#DFE3F7] text-[#445bc5] transition-colors"
-          disabled={isLoading}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          <Wifi size={14} className="text-[#445bc5]" />
-          Wifi unstable
-        </motion.button>
-
-        <motion.button
-          onClick={handleComputerSlowClick}
-          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#FEF7CD] hover:bg-[#F9ECA8] text-[#9B6C14] transition-colors"
-          disabled={isLoading}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-        >
-          <Clock size={14} className="text-[#9B6C14]" />
-          Computer slow
-        </motion.button>
-
-        <motion.button
-          onClick={handleWebcamIssueClick}
-          className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[#FFDEE2] hover:bg-[#FFCCD2] text-[#E43D59] transition-colors"
-          disabled={isLoading}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <Camera size={14} className="text-[#E43D59]" />
-          Webcam issue
-        </motion.button>
-      </div>
+      )}
     </div>
   );
 };
