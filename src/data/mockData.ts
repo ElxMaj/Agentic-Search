@@ -44,7 +44,6 @@ export interface MockQueryData {
   resolutionPaths: Record<string, ResolutionPath>;
 }
 
-// Mock data for specific scenarios
 export const mockQueries: MockQueryData[] = [
   {
     query: "Improve Dell graphics performance",
@@ -78,7 +77,7 @@ export const mockQueries: MockQueryData[] = [
         steps: [
           {
             id: "sw-step1",
-            title: "Graphics Driver Update",
+            title: "Update Intel Iris Xe Graphics drivers",
             description: "Updating your graphics drivers is often the most effective way to improve performance.",
             options: [
               { id: "sw-opt1", text: "Check for driver updates automatically", nextStepId: "sw-step2" },
@@ -1284,3 +1283,4 @@ export const suggestedQueries = [
   "Optimize CPU usage on my Dell",
   "Fix webcam not detected in Zoom"
 ];
+
