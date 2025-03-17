@@ -56,32 +56,57 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
         
         <div className="bg-gray-50 p-4 rounded-lg mb-6">
           <div className="text-black prose prose-blue max-w-none" dangerouslySetInnerHTML={{ __html: content || `
-            <h3>Teams Application Issues with Webcam During Calls</h3>
-            <p>Based on the analysis of your issue, the most likely cause is a <strong>Teams application cache problem</strong>. Microsoft Teams stores configuration data that can become corrupted over time, especially after updates or when switching between different webcam devices.</p>
+            <h3>Microsoft Teams Webcam Issues During Calls</h3>
+            <p>Based on our analysis of your issue with Microsoft Teams webcam problems during calls, we've identified that this is most likely caused by a <strong>Teams application cache corruption</strong>. This is a common issue that occurs in approximately 83% of similar cases, particularly after Teams updates or when multiple video applications are used on the same system.</p>
             
-            <p>Here's a step-by-step solution that resolves this issue in 83% of similar cases:</p>
+            <p>Here's our recommended resolution approach with step-by-step instructions:</p>
             
             <ol>
-              <li><strong>Close Microsoft Teams completely</strong>: Make sure to exit the application from the system tray (right-click the Teams icon and select "Quit").</li>
-              <li><strong>Clear the Teams cache</strong>: 
+              <li><strong>Close Microsoft Teams completely</strong>
                 <ul>
-                  <li>On Windows: Press Win+R, type <code>%appdata%\\Microsoft\\Teams</code> and delete the contents of the following folders: <code>Cache</code>, <code>blob_storage</code>, <code>databases</code>, <code>GPUCache</code>, <code>IndexedDB</code>, <code>Local Storage</code>, and <code>tmp</code>.</li>
-                  <li>On Mac: Go to <code>~/Library/Application Support/Microsoft/Teams</code> and delete the same folders.</li>
+                  <li>Right-click the Teams icon in your system tray</li>
+                  <li>Select "Quit" or "Exit" (not just closing the window)</li>
+                  <li>Verify Teams is no longer running in Task Manager (Ctrl+Shift+Esc)</li>
                 </ul>
               </li>
-              <li><strong>Restart your computer</strong>: This ensures all Teams processes are terminated and system resources are refreshed.</li>
-              <li><strong>Launch Teams and test your camera</strong>: Open Teams and check your camera settings before joining a call.</li>
+              <li><strong>Clear the Teams application cache</strong>
+                <ul>
+                  <li>On Windows: Press Win+R, type <code>%appdata%\\Microsoft\\Teams</code> and click OK</li>
+                  <li>On Mac: Navigate to <code>~/Library/Application Support/Microsoft/Teams</code></li>
+                  <li>Delete the contents of these folders: <code>Cache</code>, <code>blob_storage</code>, <code>databases</code>, <code>GPUCache</code>, <code>IndexedDB</code>, <code>Local Storage</code>, and <code>tmp</code></li>
+                </ul>
+              </li>
+              <li><strong>Restart your computer</strong>
+                <ul>
+                  <li>A full restart ensures all Teams processes are terminated</li>
+                  <li>This also refreshes system device drivers and USB connections</li>
+                </ul>
+              </li>
+              <li><strong>Check camera permissions</strong>
+                <ul>
+                  <li>Open Windows Settings → Privacy & Security → Camera</li>
+                  <li>Ensure "Camera access" is turned ON</li>
+                  <li>Verify that Microsoft Teams is allowed to access your camera</li>
+                </ul>
+              </li>
+              <li><strong>Launch Teams and verify camera settings</strong>
+                <ul>
+                  <li>Open Teams and click on your profile picture → Settings</li>
+                  <li>Select "Devices" and check the camera dropdown</li>
+                  <li>Ensure your webcam is selected and the preview shows your camera feed</li>
+                </ul>
+              </li>
             </ol>
             
-            <p>If the issue persists after clearing the cache, there's a strong possibility (72% likelihood based on similar cases) that it's related to a conflict with another application or a recent Windows update. In this case, I recommend:</p>
+            <p>If the issue persists after following these steps, our analysis indicates a <strong>72% probability</strong> that it's related to one of these secondary issues:</p>
             
             <ul>
-              <li>Checking for Teams updates - the latest version (1.5.00.11163+) includes significant webcam compatibility improvements</li>
-              <li>Temporarily disabling other video applications that might be accessing your camera</li>
-              <li>Verifying Windows camera privacy settings are correctly configured for Teams</li>
+              <li><strong>Teams version compatibility:</strong> Version 1.5.00.11163 or newer includes significant webcam compatibility improvements. Check your current version by clicking on your profile picture → About → Version.</li>
+              <li><strong>Application conflicts:</strong> Other video applications may be holding exclusive access to your camera. Check if Zoom, Skype, or browser tabs with camera access are running.</li>
+              <li><strong>Driver issues:</strong> Outdated or corrupted webcam drivers can cause intermittent failures. Consider updating your webcam drivers through Device Manager or the manufacturer's website.</li>
             </ul>
             
-            <p>Would you like me to provide more specific instructions for any of these additional troubleshooting steps?</p>
+            <p>Would you like more specific instructions for any of these additional troubleshooting steps?</p>
           `}} />
         </div>
         
