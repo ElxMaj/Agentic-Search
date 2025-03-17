@@ -467,51 +467,80 @@ const formatPerformanceDiagnosis = (content: string, query: string): string => {
           <h4 class="font-semibold text-gray-800 mb-2">Software Optimization Recommendations:</h4>
           <ol class="list-decimal pl-5 space-y-4">
             <li>
-              <span class="font-medium">Clean System Startup</span>
+              <span class="font-medium">Driver Management</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Open ${createExternalLink("ms-settings:startupapps", "Windows Startup Settings")}</li>
-                <li>Disable non-essential startup programs</li>
-                <li>Use ${createExternalLink("https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns", "Microsoft Autoruns")} for advanced startup configuration</li>
-                <li>Potential gain: ${createStatusBadge("35% faster boot time", "success")}</li>
+                <li>Run ${createExternalLink("https://www.intel.com/content/www/us/en/download/19347/intel-driver-support-assistant.html", "Intel Driver & Support Assistant")} to detect outdated graphics drivers</li>
+                <li>Update chipset drivers from ${createExternalLink("https://www.dell.com/support/home", "Dell Support")} website</li>
+                <li>Use ${createExternalLink("https://www.iobit.com/en/driver-booster.php", "Driver Booster")} for automated driver updates</li>
+                <li>Potential gain: ${createStatusBadge("5-10% improved stability", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Windows Performance Tuning</span>
+              <span class="font-medium">Windows Optimization</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
                 <li>Open ${createExternalLink("ms-settings:gaming-gamemode", "Game Mode settings")} and enable for all applications</li>
-                <li>Adjust visual effects: Right-click on 'This PC' → Properties → Advanced system settings → Performance → Settings → Adjust for best performance</li>
-                <li>Disable transparency effects in ${createExternalLink("ms-settings:personalization-colors", "Personalization")} settings</li>
+                <li>Disable visual effects: Press ${formatKeyboardShortcut(["Win", "R"])} > type 'sysdm.cpl' > Advanced > Performance > Visual Effects > Adjust for best performance</li>
+                <li>Disable transparency effects in ${createExternalLink("ms-settings:personalization-colors", "Personalization")}</li>
                 <li>Potential gain: ${createStatusBadge("15-20% improved responsiveness", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Disk Optimization</span>
+              <span class="font-medium">Clean System Startup</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Run Disk Cleanup utility with system files included</li>
-                <li>Use ${createExternalLink("ms-settings:storagesense", "Storage Sense")} to automatically free up space</li>
-                <li>Disable hibernate: Run Command Prompt as administrator → Type 'powercfg -h off'</li>
-                <li>Schedule automatic disk optimization: This PC → right-click drive → Properties → Tools → Optimize</li>
-                <li>Potential gain: ${createStatusBadge("Up to 25% faster disk access", "success")}</li>
+                <li>Open ${createExternalLink("ms-settings:startupapps", "Startup Apps Settings")}</li>
+                <li>Disable non-essential startup programs</li>
+                <li>Run ${createExternalLink("https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns", "Microsoft Autoruns")} for advanced startup configuration</li>
+                <li>Use Task Manager to identify CPU/memory-intensive background services</li>
+                <li>Potential gain: ${createStatusBadge("30% faster boot time", "success")}</li>
               </ul>
             </li>
             <li>
-              <span class="font-medium">Advanced System Configuration</span>
+              <span class="font-medium">Software Configuration</span>
               <ul class="list-disc pl-5 mt-1 text-gray-700">
-                <li>Modify Windows Virtual Memory: System Properties → Advanced → Performance → Advanced → Virtual Memory</li>
-                <li>Recommended setting: ${createStatusBadge("1.5x your physical RAM", "info")}</li>
-                <li>Use ${createExternalLink("https://www.wisecleaner.com/wise-registry-cleaner.html", "Registry Cleaner")} to fix registry issues</li>
-                <li>Enable hardware-accelerated GPU scheduling in ${createExternalLink("ms-settings:display-advancedgraphics", "Graphics Settings")}</li>
-                <li>Potential gain: ${createStatusBadge("10-15% overall system improvement", "success")}</li>
+                <li>Configure Intel Graphics Control Panel:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Right-click desktop > Intel Graphics Settings</li>
+                    <li>Under 3D settings, set "Application Optimal Mode" to ${createStatusBadge("Performance", "info")}</li>
+                    <li>Disable V-Sync for non-gaming applications</li>
+                  </ul>
+                </li>
+                <li>Browser optimization:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Disable unnecessary extensions</li>
+                    <li>Enable hardware acceleration in browser settings</li>
+                    <li>Consider ${createExternalLink("https://www.mozilla.org/en-US/firefox/new/", "Firefox")} for lower memory usage</li>
+                  </ul>
+                </li>
+                <li>Potential gain: ${createStatusBadge("10-15% application performance", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">System Maintenance</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Run Disk Cleanup utility with system files included:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Press ${formatKeyboardShortcut(["Win", "R"])} > type 'cleanmgr' > Clean up system files</li>
+                    <li>Select all temporary files and previous Windows installations</li>
+                  </ul>
+                </li>
+                <li>Enable ${createExternalLink("ms-settings:storagesense", "Storage Sense")} to automatically free up space</li>
+                <li>Schedule automatic disk optimization: 
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Open File Explorer > This PC > right-click drive > Properties > Tools > Optimize</li>
+                    <li>Click "Change settings" and enable scheduled optimization</li>
+                  </ul>
+                </li>
+                <li>Potential gain: ${createStatusBadge("Up to 25% faster disk access", "success")}</li>
               </ul>
             </li>
           </ol>
         </div>
         
-        ${createWarningBox("Be careful when modifying registry or system files. Consider creating a system restore point before making advanced changes.", "System Modification Warning")}
+        ${createWarningBox("Always create a system restore point before making system-level changes. Press Win+R, type 'systempropertiesprotection', and create a restore point.", "Safety First")}
         
-        ${createSuccessBox("These software optimizations are likely to improve your system performance by 15-40% without any hardware upgrades.")}
+        ${createSuccessBox("These software optimizations alone can improve your system performance by 15-40% without any hardware changes.")}
         
-        ${createProTip("Schedule a monthly maintenance routine using Task Scheduler to keep your system running optimally. Combine with " + createExternalLink("https://www.ccleaner.com/", "CCleaner") + " for automated cleanup.")}
+        ${createProTip("Use " + createExternalLink("https://www.ccleaner.com/", "CCleaner") + " to automate many of these optimizations and maintain your system with a single click weekly.")}
       </div>
     `;
   }
