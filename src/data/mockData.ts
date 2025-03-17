@@ -515,7 +515,8 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Mar 2024",
             metadata: "Microsoft Support",
             confidence: 98,
-            excerpt: "Access to the camera is controlled by Windows privacy settings. Ensure that access to the camera is turned on and that Teams is allowed to use the camera."
+            excerpt: "Access to the camera is controlled by Windows privacy settings. Ensure that access to the camera is turned on and that Teams is allowed to use the camera.",
+            url: "https://support.microsoft.com/en-us/office/my-camera-isn-t-working-in-teams-9581983b-c6f9-40e3-b0d8-122857972ade"
           },
           {
             type: "knowledge-base",
@@ -636,7 +637,8 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated Apr 2024",
             metadata: "Microsoft Documentation",
             confidence: 76,
-            excerpt: "For reliable camera operation in Teams, use a directly connected USB port (preferably USB 3.0) rather than a USB hub, which can cause intermittent connection issues."
+            excerpt: "For reliable camera operation in Teams, use a directly connected USB port (preferably USB 3.0) rather than a USB hub, which can cause intermittent connection issues.",
+            url: "https://docs.microsoft.com/en-us/microsoftteams/hardware-requirements-for-the-teams-app"
           },
           {
             type: "knowledge-base",
@@ -741,7 +743,8 @@ export const mockQueries: MockQueryData[] = [
             date: "Updated May 2024",
             metadata: "Microsoft Documentation",
             confidence: 87,
-            excerpt: "Recent Teams updates have improved compatibility with webcam drivers, resolving many common camera detection issues reported by users."
+            excerpt: "Recent Teams updates have improved compatibility with webcam drivers, resolving many common camera detection issues reported by users.",
+            url: "https://docs.microsoft.com/en-us/microsoftteams/troubleshoot/teams-im-presence/camera-not-working-in-teams"
           },
           {
             type: "knowledge-base",
