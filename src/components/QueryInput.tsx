@@ -37,9 +37,13 @@ const QueryInput: React.FC<QueryInputProps> = ({
     setHasSearched(true);
   };
 
-  const handleClearSearch = () => {
+  const handleClearSearch = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent form submission
+    e.stopPropagation(); // Stop event propagation
+    
     setQuery('');
     setHasSearched(false);
+    
     // Call onSearch with empty string to reset the search state
     onSearch('');
   };
@@ -83,7 +87,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
           />
           {hasSearched && query.trim() && !isLoading ? (
             <button
-              type="button"
+              type="button" 
               onClick={handleClearSearch}
               className="flex items-center justify-center h-12 w-12 mr-1 rounded-md bg-red-500 text-white hover:bg-red-600 transition-all"
               aria-label="Clear search"
