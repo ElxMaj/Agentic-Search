@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database } from 'lucide-react';
@@ -139,6 +138,150 @@ const formatStandardAnswer = (content: string, query: string, type: string = "bl
   formattedHTML += `</div>`;
   
   return formattedHTML;
+};
+
+const formatDellBatteryDrainContent = (content: string, query: string): string => {
+  if (query.toLowerCase().includes('battery') && 
+      (query.toLowerCase().includes('drain') || query.toLowerCase().includes('life') || 
+       query.toLowerCase().includes('power') || query.toLowerCase().includes('dying'))) {
+    return `
+      <div class="space-y-6">
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r">
+          <h3 class="font-bold text-lg text-indigo-800 flex items-center gap-2">
+            <BatteryFull size={20} />
+            Dell Battery Optimization Guide
+          </h3>
+          <p class="text-indigo-700 mb-2">Extend your Dell laptop's battery life with these proven power-saving techniques.</p>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-semibold text-gray-800 mb-2">Battery Drain Analysis:</h4>
+          <div class="bg-indigo-50 p-4 rounded-lg mb-4">
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Power settings: ${createStatusBadge("Current profile sub-optimal", "warning")} for battery longevity</li>
+              <li>Background processes: ${createStatusBadge("Multiple high-drain apps", "warning")} running constantly</li>
+              <li>Display settings: ${createStatusBadge("Brightness level", "warning")} consuming excess power</li>
+              <li>Dell-specific settings: Several battery-saving features not enabled</li>
+            </ul>
+          </div>
+          
+          <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Battery Optimization:</h4>
+          <ol class="list-decimal pl-5 space-y-4">
+            <li>
+              <span class="font-medium">Optimize Dell Power Manager Settings</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Open ${createExternalLink("https://www.dell.com/support/home/drivers/driversdetails?driverid=jxr7w", "Dell Power Manager")} (pre-installed on most Dell systems)</li>
+                <li>Select "Battery Information" > "Battery Settings"</li>
+                <li>Choose ${createStatusBadge("Primarily AC Use", "info")} for maximum performance or ${createStatusBadge("Balanced", "success")} for everyday use</li>
+                <li>Enable "Battery Extender" mode for critical situations</li>
+                <li>Set custom thresholds:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Start charging: 50%</li>
+                    <li>Stop charging: 80%</li>
+                  </ul>
+                </li>
+                <li>Potential gain: ${createStatusBadge("15-20% longer battery life", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Adjust Windows Power Settings</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Access ${createExternalLink("ms-settings:powersleep", "Windows Power Settings")}</li>
+                <li>Select "Battery saver settings"</li>
+                <li>Enable "Battery saver" automatically at ${createStatusBadge("20%", "info")}</li>
+                <li>Configure "Screen timeout" to 5 minutes and "Sleep" to 15 minutes on battery</li>
+                <li>Click "Additional power settings" to access Power Plan</li>
+                <li>Select "Power saver" plan while on battery</li>
+                <li>Click "Change plan settings" > "Change advanced power settings"</li>
+                <li>Optimize:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Processor power management > Maximum processor state: ${createStatusBadge("70%", "info")} on battery</li>
+                    <li>Display > Brightness: ${createStatusBadge("40%", "info")} on battery</li>
+                    <li>Sleep > Hibernate after: ${createStatusBadge("30 minutes", "info")} on battery</li>
+                  </ul>
+                </li>
+                <li>Potential gain: ${createStatusBadge("25-35% longer battery life", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Disable Background Applications</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Check ${createExternalLink("ms-settings:battery", "Battery usage by app")}</li>
+                <li>Identify high-drain applications</li>
+                <li>Open Task Manager with ${formatKeyboardShortcut(["Ctrl", "Shift", "Esc"])}</li>
+                <li>Go to "Startup" tab and disable non-essential applications</li>
+                <li>In Windows Settings > Apps > Startup, disable high-power apps</li>
+                <li>Use ${createExternalLink("https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns", "Microsoft Autoruns")} for advanced startup management</li>
+                <li>For Dell-specific background services: 
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Keep Dell Power Manager and Dell Support Assist</li>
+                    <li>Consider disabling Dell Mobile Connect when not in use</li>
+                    <li>Disable Dell Digital Delivery after software updates complete</li>
+                  </ul>
+                </li>
+                <li>Potential gain: ${createStatusBadge("15-25% longer battery life", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Configure Dell BIOS Settings</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Restart your Dell laptop</li>
+                <li>Press F2 repeatedly during startup to enter BIOS</li>
+                <li>Navigate to "Power Management"</li>
+                <li>Enable "Deep Sleep Control" if available</li>
+                <li>Set "Block Sleep" to No</li>
+                <li>Enable "USB Wake Support" but disable "Wake on LAN/WLAN"</li>
+                <li>Save changes and exit</li>
+                <li>Potential gain: ${createStatusBadge("5-10% lower power consumption", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Optimize Display & Components</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Manually lower screen brightness with ${formatKeyboardShortcut(["Fn", "F11"])} (varies by model)</li>
+                <li>Enable Windows Night Light to reduce blue light (and power consumption)</li>
+                <li>Use darker wallpapers and themes for OLED displays</li>
+                <li>In ${createExternalLink("ms-settings:bluetooth", "Bluetooth & devices settings")}:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Disable Bluetooth when not in use</li>
+                    <li>Disconnect unused USB devices</li>
+                    <li>Disable touchscreen if rarely used (Device Manager > Human Interface Devices)</li>
+                  </ul>
+                </li>
+                <li>Potential gain: ${createStatusBadge("10-15% longer battery life", "success")}</li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Battery Maintenance Best Practices</span>
+              <ul class="list-disc pl-5 mt-1 text-gray-700">
+                <li>Use the official Dell charger that came with your laptop</li>
+                <li>Avoid exposing laptop to extreme temperatures</li>
+                <li>Perform ${createExternalLink("https://www.dell.com/support/kbdoc/en-us/000130881/resetting-the-battery-on-a-dell-laptop", "battery calibration")} every 2-3 months:
+                  <ul class="list-disc pl-5 mt-1">
+                    <li>Charge to 100%</li>
+                    <li>Let it cool for 2 hours while plugged in</li>
+                    <li>Unplug and use until completely drained</li>
+                    <li>Let it sit unpowered for 3-5 hours</li>
+                    <li>Charge to 100% without interruption</li>
+                  </ul>
+                </li>
+                <li>Run ${createExternalLink("https://www.dell.com/support/home/drivers/driversdetails?driverid=ddc9m", "Dell SupportAssist")} diagnostics to check battery health regularly</li>
+                <li>Long-term benefit: ${createStatusBadge("Extended total battery lifespan", "success")}</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+        
+        ${createWarningBox("If your battery depletes extremely rapidly (empty within 1 hour) or won't hold a charge at all, you may need a battery replacement. Contact Dell Support for hardware service options.")}
+        
+        ${createSuccessBox("Implementing these Dell-specific optimizations can improve your battery runtime by 30-60% and extend overall battery lifespan by up to 2 years.")}
+        
+        ${createProTip("For Dell laptops used primarily at a desk, use Dell Power Manager to enable 'Primarily AC Use' mode. This optimizes the battery charging threshold to extend its overall lifespan.")}
+      </div>
+    `;
+  }
+  
+  return content;
 };
 
 const formatDellGraphicsContent = (content: string, query: string): string => {
@@ -580,7 +723,7 @@ const formatPerformanceDiagnosis = (content: string, query: string): string => {
                 <li>Configure Intel Graphics Control Panel:
                   <ul class="list-disc pl-5 mt-1">
                     <li>Right-click desktop > Intel Graphics Settings</li>
-                    <li>Under 3D settings, set "Application Optimal Mode" to ${createStatusBadge("Performance", "info")}</li>
+                    <li>Under 3D settings, set <span class="font-semibold">Application Optimal Mode</span> to ${createStatusBadge("Performance", "info")}</li>
                     <li>Disable V-Sync for non-gaming applications</li>
                   </ul>
                 </li>
@@ -716,7 +859,11 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   
   let processedContent = processContentWithLinks(content);
   
-  if (currentQuery.toLowerCase().includes('hardware') || 
+  if (currentQuery.toLowerCase().includes('battery') && 
+      (currentQuery.toLowerCase().includes('drain') || currentQuery.toLowerCase().includes('life') || 
+       currentQuery.toLowerCase().includes('power') || currentQuery.toLowerCase().includes('dying'))) {
+    processedContent = formatDellBatteryDrainContent(processedContent, currentQuery);
+  } else if (currentQuery.toLowerCase().includes('hardware') || 
       processedContent.toLowerCase().includes('hardware solution') ||
       processedContent.toLowerCase().includes('upgrade')) {
     processedContent = formatHardwareSolutions(processedContent, currentQuery);

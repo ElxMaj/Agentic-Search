@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink } from 'lucide-react';
+import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink, BatteryFull } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
@@ -35,6 +35,63 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     return null;
   }
 
+  // Get query from URL to check if it's a battery-related query
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentQuery = urlParams.get('q') || '';
+  const isBatteryQuery = currentQuery.toLowerCase().includes('battery') && 
+                         (currentQuery.toLowerCase().includes('drain') || 
+                          currentQuery.toLowerCase().includes('life') || 
+                          currentQuery.toLowerCase().includes('dying'));
+
+  // Custom options for Dell battery drain scenario
+  const batteryDrainOptions = [
+    {
+      key: "power-settings",
+      name: "Power Settings Optimization",
+      icon: "⚡",
+      description: "Optimize Dell power settings and Windows power management for maximum battery efficiency.",
+      confidence: 96,
+      sources: 8,
+      detail: "Configure Dell Power Manager and Windows power settings for optimal battery life.",
+      links: [
+        {
+          text: "Dell Power Manager Guide",
+          url: "https://www.dell.com/support/kbdoc/en-us/000131081/power-manager-power-settings-in-windows"
+        }
+      ]
+    },
+    {
+      key: "background-apps",
+      name: "Background Application Management",
+      icon: "🔍",
+      description: "Identify and control battery-draining background processes and applications.",
+      confidence: 91,
+      sources: 6,
+      detail: "Manage startup apps and background processes to reduce unnecessary battery drain.",
+      links: [
+        {
+          text: "Battery Usage by App",
+          url: "ms-settings:battery"
+        }
+      ]
+    },
+    {
+      key: "hardware-calibration",
+      name: "Battery Maintenance",
+      icon: "🔋",
+      description: "Dell-specific battery calibration and hardware optimization techniques.",
+      confidence: 88,
+      sources: 5,
+      detail: "Proper battery maintenance and calibration procedures for Dell laptops.",
+      links: [
+        {
+          text: "Dell Battery Calibration Guide",
+          url: "https://www.dell.com/support/kbdoc/en-us/000130881/resetting-the-battery-on-a-dell-laptop"
+        }
+      ]
+    }
+  ];
+
   // Function to determine color based on confidence level
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 90) return "text-green-600";
@@ -42,6 +99,9 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     if (confidence >= 60) return "text-amber-500";
     return "text-orange-500";
   };
+
+  // Use battery drain options if the query is battery-related
+  const displayOptions = isBatteryQuery ? batteryDrainOptions : options;
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
@@ -52,11 +112,13 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
         </div>
         
         <p className="text-gray-600 mb-6">
-          Here are the most effective approaches to resolve your issue, based on analysis of similar cases.
+          {isBatteryQuery 
+            ? "Here are the most effective approaches to extend your Dell laptop's battery life."
+            : "Here are the most effective approaches to resolve your issue, based on analysis of similar cases."}
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {options.map((option) => (
+          {displayOptions.map((option) => (
             <div 
               key={option.key}
               className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer h-full flex flex-col ${
