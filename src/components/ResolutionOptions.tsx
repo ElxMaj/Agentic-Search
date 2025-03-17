@@ -1,7 +1,22 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircleQuestion, ThumbsUp, Info, ExternalLink, BatteryFull, Wifi, Monitor, Clock, Camera } from 'lucide-react';
+import { 
+  MessageCircleQuestion, 
+  ThumbsUp, 
+  Info, 
+  ExternalLink, 
+  BatteryFull, 
+  Wifi, 
+  Monitor, 
+  Clock, 
+  Camera,
+  Cpu,
+  Zap,
+  Wrench,
+  Settings,
+  HardDrive
+} from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
@@ -62,13 +77,13 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   // Custom options for Dell battery drain scenario
   const batteryDrainOptions = [
     {
-      key: "power-settings",
-      name: "Power Settings Optimization",
-      icon: "⚡",
-      description: "Optimize Dell power settings and Windows power management for maximum battery efficiency.",
+      key: "power-management",
+      name: "Advanced Power Management",
+      icon: "🔋",
+      description: "Optimize Dell-specific battery settings for maximum efficiency.",
       confidence: 96,
       sources: 8,
-      detail: "Configure Dell Power Manager and Windows power settings for optimal battery life.",
+      detail: "Tune power profiles and internal battery thresholds for optimal battery life.",
       links: [
         {
           text: "Dell Power Manager Guide",
@@ -77,13 +92,13 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
       ]
     },
     {
-      key: "background-apps",
-      name: "Background Application Management",
-      icon: "🔍",
-      description: "Identify and control battery-draining background processes and applications.",
-      confidence: 91,
-      sources: 6,
-      detail: "Manage startup apps and background processes to reduce unnecessary battery drain.",
+      key: "app-control",
+      name: "Application Energy Control",
+      icon: "⚡",
+      description: "Identify and manage high-drain applications and system processes.",
+      confidence: 93,
+      sources: 7,
+      detail: "Profile and limit resource usage of battery-consuming background applications.",
       links: [
         {
           text: "Battery Usage by App",
@@ -92,13 +107,13 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
       ]
     },
     {
-      key: "hardware-calibration",
-      name: "Battery Maintenance",
-      icon: "🔋",
-      description: "Dell-specific battery calibration and hardware optimization techniques.",
-      confidence: 88,
-      sources: 5,
-      detail: "Proper battery maintenance and calibration procedures for Dell laptops.",
+      key: "battery-health",
+      name: "Battery Longevity Strategy",
+      icon: "📊",
+      description: "Dell battery calibration and maintenance procedures for extended lifespan.",
+      confidence: 91,
+      sources: 9,
+      detail: "Implement charge thresholds and custom cycling to maximize battery health.",
       links: [
         {
           text: "Dell Battery Calibration Guide",
@@ -111,46 +126,46 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   // Custom options for Wifi unstable scenario
   const wifiUnstableOptions = [
     {
-      key: "driver-update",
-      name: "Driver & Firmware Update",
+      key: "signal-optimization",
+      name: "Signal Path Optimization",
       icon: "📡",
-      description: "Update wireless adapter drivers and router firmware to fix compatibility issues.",
+      description: "Analyze and enhance wireless signal pathways and environmental factors.",
       confidence: 94,
       sources: 9,
-      detail: "Latest drivers often include fixes for connectivity and stability issues.",
+      detail: "Map signal strengths and optimize router placement for consistent coverage.",
       links: [
         {
-          text: "Dell Network Drivers",
-          url: "https://www.dell.com/support/home/en-us/drivers/driversdetails?driverid=57fcj"
+          text: "Wi-Fi Analyzer Tool",
+          url: "https://play.google.com/store/apps/details?id=com.farproc.wifi.analyzer"
         }
       ]
     },
     {
-      key: "wireless-optimization",
-      name: "Wireless Environment Optimization",
-      icon: "📶",
-      description: "Analyze and optimize wireless signal environment and router configuration.",
+      key: "network-reconfiguration",
+      name: "Network Infrastructure Reconfiguration",
+      icon: "🔄",
+      description: "Reconfigure network settings to eliminate interference and channel congestion.",
       confidence: 89,
       sources: 7,
-      detail: "Adjust wireless channel, band settings, and router positioning for optimal signal.",
+      detail: "Implement optimal channel selection and QoS prioritization for stable connections.",
       links: [
         {
-          text: "Wi-Fi Troubleshooting Guide",
-          url: "https://www.dell.com/support/kbdoc/en-us/000132223/how-to-troubleshoot-wireless-network-connectivity-issues"
+          text: "Router Channel Management Guide",
+          url: "https://www.netgear.com/support/product/nighthawk-app.aspx"
         }
       ]
     },
     {
-      key: "adapter-settings",
-      name: "Adapter Configuration",
-      icon: "⚙️",
-      description: "Optimize wireless adapter power settings and advanced properties.",
+      key: "connection-hardening",
+      name: "Connection Reliability Hardening",
+      icon: "🛡️",
+      description: "Implement advanced wireless adapter settings and firmware updates.",
       confidence: 92,
       sources: 8,
-      detail: "Configure wireless adapter for reliability over power efficiency.",
+      detail: "Optimize adapter power management and implement connection persistence protocols.",
       links: [
         {
-          text: "Windows Network Settings",
+          text: "Advanced Adapter Settings",
           url: "ms-settings:network-status"
         }
       ]
@@ -160,47 +175,47 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   // Custom options for Dell graphics performance scenario
   const graphicsPerformanceOptions = [
     {
-      key: "driver-optimization",
-      name: "Graphics Driver Optimization",
+      key: "driver-ecosystem",
+      name: "Graphics Driver Ecosystem",
       icon: "🖥️",
-      description: "Update and configure Dell-specific graphics drivers for optimal performance.",
+      description: "Comprehensive driver management for optimal Dell graphics performance.",
       confidence: 95,
       sources: 12,
-      detail: "The latest driver versions contain important performance enhancements and bug fixes.",
+      detail: "Implement a custom driver selection and validation process for your specific Dell model.",
       links: [
         {
-          text: "Dell Graphics Drivers",
-          url: "https://www.dell.com/support/home/en-us/product-support/product/dell-g5-15-5590-laptop/drivers"
+          text: "Dell Graphics Command Center",
+          url: "https://www.dell.com/support/home/en-us/drivers/driversdetails?driverid=f53rr"
         }
       ]
     },
     {
-      key: "performance-tuning",
-      name: "Performance Profile Tuning",
-      icon: "🚀",
-      description: "Configure system and application settings to maximize graphics performance.",
+      key: "thermal-optimization",
+      name: "Thermal Performance Balancing",
+      icon: "❄️",
+      description: "Optimize cooling and thermal management for sustained graphics performance.",
       confidence: 93,
       sources: 10,
-      detail: "Balance power and performance settings for optimal graphics capability.",
+      detail: "Implement advanced cooling solutions and thermal profile management specific to Dell systems.",
       links: [
         {
-          text: "NVIDIA Control Panel Guide",
-          url: "https://www.nvidia.com/en-us/geforce/guides/nvidia-control-panel-guide/"
+          text: "Dell Power Thermal Management",
+          url: "https://www.dell.com/support/kbdoc/en-us/000132240/dell-power-manager-thermal-management"
         }
       ]
     },
     {
-      key: "hardware-acceleration",
-      name: "Hardware Acceleration Management",
-      icon: "⚡",
-      description: "Optimize hardware acceleration settings across applications and system services.",
+      key: "resource-allocation",
+      name: "System Resource Allocation",
+      icon: "🧠",
+      description: "Optimize system resource distribution for graphics-intensive workloads.",
       confidence: 89,
       sources: 7,
-      detail: "Enable and configure hardware acceleration for graphics-intensive tasks.",
+      detail: "Configure memory allocation, pagefile settings, and process priorities for graphics tasks.",
       links: [
         {
-          text: "Intel Graphics Command Center",
-          url: "https://www.intel.com/content/www/us/en/support/articles/000055848/graphics.html"
+          text: "Dell Performance Guide",
+          url: "https://www.dell.com/support/kbdoc/en-us/000178000/dell-command-power-manager"
         }
       ]
     }
@@ -209,47 +224,47 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   // Custom options for Computer slow scenario
   const computerSlowOptions = [
     {
-      key: "startup-optimization",
-      name: "Startup & Background Process Optimization",
-      icon: "🔄",
-      description: "Identify and disable unnecessary startup items and background processes.",
+      key: "system-optimization",
+      name: "System Process Optimization",
+      icon: "⚙️",
+      description: "Comprehensive system service and process management for improved responsiveness.",
       confidence: 97,
       sources: 14,
-      detail: "Significantly improves boot time and overall system responsiveness.",
+      detail: "Identify and reconfigure resource-intensive system processes for optimal performance.",
       links: [
         {
-          text: "Windows Task Manager Guide",
-          url: "https://support.microsoft.com/en-us/windows/open-task-manager-bce95b4f-e178-fce3-6bc1-a0631290730d"
+          text: "Advanced System Configuration",
+          url: "ms-settings:systeminfo"
         }
       ]
     },
     {
-      key: "disk-cleanup",
-      name: "Storage & File System Maintenance",
+      key: "storage-management",
+      name: "Advanced Storage Architecture",
       icon: "💾",
-      description: "Clean up unused files and optimize storage for maximum performance.",
+      description: "Implement enterprise-level storage optimization techniques for faster performance.",
       confidence: 92,
       sources: 9,
-      detail: "Remove temporary files, optimize disk usage and ensure adequate free space.",
+      detail: "Restructure file systems, implement indexing strategies, and optimize storage I/O operations.",
       links: [
         {
-          text: "Disk Cleanup Tutorial",
-          url: "https://support.microsoft.com/en-us/windows/disk-cleanup-in-windows-10-8a96ff42-5751-39ad-23d6-434b4d5b9a68"
+          text: "Storage Sense Settings",
+          url: "ms-settings:storagesense"
         }
       ]
     },
     {
-      key: "system-optimization",
-      name: "System Configuration & Services",
-      icon: "⚙️",
-      description: "Optimize Windows services, visual effects, and system settings.",
+      key: "memory-enhancement",
+      name: "Memory Utilization Enhancement",
+      icon: "🚀",
+      description: "Advanced memory management and allocation strategies for smoother multitasking.",
       confidence: 90,
       sources: 11,
-      detail: "Fine-tune Windows for performance rather than aesthetics.",
+      detail: "Implement custom paging files, memory compression, and application memory priorities.",
       links: [
         {
-          text: "Windows Performance Guide",
-          url: "https://support.microsoft.com/en-us/windows/improve-pc-performance-in-windows-9c5e5479-eff5-2940-611b-b07443dca6bb"
+          text: "Windows Memory Diagnostics",
+          url: "ms-settings:windowsupdate-history"
         }
       ]
     }
@@ -258,47 +273,47 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   // Custom options for Webcam issue scenario
   const webcamIssueOptions = [
     {
-      key: "driver-software",
-      name: "Driver & Software Update",
-      icon: "📥",
-      description: "Install the latest Logitech webcam drivers and software for compatibility.",
+      key: "hardware-diagnostics",
+      name: "Camera Hardware Diagnostics",
+      icon: "🔍",
+      description: "Comprehensive webcam hardware troubleshooting and diagnostics workflow.",
       confidence: 96,
       sources: 13,
-      detail: "Most webcam issues are resolved with proper driver installation.",
+      detail: "Implement a systematic approach to isolate hardware vs. software camera issues.",
       links: [
         {
-          text: "Logitech Support",
-          url: "https://support.logi.com/hc/en-us/categories/360001759473-Webcams"
+          text: "Logitech Diagnostic Tool",
+          url: "https://support.logi.com/hc/en-us/articles/360023307914"
         }
       ]
     },
     {
-      key: "app-permissions",
-      name: "Application & Privacy Settings",
-      icon: "🔒",
-      description: "Troubleshoot application permissions and privacy settings affecting webcam access.",
+      key: "driver-configuration",
+      name: "Advanced Driver Architecture",
+      icon: "⚙️",
+      description: "Optimize webcam driver configuration and software integration.",
       confidence: 94,
       sources: 10,
-      detail: "Windows and browser privacy settings often block webcam access.",
+      detail: "Implement custom driver parameters and software compatibility settings.",
       links: [
         {
-          text: "Windows Camera Privacy Settings",
-          url: "ms-settings:privacy-webcam"
+          text: "Device Manager",
+          url: "ms-settings:devicemanager"
         }
       ]
     },
     {
-      key: "connectivity-troubleshooting",
-      name: "Connection & Hardware Testing",
-      icon: "🔌",
-      description: "Verify physical connections and test webcam hardware across multiple applications.",
+      key: "application-integration",
+      name: "Multi-Application Compatibility",
+      icon: "🔄",
+      description: "Ensure seamless webcam functionality across all communication platforms.",
       confidence: 91,
       sources: 8,
-      detail: "Isolate whether the issue is hardware, software, or application-specific.",
+      detail: "Configure application-specific camera permissions and integration settings.",
       links: [
         {
-          text: "Logitech Webcam Test Tool",
-          url: "https://support.logi.com/hc/en-us/articles/360023237594-Logitech-Capture"
+          text: "Camera Privacy Settings",
+          url: "ms-settings:privacy-webcam"
         }
       ]
     }
@@ -316,32 +331,38 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
   let displayOptions = options;
   let headerText = "Here are the most effective approaches to resolve your issue, based on analysis of similar cases.";
   let headerIcon = <MessageCircleQuestion className="text-[#0076CE] mr-2" size={20} />;
+  let headerClass = "bg-gray-50";
   
   if (isBatteryQuery) {
     displayOptions = batteryDrainOptions;
-    headerText = "Here are the most effective approaches to extend your Dell laptop's battery life.";
+    headerText = "Here are proven strategies to maximize your Dell laptop's battery life.";
     headerIcon = <BatteryFull className="text-[#538234] mr-2" size={20} />;
+    headerClass = "bg-green-50";
   } else if (isWifiQuery) {
     displayOptions = wifiUnstableOptions;
-    headerText = "Here are the most effective approaches to resolve your WiFi connectivity issues.";
+    headerText = "Here are advanced solutions to stabilize your WiFi connection permanently.";
     headerIcon = <Wifi className="text-[#445bc5] mr-2" size={20} />;
+    headerClass = "bg-blue-50";
   } else if (isGraphicsQuery) {
     displayOptions = graphicsPerformanceOptions;
-    headerText = "Here are the most effective approaches to improve your Dell's graphics performance.";
+    headerText = "Here are professional-grade techniques to enhance your Dell's graphics capabilities.";
     headerIcon = <Monitor className="text-[#F97316] mr-2" size={20} />;
+    headerClass = "bg-orange-50";
   } else if (isComputerSlowQuery) {
     displayOptions = computerSlowOptions;
-    headerText = "Here are the most effective approaches to speed up your slow computer.";
+    headerText = "Here are comprehensive approaches to restore your computer's performance and speed.";
     headerIcon = <Clock className="text-[#9B6C14] mr-2" size={20} />;
+    headerClass = "bg-amber-50";
   } else if (isWebcamQuery) {
     displayOptions = webcamIssueOptions;
-    headerText = "Here are the most effective approaches to fix your Logitech webcam issues.";
+    headerText = "Here are specialized solutions to resolve complex webcam connectivity issues.";
     headerIcon = <Camera className="text-[#E43D59] mr-2" size={20} />;
+    headerClass = "bg-red-50";
   }
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
-      <div className="rounded-xl border border-gray-200 p-6 mb-6">
+      <div className={`rounded-xl border border-gray-200 p-6 mb-6 ${headerClass}`}>
         <div className="flex items-center mb-4">
           {headerIcon}
           <h2 className="text-lg font-semibold text-black">Solution Approaches</h2>
