@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Loader2, X } from 'lucide-react';
+import { Search, ArrowRight, Loader2, X, Laptop, Clock, Camera, Wifi, Battery } from 'lucide-react';
 
 interface QueryInputProps {
   onSearch: (query: string) => void;
@@ -56,6 +56,35 @@ const QueryInput: React.FC<QueryInputProps> = ({
       return `e.g., ${suggestedQueries[randomIndex]}`;
     }
     return "e.g., How do I improve my software's performance?";
+  };
+
+  // Map of queries to their icon and background color
+  const suggestionStyles: Record<string, { icon: React.ReactNode; bgColor: string; textColor: string }> = {
+    "Dell graphics": { 
+      icon: <Laptop size={16} />, 
+      bgColor: "bg-orange-100", 
+      textColor: "text-orange-800" 
+    },
+    "Dell battery drain": { 
+      icon: <Battery size={16} />, 
+      bgColor: "bg-green-100", 
+      textColor: "text-green-800" 
+    },
+    "WiFi unstable": { 
+      icon: <Wifi size={16} />, 
+      bgColor: "bg-blue-100", 
+      textColor: "text-blue-800" 
+    },
+    "My computer is slow": { 
+      icon: <Clock size={16} />, 
+      bgColor: "bg-yellow-100", 
+      textColor: "text-amber-800" 
+    },
+    "Webcam issue": { 
+      icon: <Camera size={16} />, 
+      bgColor: "bg-red-100", 
+      textColor: "text-red-800" 
+    }
   };
 
   return (
@@ -123,16 +152,26 @@ const QueryInput: React.FC<QueryInputProps> = ({
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          {suggestedQueries.slice(0, 3).map((suggestion, index) => (
-            <button
-              key={index}
-              onClick={() => handleSuggestionClick(suggestion)}
-              className="text-sm px-3 py-1.5 rounded-full bg-[#E6F1F8] hover:bg-[#D1E4F1] text-[#0076CE] transition-colors"
-              disabled={isLoading}
-            >
-              {suggestion === "Troubleshoot slow application loading" ? "My computer is slow" : suggestion}
-            </button>
-          ))}
+          {suggestedQueries.slice(0, 5).map((suggestion, index) => {
+            const displayText = suggestion === "Troubleshoot slow application loading" ? "My computer is slow" : suggestion;
+            const style = suggestionStyles[displayText] || { 
+              icon: <Search size={16} />, 
+              bgColor: "bg-gray-100", 
+              textColor: "text-gray-800" 
+            };
+            
+            return (
+              <button
+                key={index}
+                onClick={() => handleSuggestionClick(suggestion)}
+                className={`text-sm px-4 py-2 rounded-full ${style.bgColor} ${style.textColor} font-medium hover:brightness-95 transition-all flex items-center gap-1.5`}
+                disabled={isLoading}
+              >
+                {style.icon}
+                {displayText}
+              </button>
+            );
+          })}
         </motion.div>
       )}
     </div>
