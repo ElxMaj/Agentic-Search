@@ -12,6 +12,17 @@ interface AIGeneratedAnswerProps {
   isVisible: boolean;
 }
 
+// Function to make URLs clickable in the content
+const processContentWithLinks = (content: string): string => {
+  // This regex looks for URLs that aren't already wrapped in anchor tags
+  const urlRegex = /(?<!<a[^>]*href=["'])https?:\/\/[^\s<>"']+/g;
+  
+  // Replace URLs with anchor tags
+  return content.replace(urlRegex, (url) => {
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">${url}</a>`;
+  });
+};
+
 const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({ 
   content,
   sources,
@@ -28,6 +39,9 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
     
   // Check if content contains Intel Iris Xe Graphics
   const hasGPUInfo = content.includes("Intel Iris Xe Graphics");
+  
+  // Process content to add hyperlinks if not already present
+  const processedContent = processContentWithLinks(content);
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.4}>
@@ -65,7 +79,10 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
         </div>
         
         <div className="bg-gray-50 p-4 rounded-lg mb-6">
-          <div className="text-black prose prose-blue max-w-none" dangerouslySetInnerHTML={{ __html: content }} />
+          <div 
+            className="text-black prose prose-blue max-w-none"
+            dangerouslySetInnerHTML={{ __html: processedContent }}
+          />
         </div>
         
         <SourcesList sources={sources} isVisible={true} />
