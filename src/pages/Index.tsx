@@ -8,14 +8,6 @@ import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
 import FollowUpPrompt from '../components/FollowUpPrompt';
 import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
 
-interface ConversationItem {
-  query: string;
-  queryData: MockQueryData | null;
-  selectedPath: string;
-  answer: string;
-  sources: Source[];
-}
-
 const Index: React.FC = () => {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +18,6 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
-  const [conversationHistory, setConversationHistory] = useState<ConversationItem[]>([]);
   const [showFollowUp, setShowFollowUp] = useState(false);
 
   const handleSearch = (searchQuery: string) => {
@@ -163,26 +154,6 @@ const Index: React.FC = () => {
         setShowFollowUp(true);
       }, 1000);
     }, 300);
-  };
-
-  const handleFollowUpSubmit = (followUpQuery: string) => {
-    if (currentQueryData && selectedPathKey) {
-      const currentAnswer = getAnswerContent();
-      const currentSources = getSelectedPathSources();
-      
-      const conversationItem: ConversationItem = {
-        query,
-        queryData: currentQueryData,
-        selectedPath: selectedPathKey,
-        answer: currentAnswer,
-        sources: currentSources
-      };
-      
-      setConversationHistory([...conversationHistory, conversationItem]);
-      
-      handleSearch(`${query} - ${followUpQuery}`);
-      setShowFollowUp(false);
-    }
   };
 
   const getAnswerContent = () => {
@@ -1009,16 +980,6 @@ const Index: React.FC = () => {
           <section className="w-full flex flex-col items-center">
             <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
             
-            {conversationHistory.map((item, index) => (
-              <div key={index} className="w-full max-w-5xl mx-auto mt-8 border-b pb-8">
-                <div className="text-lg font-medium mb-2 text-gray-700">
-                  {item.query}
-                </div>
-                <div className="bg-white p-4 rounded-lg shadow-sm" 
-                  dangerouslySetInnerHTML={{ __html: item.answer }} />
-              </div>
-            ))}
-            
             {currentQueryData && showQueryInterpretation && (
               <div className="w-full max-w-5xl mx-auto mt-8">
                 <QueryInterpretation 
@@ -1045,7 +1006,6 @@ const Index: React.FC = () => {
                     />
                     
                     <FollowUpPrompt
-                      onFollowUpSubmit={handleFollowUpSubmit}
                       currentQuery={query}
                       isVisible={showFollowUp}
                     />
@@ -1063,4 +1023,3 @@ const Index: React.FC = () => {
 };
 
 export default Index;
-

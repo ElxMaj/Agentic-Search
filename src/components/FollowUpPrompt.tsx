@@ -6,13 +6,11 @@ import { Input } from './ui/input';
 import FollowUpChip from './FollowUpChip';
 
 interface FollowUpPromptProps {
-  onFollowUpSubmit: (followUp: string) => void;
   currentQuery: string;
   isVisible: boolean;
 }
 
 const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({ 
-  onFollowUpSubmit, 
   currentQuery,
   isVisible 
 }) => {
@@ -53,16 +51,14 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
 
   const suggestions = getSuggestions();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleDemoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (followUpText.trim()) {
-      onFollowUpSubmit(followUpText.trim());
-      setFollowUpText('');
-    }
+    // This is just a display-only version, so we don't process the submission
+    setFollowUpText('');
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    onFollowUpSubmit(suggestion);
+  const handleDemoChipClick = () => {
+    // This is just a display-only version, so we don't process the click
   };
 
   return (
@@ -76,7 +72,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         Still need help? Ask a follow-up or try one of these suggestions:
       </h3>
 
-      <form onSubmit={handleSubmit} className="mb-4">
+      <form onSubmit={handleDemoSubmit} className="mb-4">
         <div className="flex">
           <Input
             value={followUpText}
@@ -99,7 +95,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
           <FollowUpChip
             key={index}
             text={suggestion}
-            onClick={() => handleSuggestionClick(suggestion)}
+            onClick={handleDemoChipClick}
             delay={0.1 + (index * 0.1)}
           />
         ))}
