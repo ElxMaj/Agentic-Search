@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,7 +5,16 @@ import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
+import FollowUpPrompt from '../components/FollowUpPrompt';
 import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
+
+interface ConversationItem {
+  query: string;
+  queryData: MockQueryData | null;
+  selectedPath: string;
+  answer: string;
+  sources: Source[];
+}
 
 const Index: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -18,6 +26,8 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
+  const [conversationHistory, setConversationHistory] = useState<ConversationItem[]>([]);
+  const [showFollowUp, setShowFollowUp] = useState(false);
 
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
@@ -27,6 +37,7 @@ const Index: React.FC = () => {
       setShowQueryInterpretation(false);
       setShowResolutionOptions(false);
       setShowAnswer(false);
+      setShowFollowUp(false);
       setCurrentQueryData(null);
       setSelectedPathKey("");
       return;
@@ -36,6 +47,7 @@ const Index: React.FC = () => {
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
+    setShowFollowUp(false);
     setSelectedPathKey(""); // Reset selected path on new search
     
     setTimeout(() => {
@@ -147,7 +159,30 @@ const Index: React.FC = () => {
     setSelectedPathKey(pathKey);
     setTimeout(() => {
       setShowAnswer(true);
+      setTimeout(() => {
+        setShowFollowUp(true);
+      }, 1000);
     }, 300);
+  };
+
+  const handleFollowUpSubmit = (followUpQuery: string) => {
+    if (currentQueryData && selectedPathKey) {
+      const currentAnswer = getAnswerContent();
+      const currentSources = getSelectedPathSources();
+      
+      const conversationItem: ConversationItem = {
+        query,
+        queryData: currentQueryData,
+        selectedPath: selectedPathKey,
+        answer: currentAnswer,
+        sources: currentSources
+      };
+      
+      setConversationHistory([...conversationHistory, conversationItem]);
+      
+      handleSearch(`${query} - ${followUpQuery}`);
+      setShowFollowUp(false);
+    }
   };
 
   const getAnswerContent = () => {
@@ -829,7 +864,7 @@ const Index: React.FC = () => {
         </div>
       </div>
       
-      <div class="bg-green-50 p-3 rounded-md mb-4">
+      <div class="bg-green-50 p-3 rounded-md">
         <p class="font-medium text-green-700">Expected Results:</p>
         <ul class="list-disc pl-5 mt-1">
           <li>Reduced startup time by 50-65%</li>
@@ -974,6 +1009,16 @@ const Index: React.FC = () => {
           <section className="w-full flex flex-col items-center">
             <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
             
+            {conversationHistory.map((item, index) => (
+              <div key={index} className="w-full max-w-5xl mx-auto mt-8 border-b pb-8">
+                <div className="text-lg font-medium mb-2 text-gray-700">
+                  {item.query}
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm" 
+                  dangerouslySetInnerHTML={{ __html: item.answer }} />
+              </div>
+            ))}
+            
             {currentQueryData && showQueryInterpretation && (
               <div className="w-full max-w-5xl mx-auto mt-8">
                 <QueryInterpretation 
@@ -992,11 +1037,19 @@ const Index: React.FC = () => {
                 )}
                 
                 {showAnswer && selectedPathKey && (
-                  <AIGeneratedAnswer 
-                    content={getAnswerContent()} 
-                    sources={getSelectedPathSources()} 
-                    isVisible={showAnswer} 
-                  />
+                  <>
+                    <AIGeneratedAnswer 
+                      content={getAnswerContent()} 
+                      sources={getSelectedPathSources()} 
+                      isVisible={showAnswer} 
+                    />
+                    
+                    <FollowUpPrompt
+                      onFollowUpSubmit={handleFollowUpSubmit}
+                      currentQuery={query}
+                      isVisible={showFollowUp}
+                    />
+                  </>
                 )}
               </div>
             )}
@@ -1010,3 +1063,4 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+
