@@ -1,12 +1,14 @@
-
 import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
-import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
+import ResolutionOptions from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
-import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
+import ConversationThread, { ConversationItem } from '../components/ConversationThread';
+import { mockQueries, suggestedQueries, Source } from '../data/mockData';
+import { generateFollowUpSuggestions } from '../utils/followUpSuggestions';
 
 const Index: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -18,6 +20,10 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
+  const [conversationHistory, setConversationHistory] = useState<ConversationItem[]>([]);
+  const [activeConversationItemId, setActiveConversationItemId] = useState<string>('');
+  const [followUpSuggestions, setFollowUpSuggestions] = useState<string[]>([]);
+  const [usedSuggestions, setUsedSuggestions] = useState<string[]>([]);
 
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
@@ -32,11 +38,14 @@ const Index: React.FC = () => {
       return;
     }
     
+    const newItemId = uuidv4();
+    setActiveConversationItemId(newItemId);
+    
     setIsLoading(true);
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
-    setSelectedPathKey(""); // Reset selected path on new search
+    setSelectedPathKey("");
     
     setTimeout(() => {
       const matchedQuery = mockQueries.find(q => 
@@ -137,6 +146,12 @@ const Index: React.FC = () => {
           
           setResolutionOptions(options);
           setShowResolutionOptions(true);
+          
+          // Generate follow-up suggestions based on query
+          const newSuggestions = generateFollowUpSuggestions(searchQuery, usedSuggestions);
+          setFollowUpSuggestions(newSuggestions);
+          setUsedSuggestions(prev => [...prev, ...newSuggestions]);
+          
           setIsLoading(false);
         }, 500);
       }, 1500);
@@ -147,7 +162,57 @@ const Index: React.FC = () => {
     setSelectedPathKey(pathKey);
     setTimeout(() => {
       setShowAnswer(true);
+      
+      // Add this conversation item to history when an answer is displayed
+      if (query && currentQueryData) {
+        const answerContent = getAnswerContent();
+        const sources = getSelectedPathSources();
+        
+        // Create new conversation item
+        const newItem: ConversationItem = {
+          id: activeConversationItemId,
+          query: query,
+          answer: answerContent,
+          isActive: true,
+        };
+        
+        // Update all other items to be inactive
+        setConversationHistory(prev => 
+          prev.map(item => ({...item, isActive: false}))
+        );
+        
+        // Add the new item to conversation history
+        setConversationHistory(prev => [...prev, newItem]);
+      }
     }, 300);
+  };
+
+  const handleFollowUpSubmit = (followUpQuery: string) => {
+    // Handle follow-up queries
+    handleSearch(followUpQuery);
+  };
+
+  const handleConversationItemClick = (itemId: string) => {
+    // Make the clicked item active
+    setConversationHistory(prev => 
+      prev.map(item => ({
+        ...item,
+        isActive: item.id === itemId
+      }))
+    );
+    
+    // Find the item
+    const selectedItem = conversationHistory.find(item => item.id === itemId);
+    if (selectedItem) {
+      setActiveConversationItemId(itemId);
+      setQuery(selectedItem.query);
+      
+      // You would typically reload the answer here, but since we're using mock data,
+      // we'll just update the display state
+      setShowAnswer(true);
+      setShowQueryInterpretation(false);
+      setShowResolutionOptions(false);
+    }
   };
 
   const getAnswerContent = () => {
@@ -974,15 +1039,22 @@ const Index: React.FC = () => {
           <section className="w-full flex flex-col items-center">
             <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
             
-            {currentQueryData && showQueryInterpretation && (
+            {currentQueryData && (
               <div className="w-full max-w-5xl mx-auto mt-8">
-                <QueryInterpretation 
-                  steps={currentQueryData.interpretation.steps} 
-                  isVisible={showQueryInterpretation}
-                  isThinking={isThinking}
+                <ConversationThread 
+                  items={conversationHistory} 
+                  onItemClick={handleConversationItemClick} 
                 />
                 
-                {showResolutionOptions && (
+                {showQueryInterpretation && !conversationHistory.find(item => item.isActive) && (
+                  <QueryInterpretation 
+                    steps={currentQueryData.interpretation.steps} 
+                    isVisible={showQueryInterpretation}
+                    isThinking={isThinking}
+                  />
+                )}
+                
+                {showResolutionOptions && !conversationHistory.find(item => item.isActive) && (
                   <ResolutionOptions 
                     options={resolutionOptions} 
                     onSelectPath={handleSelectPath} 
@@ -995,7 +1067,9 @@ const Index: React.FC = () => {
                   <AIGeneratedAnswer 
                     content={getAnswerContent()} 
                     sources={getSelectedPathSources()} 
-                    isVisible={showAnswer} 
+                    isVisible={showAnswer}
+                    followUpSuggestions={followUpSuggestions}
+                    onFollowUpSubmit={handleFollowUpSubmit}
                   />
                 )}
               </div>

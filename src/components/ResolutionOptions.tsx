@@ -1,8 +1,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircleQuestion, ThumbsUp, Info } from 'lucide-react';
-import AnimatedTransition from './AnimatedTransition';
 
 export interface ResolutionPathOption {
   key: string;
@@ -23,73 +21,66 @@ interface ResolutionOptionsProps {
 
 const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({ 
   options, 
-  onSelectPath, 
+  onSelectPath,
   selectedPath,
-  isVisible
+  isVisible 
 }) => {
-  if (!isVisible || options.length === 0) {
+  if (!isVisible || !options || options.length === 0) {
     return null;
   }
 
-  // Function to determine color based on confidence level
-  const getConfidenceColor = (confidence: number) => {
-    if (confidence >= 90) return "text-green-600";
-    if (confidence >= 75) return "text-blue-500";
-    if (confidence >= 60) return "text-amber-500";
-    return "text-orange-500";
-  };
-
   return (
-    <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
-      <div className="rounded-xl border border-gray-200 p-6 mb-6">
-        <div className="flex items-center mb-4">
-          <MessageCircleQuestion className="text-[#0076CE] mr-2" size={20} />
-          <h2 className="text-lg font-semibold text-black">Solution Approaches</h2>
-        </div>
-        
-        <p className="text-gray-600 mb-6">
-          Here are the most effective approaches to resolve your issue, based on analysis of similar cases.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {options.map((option) => (
-            <div 
-              key={option.key}
-              className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer h-full flex flex-col ${
-                selectedPath === option.key 
-                  ? 'border-[#0076CE] bg-blue-50' 
-                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-              }`}
-              onClick={() => onSelectPath(option.key)}
-            >
-              <div className="flex items-start mb-auto">
-                <div className="text-2xl mr-3">{option.icon}</div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-black mb-1">{option.name}</h3>
-                  <p className="text-sm text-gray-600">{option.description}</p>
-                </div>
-              </div>
-              
-              <div className="mt-4 pt-3 border-t border-gray-100">
-                <div className="flex items-center mb-2">
-                  <ThumbsUp size={16} className={`${getConfidenceColor(option.confidence)} mr-2`} />
-                  <span className={`text-sm ${getConfidenceColor(option.confidence)}`}>
-                    {option.confidence}% Confidence
-                  </span>
-                </div>
-                
-                <div className="flex items-center mb-4">
-                  <Info size={16} className="text-gray-400 mr-2" />
-                  <span className="text-sm text-gray-600">{option.sources} Sources</span>
-                </div>
-                
-                <p className="text-sm text-gray-600">{option.detail}</p>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2 }}
+      className="mt-6"
+    >
+      <h3 className="text-lg font-medium mb-4">I found these potential solutions:</h3>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {options.map((option, index) => (
+          <motion.div
+            key={option.key}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 + (index * 0.1) }}
+            className={`relative border rounded-xl p-5 cursor-pointer transition-all ${
+              selectedPath === option.key
+                ? 'border-[#0076CE] bg-[#F5F9FF] shadow-sm'
+                : 'border-gray-200 hover:border-[#0076CE]/50 hover:bg-gray-50'
+            }`}
+            onClick={() => onSelectPath(option.key)}
+          >
+            <div className="absolute top-3 right-3 flex items-center">
+              <span className={`text-xs font-medium ${
+                option.confidence >= 90 ? 'text-green-600' : 'text-amber-600'
+              }`}>
+                {option.confidence}% match
+              </span>
+            </div>
+            
+            <div className="flex items-start">
+              <span className="text-2xl mr-2">{option.icon}</span>
+              <div>
+                <h4 className="font-medium">{option.name}</h4>
+                <p className="text-sm text-gray-600 mt-1">{option.description}</p>
               </div>
             </div>
-          ))}
-        </div>
+            
+            {option.detail && (
+              <div className="mt-3 bg-gray-50 border border-gray-100 rounded-md px-3 py-2 text-xs text-gray-700">
+                {option.detail}
+              </div>
+            )}
+            
+            <div className="mt-3 text-xs text-gray-500">
+              Based on {option.sources} sources
+            </div>
+          </motion.div>
+        ))}
       </div>
-    </AnimatedTransition>
+    </motion.div>
   );
 };
 
