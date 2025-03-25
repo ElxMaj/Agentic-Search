@@ -1277,49 +1277,8 @@ export const mockQueries: MockQueryData[] = [
   }
 ];
 
-// Function to get mock response based on query
-export const getMockResponse = (query: string) => {
-  // Find the closest matching mock query
-  const lowercaseQuery = query.toLowerCase();
-  
-  // Try to find an exact match first
-  const exactMatch = mockQueries.find(
-    mockQuery => mockQuery.query.toLowerCase() === lowercaseQuery
-  );
-  
-  if (exactMatch) {
-    return {
-      queryInterpretation: exactMatch.interpretation,
-      resolutionPaths: Object.values(exactMatch.resolutionPaths)
-    };
-  }
-  
-  // If no exact match, look for partial matches
-  for (const mockQuery of mockQueries) {
-    const queryParts = mockQuery.query.toLowerCase().split(' ');
-    
-    // Check if any significant words from the mock query appear in the user query
-    const hasMatch = queryParts.some(part => 
-      part.length > 3 && lowercaseQuery.includes(part)
-    );
-    
-    if (hasMatch) {
-      return {
-        queryInterpretation: mockQuery.interpretation,
-        resolutionPaths: Object.values(mockQuery.resolutionPaths)
-      };
-    }
-  }
-  
-  // Default to the first mock query if no match found
-  return {
-    queryInterpretation: mockQueries[0].interpretation,
-    resolutionPaths: Object.values(mockQueries[0].resolutionPaths)
-  };
-};
-
-// Additional suggested queries for the search box as strings
-export const suggestedQueriesText = [
+// Additional suggested queries for the search box
+export const suggestedQueries = [
   "How to improve Dell graphics performance?",
   "Webcam problem during a Teams call",
   "Troubleshoot slow application loading",

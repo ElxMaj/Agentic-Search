@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, CheckCircle2, Info, Cpu, ExternalLink, Download, Settings, TrendingUp, AlertTriangle, HardDrive, Activity, MemoryStick, X, Monitor, Rocket, LucideCheck, BatteryFull, Clock, Database } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
-import FoldableSources from './FoldableSources';
+import SourcesList from './SourcesList';
 import { Source } from '../data/mockData';
 import { 
   createExternalLink, 
@@ -28,7 +29,9 @@ const processContentWithLinks = (content: string): string => {
   });
 };
 
+// Format all content with a consistent, digestible style similar to webcam troubleshooting
 const formatGeneralContent = (content: string, query: string): string => {
+  // Skip if the content is already formatted with colored sections
   if (content.includes('bg-blue-50') || 
       content.includes('bg-green-50') || 
       content.includes('bg-purple-50') ||
@@ -37,6 +40,7 @@ const formatGeneralContent = (content: string, query: string): string => {
     return content;
   }
   
+  // Determine content topic and color theme
   let headerTitle = "Solution Guide";
   let headerColor = "blue";
   let headerDescription = "Follow these steps to resolve your issue.";
@@ -63,8 +67,10 @@ const formatGeneralContent = (content: string, query: string): string => {
     headerDescription = "Enhance performance with these optimization steps.";
   }
   
+  // Convert regular content into formatted sections
   const sections = content.split('\n\n').filter(section => section.trim() !== '');
   
+  // Create the colored header section
   let formattedHTML = `
     <div class="space-y-4">
       <div class="bg-${headerColor}-50 border-l-4 border-${headerColor}-500 p-4 rounded-r">
@@ -73,17 +79,22 @@ const formatGeneralContent = (content: string, query: string): string => {
       </div>
   `;
   
+  // Add the main white container with step-by-step solution
   formattedHTML += `
     <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
       <h4 class="font-semibold text-gray-800 mb-2">Step-by-Step Solution:</h4>
       <ol class="list-decimal pl-5 space-y-2">
   `;
   
+  // Process each section into list items
   sections.forEach((section, index) => {
+    // Extract any links and format them properly
     const processedSection = processContentWithLinks(section);
     
+    // Format section content into list items
     let stepContent = processedSection;
     
+    // Handle bullet points within steps
     if (section.includes('- ')) {
       const mainContent = section.split('- ')[0];
       const bulletPoints = section.split('- ').slice(1).filter(point => point.trim() !== '');
@@ -93,14 +104,17 @@ const formatGeneralContent = (content: string, query: string): string => {
         </ul>`;
     }
     
+    // Add the step to the list
     formattedHTML += `<li>${stepContent}</li>`;
   });
   
+  // Close the ordered list and white container
   formattedHTML += `
       </ol>
     </div>
   `;
   
+  // Add a pro tip if appropriate
   if (sections.length > 1) {
     let tipContent = "Bookmark this solution for future reference. Many users find these steps helpful for similar issues.";
     
@@ -113,6 +127,7 @@ const formatGeneralContent = (content: string, query: string): string => {
     formattedHTML += createProTip(tipContent);
   }
   
+  // Add a warning if relevant keywords are found
   if (content.toLowerCase().includes('caution') || 
       content.toLowerCase().includes('warning') || 
       content.toLowerCase().includes('important')) {
@@ -124,6 +139,7 @@ const formatGeneralContent = (content: string, query: string): string => {
   return formattedHTML;
 };
 
+// Specialized formatter for Dell graphics performance content
 const formatDellGraphicsContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('dell') && 
       (content.toLowerCase().includes('graphics') || content.toLowerCase().includes('performance'))) {
@@ -200,6 +216,7 @@ const formatDellGraphicsContent = (content: string, query: string): string => {
   return content;
 };
 
+// Specialized formatter for webcam troubleshooting content
 const formatWebcamContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('webcam') || content.toLowerCase().includes('webcam') || 
       content.toLowerCase().includes('camera') || content.toLowerCase().includes('teams')) {
@@ -286,6 +303,7 @@ const formatWebcamContent = (content: string, query: string): string => {
   return content;
 };
 
+// Specialized formatter for computer slowness content
 const formatComputerSlowContent = (content: string, query: string): string => {
   if (query.toLowerCase().includes('slow') || 
       (content.toLowerCase().includes('slow') && content.toLowerCase().includes('computer'))) {
@@ -368,6 +386,7 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
   
   let processedContent = processContentWithLinks(content);
   
+  // Apply specialized formatting based on content type
   if (currentQuery.toLowerCase().includes('dell') && 
       (currentQuery.toLowerCase().includes('graphics') || currentQuery.toLowerCase().includes('performance'))) {
     processedContent = formatDellGraphicsContent(processedContent, currentQuery);
@@ -378,11 +397,12 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
             (processedContent.toLowerCase().includes('slow') && processedContent.toLowerCase().includes('computer'))) {
     processedContent = formatComputerSlowContent(processedContent, currentQuery);
   } else {
+    // Apply general formatting for all other content
     processedContent = formatGeneralContent(processedContent, currentQuery);
   }
 
   return (
-    <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-4" delay={0.4}>
+    <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.4}>
       <div className="rounded-xl border border-gray-200 p-6 mb-4 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
@@ -423,7 +443,7 @@ const AIGeneratedAnswer: React.FC<AIGeneratedAnswerProps> = ({
           />
         </div>
         
-        <FoldableSources sources={sources} />
+        <SourcesList sources={sources} isVisible={true} />
       </div>
     </AnimatedTransition>
   );
