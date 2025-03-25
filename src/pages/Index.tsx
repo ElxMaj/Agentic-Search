@@ -10,12 +10,16 @@ import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions from '../components/ResolutionOptions';
 import ResolutionPath from '../components/ResolutionPath';
 import FollowUpPrompt from '../components/FollowUpPrompt';
-import { mockQueries, getMockResponse } from '../data/mockData';
+import { mockQueries, getMockResponse, suggestedQueriesText } from '../data/mockData';
 
 interface ConversationTurn {
   query: string;
   response: any;
   selectedPath?: string;
+}
+
+interface ThinkingAnimationProps {
+  queryText: string;
 }
 
 const Index = () => {
@@ -181,11 +185,11 @@ const Index = () => {
           <QueryInput 
             onSearch={handleSearch} 
             isLoading={isLoading}
-            suggestedQueries={mockQueries}
+            suggestedQueries={suggestedQueriesText}
           />
           
           {/* Thinking Animation (while loading) */}
-          {isLoading && <ThinkingAnimation query={queryParam || ""} />}
+          {isLoading && <ThinkingAnimation queryText={queryParam || ""} />}
           
           {/* Results Section */}
           {result && !isLoading && (
@@ -198,15 +202,15 @@ const Index = () => {
               
               {/* Resolution Options */}
               <ResolutionOptions 
-                paths={result.resolutionPaths} 
+                options={result.resolutionPaths} 
                 onSelect={handlePathSelect}
-                selectedPath={selectedPath}
+                selectedOption={selectedPath}
                 isVisible={true}
               />
               
               {/* Selected Resolution Path */}
               <ResolutionPath
-                path={selectedPath 
+                data={selectedPath 
                   ? result.resolutionPaths.find((p: any) => p.name === selectedPath) 
                   : result.resolutionPaths[0]}
                 isVisible={true}
