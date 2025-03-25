@@ -1,8 +1,18 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircleQuestion, ThumbsUp, Info } from 'lucide-react';
 import AnimatedTransition from './AnimatedTransition';
-import { ResolutionPathOption } from '../types/index';
+
+export interface ResolutionPathOption {
+  key: string;
+  name: string;
+  icon: string;
+  description: string;
+  confidence: number;
+  sources: number;
+  detail: string;
+}
 
 interface ResolutionOptionsProps {
   options: ResolutionPathOption[];
