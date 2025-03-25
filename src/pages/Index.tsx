@@ -1,12 +1,16 @@
-
 import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
-import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
+import ConversationThread from '../components/ConversationThread';
+import { mockQueries, suggestedQueries, Source } from '../data/mockData';
+import { generateFollowUpSuggestions } from '../utils/followUpSuggestions';
+import { MockQueryData, ConversationItem } from '../types';
+import FollowUpPrompt from '../components/FollowUpPrompt';
 
 const Index: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -18,6 +22,10 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
+  const [conversationHistory, setConversationHistory] = useState<ConversationItem[]>([]);
+  const [activeConversationItemId, setActiveConversationItemId] = useState<string>('');
+  const [followUpSuggestions, setFollowUpSuggestions] = useState<string[]>([]);
+  const [usedSuggestions, setUsedSuggestions] = useState<string[]>([]);
 
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
@@ -32,11 +40,14 @@ const Index: React.FC = () => {
       return;
     }
     
+    const newItemId = uuidv4();
+    setActiveConversationItemId(newItemId);
+    
     setIsLoading(true);
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
-    setSelectedPathKey(""); // Reset selected path on new search
+    setSelectedPathKey("");
     
     setTimeout(() => {
       const matchedQuery = mockQueries.find(q => 
@@ -147,7 +158,47 @@ const Index: React.FC = () => {
     setSelectedPathKey(pathKey);
     setTimeout(() => {
       setShowAnswer(true);
+      
+      if (query && currentQueryData) {
+        const answerContent = getAnswerContent();
+        
+        const newItem: ConversationItem = {
+          id: activeConversationItemId,
+          query: query,
+          answer: answerContent,
+          isActive: true,
+        };
+        
+        setConversationHistory(prev => 
+          prev.map(item => ({...item, isActive: false}))
+        );
+        
+        setConversationHistory(prev => [...prev, newItem]);
+      }
     }, 300);
+  };
+
+  const handleFollowUpSubmit = (followUpQuery: string) => {
+    handleSearch(followUpQuery);
+  };
+
+  const handleConversationItemClick = (itemId: string) => {
+    setConversationHistory(prev => 
+      prev.map(item => ({
+        ...item,
+        isActive: item.id === itemId
+      }))
+    );
+    
+    const selectedItem = conversationHistory.find(item => item.id === itemId);
+    if (selectedItem) {
+      setActiveConversationItemId(itemId);
+      setQuery(selectedItem.query);
+      
+      setShowAnswer(true);
+      setShowQueryInterpretation(false);
+      setShowResolutionOptions(false);
+    }
   };
 
   const getAnswerContent = () => {
@@ -974,6 +1025,13 @@ const Index: React.FC = () => {
           <section className="w-full flex flex-col items-center">
             <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
             
+            <div className="w-full max-w-5xl mx-auto">
+              <ConversationThread 
+                items={conversationHistory.filter(item => !item.isActive)} 
+                onItemClick={handleConversationItemClick} 
+              />
+            </div>
+            
             {currentQueryData && showQueryInterpretation && (
               <div className="w-full max-w-5xl mx-auto mt-8">
                 <QueryInterpretation 
@@ -992,11 +1050,20 @@ const Index: React.FC = () => {
                 )}
                 
                 {showAnswer && selectedPathKey && (
-                  <AIGeneratedAnswer 
-                    content={getAnswerContent()} 
-                    sources={getSelectedPathSources()} 
-                    isVisible={showAnswer} 
-                  />
+                  <>
+                    <AIGeneratedAnswer 
+                      content={getAnswerContent()} 
+                      sources={getSelectedPathSources()} 
+                      isVisible={showAnswer} 
+                    />
+                    
+                    {showAnswer && (
+                      <FollowUpPrompt 
+                        suggestions={followUpSuggestions} 
+                        onFollowUpSubmit={handleFollowUpSubmit} 
+                      />
+                    )}
+                  </>
                 )}
               </div>
             )}
