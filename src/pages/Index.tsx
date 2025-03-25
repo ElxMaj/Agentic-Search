@@ -6,7 +6,6 @@ import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
-import FollowUpQuestions from '../components/FollowUpQuestions';
 import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
 
 const Index: React.FC = () => {
@@ -16,7 +15,6 @@ const Index: React.FC = () => {
   const [isThinking, setIsThinking] = useState(false);
   const [showResolutionOptions, setShowResolutionOptions] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [showFollowUp, setShowFollowUp] = useState(false);
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
@@ -29,7 +27,6 @@ const Index: React.FC = () => {
       setShowQueryInterpretation(false);
       setShowResolutionOptions(false);
       setShowAnswer(false);
-      setShowFollowUp(false);
       setCurrentQueryData(null);
       setSelectedPathKey("");
       return;
@@ -39,7 +36,6 @@ const Index: React.FC = () => {
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
-    setShowFollowUp(false);
     setSelectedPathKey(""); // Reset selected path on new search
     
     setTimeout(() => {
@@ -151,18 +147,7 @@ const Index: React.FC = () => {
     setSelectedPathKey(pathKey);
     setTimeout(() => {
       setShowAnswer(true);
-      // Show follow-up component after answer is displayed
-      setTimeout(() => {
-        setShowFollowUp(true);
-      }, 1000);
     }, 300);
-  };
-
-  const handleFollowUpQuestion = (followUpQuery: string) => {
-    // Handle follow-up question the same way as initial search
-    handleSearch(followUpQuery);
-    // Scroll to top of the page for better UX
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const getAnswerContent = () => {
@@ -1011,14 +996,6 @@ const Index: React.FC = () => {
                     content={getAnswerContent()} 
                     sources={getSelectedPathSources()} 
                     isVisible={showAnswer} 
-                  />
-                )}
-                
-                {/* Follow-up questions component */}
-                {showFollowUp && showAnswer && (
-                  <FollowUpQuestions 
-                    currentQuery={query}
-                    onSubmitFollowUp={handleFollowUpQuestion}
                   />
                 )}
               </div>
