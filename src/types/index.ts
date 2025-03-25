@@ -16,7 +16,7 @@ export interface MockQueryData {
 
 export interface InterpretationStep {
   description: string;
-  entities?: Entity[];
+  entities: Entity[]; // Changed from optional to required
 }
 
 export interface Entity {
@@ -40,7 +40,7 @@ export interface ResolutionPathOption {
   description: string;
   confidence: number;
   sources: number;
-  detail?: string;
+  detail: string; // Changed from optional to required
 }
 
 export interface ConversationItem {

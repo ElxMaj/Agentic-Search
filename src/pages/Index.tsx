@@ -1035,7 +1035,7 @@ const Index: React.FC = () => {
             {currentQueryData && showQueryInterpretation && (
               <div className="w-full max-w-5xl mx-auto mt-8">
                 <QueryInterpretation 
-                  steps={currentQueryData.interpretation.steps as InterpretationStep[]} 
+                  steps={currentQueryData.interpretation.steps} 
                   isVisible={showQueryInterpretation}
                   isThinking={isThinking}
                 />
