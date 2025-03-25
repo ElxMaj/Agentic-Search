@@ -1,16 +1,12 @@
 
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
-import ResolutionOptions from '../components/ResolutionOptions';
+import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
-import ConversationThread from '../components/ConversationThread';
-import { mockQueries, suggestedQueries } from '../data/mockData';
-import { generateFollowUpSuggestions } from '../utils/followUpSuggestions';
-import { MockQueryData, ResolutionPathOption, ConversationItem } from '../types';
+import { mockQueries, suggestedQueries, Source, MockQueryData } from '../data/mockData';
 
 const Index: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -22,10 +18,6 @@ const Index: React.FC = () => {
   const [currentQueryData, setCurrentQueryData] = useState<MockQueryData | null>(null);
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
-  const [conversationHistory, setConversationHistory] = useState<ConversationItem[]>([]);
-  const [activeConversationItemId, setActiveConversationItemId] = useState<string>('');
-  const [followUpSuggestions, setFollowUpSuggestions] = useState<string[]>([]);
-  const [usedSuggestions, setUsedSuggestions] = useState<string[]>([]);
 
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
@@ -40,14 +32,11 @@ const Index: React.FC = () => {
       return;
     }
     
-    const newItemId = uuidv4();
-    setActiveConversationItemId(newItemId);
-    
     setIsLoading(true);
     setShowQueryInterpretation(false);
     setShowResolutionOptions(false);
     setShowAnswer(false);
-    setSelectedPathKey("");
+    setSelectedPathKey(""); // Reset selected path on new search
     
     setTimeout(() => {
       const matchedQuery = mockQueries.find(q => 
@@ -148,12 +137,6 @@ const Index: React.FC = () => {
           
           setResolutionOptions(options);
           setShowResolutionOptions(true);
-          
-          // Generate follow-up suggestions based on query
-          const newSuggestions = generateFollowUpSuggestions(searchQuery, usedSuggestions);
-          setFollowUpSuggestions(newSuggestions);
-          setUsedSuggestions(prev => [...prev, ...newSuggestions]);
-          
           setIsLoading(false);
         }, 500);
       }, 1500);
@@ -164,56 +147,7 @@ const Index: React.FC = () => {
     setSelectedPathKey(pathKey);
     setTimeout(() => {
       setShowAnswer(true);
-      
-      // Add this conversation item to history when an answer is displayed
-      if (query && currentQueryData) {
-        const answerContent = getAnswerContent();
-        
-        // Create new conversation item
-        const newItem: ConversationItem = {
-          id: activeConversationItemId,
-          query: query,
-          answer: answerContent,
-          isActive: true,
-        };
-        
-        // Update all other items to be inactive
-        setConversationHistory(prev => 
-          prev.map(item => ({...item, isActive: false}))
-        );
-        
-        // Add the new item to conversation history
-        setConversationHistory(prev => [...prev, newItem]);
-      }
     }, 300);
-  };
-
-  const handleFollowUpSubmit = (followUpQuery: string) => {
-    // Handle follow-up queries
-    handleSearch(followUpQuery);
-  };
-
-  const handleConversationItemClick = (itemId: string) => {
-    // Make the clicked item active
-    setConversationHistory(prev => 
-      prev.map(item => ({
-        ...item,
-        isActive: item.id === itemId
-      }))
-    );
-    
-    // Find the item
-    const selectedItem = conversationHistory.find(item => item.id === itemId);
-    if (selectedItem) {
-      setActiveConversationItemId(itemId);
-      setQuery(selectedItem.query);
-      
-      // You would typically reload the answer here, but since we're using mock data,
-      // we'll just update the display state
-      setShowAnswer(true);
-      setShowQueryInterpretation(false);
-      setShowResolutionOptions(false);
-    }
   };
 
   const getAnswerContent = () => {
@@ -724,50 +658,304 @@ const Index: React.FC = () => {
         <p class="text-sm">Microsoft Teams uses the Electron framework, which combines Chromium and Node.js. This architecture can sometimes cause conflicts with the WebRTC components that handle video. The cache-clearing steps reset the media subsystem components without affecting your user data or chat history. Recent Teams updates have improved webcam compatibility, particularly for USB devices on Windows 11.</p>
       </div>`;
     } else if (selectedPathKey === "diskOptimization") {
-      return `<h3 class="text-lg font-medium mb-3">Disk Optimization</h3>
+      return `<h3 class="text-lg font-medium mb-3">Slow Application Loading: Disk Optimization Solutions</h3>
       
-      <p class="mb-3">Disk optimization can help improve storage performance and system responsiveness:</p>
+      <p class="mb-3">After analyzing your system's storage performance, I've identified several optimization opportunities that can significantly improve application loading times:</p>
       
-      <ol class="list-decimal pl-5 mb-4 space-y-2">
-        <li><strong>Run Disk Cleanup</strong> - Remove temporary files, system files, and other unnecessary data to free up space.</li>
-        <li><strong>Optimize File System</strong> - Reorganize files to improve read/write speeds and reduce fragmentation.</li>
-        <li><strong>Defragment Disk</strong> - Reorganize data on the disk to improve read/write speeds and reduce fragmentation.</li>
-        <li><strong>Enable File Caching</strong> - Store frequently accessed files in memory for faster access.</li>
-      </ol>
+      <div class="bg-blue-100 p-3 rounded-md mb-4">
+        <p class="font-medium">Storage Performance Analysis:</p>
+        <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
+          <div>
+            <p class="font-medium">Current Read Speed:</p>
+            <p>320 MB/s (45% below optimal)</p>
+          </div>
+          <div>
+            <p class="font-medium">Current Write Speed:</p>
+            <p>290 MB/s (37% below optimal)</p>
+          </div>
+          <div>
+            <p class="font-medium">Drive Type:</p>
+            <p>SATA SSD (Samsung 870 EVO)</p>
+          </div>
+          <div>
+            <p class="font-medium">Free Space:</p>
+            <p>18% (Critical - below 20% threshold)</p>
+          </div>
+        </div>
+      </div>
       
-      <p>These steps can improve disk performance by up to 20% and reduce system load times.</p>`;
+      <h4 class="font-medium mt-4 mb-2">Recommended Optimization Steps:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Free Up Disk Space</p>
+            <p class="mb-2">Your SSD performance is degrading due to insufficient free space. SSDs require at least 20% free space for optimal performance.</p>
+            <div class="bg-white p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">Quick Actions:</p>
+              <ul class="list-disc pl-4">
+                <li>Run Disk Cleanup (found 14.3GB of temporary files)</li>
+                <li>Uninstall unused applications (identified 7 rarely used apps using 22GB)</li>
+                <li>Move media files to external storage</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Enable TRIM for SSD Optimization</p>
+            <p class="mb-2">TRIM command optimization is currently running on a monthly schedule, which is insufficient for your usage patterns.</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Recommended Configuration:</p>
+              <ol class="list-decimal pl-4">
+                <li>Open Command Prompt as administrator</li>
+                <li>Type: <code class="bg-gray-200 px-1">fsutil behavior query DisableDeleteNotify</code></li>
+                <li>If result is 1, TRIM is disabled. Enable it with: <code class="bg-gray-200 px-1">fsutil behavior set DisableDeleteNotify 0</code></li>
+                <li>Schedule weekly TRIM operations</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Optimize Virtual Memory Settings</p>
+            <p class="mb-2">Your virtual memory configuration is suboptimal for your system's RAM and usage patterns.</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Optimal Configuration:</p>
+              <ol class="list-decimal pl-4">
+                <li>Press Win+R and type <code class="bg-gray-200 px-1">sysdm.cpl</code></li>
+                <li>Go to Advanced tab > Performance > Settings > Advanced</li>
+                <li>Click "Change" under Virtual Memory</li>
+                <li>Set custom size: Initial size: 4096 MB, Maximum size: 8192 MB</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t pt-3 mt-4">
+        <p class="font-medium">Long-term Solution: Storage Upgrade</p>
+        <p class="mb-2">For a more substantial performance improvement, consider upgrading to an NVMe SSD:</p>
+        <ul class="list-disc pl-5">
+          <li>Compatible NVMe upgrades for your Dell XPS: Samsung 980 Pro or WD Black SN850</li>
+          <li>Expected performance improvement: 4-6x faster application loading times</li>
+          <li>Cost range: $90-150 for 1TB capacity</li>
+        </ul>
+      </div>`;
     } else if (selectedPathKey === "startupOptimization") {
-      return `<h3 class="text-lg font-medium mb-3">Startup Optimization</h3>
+      return `<h3 class="text-lg font-medium mb-3">Slow Application Loading: Startup Optimization</h3>
       
-      <p class="mb-3">Startup optimization can help reduce system boot time and improve overall system performance:</p>
+      <p class="mb-3">I've analyzed your system's startup configuration and identified several opportunities to improve application loading performance:</p>
       
-      <ol class="list-decimal pl-5 mb-4 space-y-2">
-        <li><strong>Disable Unnecessary Startup Items</strong> - Remove programs that start automatically when your computer boots.</li>
-        <li><strong>Use Task Manager</strong> - Identify and disable programs that are consuming excessive system resources.</li>
-        <li><strong>Enable Startup Applications</strong> - Only start applications that are necessary for your daily tasks.</li>
-        <li><strong>Use Startup Manager</strong> - Manage startup applications and ensure only essential programs are running.</li>
-      </ol>
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+        <p class="font-medium">System Startup Analysis:</p>
+        <ul class="list-disc pl-5 mt-1">
+          <li>Current startup time: <strong>47 seconds</strong> (73% slower than optimal)</li>
+          <li>Startup applications: <strong>24</strong> (12 unnecessary)</li>
+          <li>Background services: <strong>142</strong> (38 non-essential)</li>
+          <li>Delayed launch applications: <strong>0</strong> (not utilizing delayed start)</li>
+        </ul>
+      </div>
       
-      <p>These steps can improve system performance by up to 10% and reduce boot time.</p>`;
+      <h4 class="font-medium mt-4 mb-2">Step-by-Step Optimization Plan:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Manage Startup Applications</p>
+            <p class="mb-2">Disable unnecessary applications that start automatically with Windows:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Using Task Manager:</p>
+              <ol class="list-decimal pl-4">
+                <li>Press Ctrl+Shift+Esc to open Task Manager</li>
+                <li>Go to the "Startup" tab</li>
+                <li>Disable these high-impact, non-essential items:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Adobe Creative Cloud</li>
+                    <li>Spotify</li>
+                    <li>Steam</li>
+                    <li>Discord</li>
+                    <li>Skype</li>
+                    <li>OneDrive (unless frequently used)</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Optimize Background Services</p>
+            <p class="mb-2">Configure Windows services for better performance:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Using Services Manager:</p>
+              <ol class="list-decimal pl-4">
+                <li>Press Win+R and type <code class="bg-gray-200 px-1">services.msc</code></li>
+                <li>Set these services to Manual start:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Print Spooler (if you don't print regularly)</li>
+                    <li>Windows Search (reduces indexing overhead)</li>
+                    <li>Bluetooth Support Service (if not using Bluetooth)</li>
+                    <li>Connected User Experiences and Telemetry</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Address Application Conflicts</p>
+            <p class="mb-2">Resolve conflicts between applications that are competing for resources:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Identified Conflicts:</p>
+              <ul class="list-disc pl-4">
+                <li><strong>McAfee and Windows Defender</strong> - Multiple active antivirus solutions causing scanning conflicts</li>
+                <li><strong>Multiple cloud storage services</strong> - Dropbox, Google Drive, and OneDrive all syncing at startup</li>
+                <li><strong>Duplicate media services</strong> - iTunes and Windows Media Player services both running</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-green-50 p-3 rounded-md mb-4">
+        <p class="font-medium text-green-700">Expected Results:</p>
+        <ul class="list-disc pl-5 mt-1">
+          <li>Reduced startup time by 50-65%</li>
+          <li>Faster application launch times by 25-40%</li>
+          <li>Reduced background CPU usage by 15-20%</li>
+          <li>More responsive system throughout work sessions</li>
+        </ul>
+      </div>
+      
+      <p>Would you like assistance implementing any of these optimizations? I can provide step-by-step guidance for your specific system configuration.</p>`;
     } else if (selectedPathKey === "memoryManagement") {
-      return `<h3 class="text-lg font-medium mb-3">Memory Management</h3>
+      return `<h3 class="text-lg font-medium mb-3">Slow Application Loading: Memory Optimization</h3>
       
-      <p class="mb-3">Memory management can help improve system performance and reduce system crashes:</p>
+      <p class="mb-3">After analyzing your Dell XPS system with 8GB RAM, I've identified several memory optimization opportunities to improve application loading times:</p>
       
-      <ol class="list-decimal pl-5 mb-4 space-y-2">
-        <li><strong>Free Up Unused RAM</strong> - Remove programs that are not in use to free up memory.</li>
-        <li><strong>Optimize Applications</strong> - Use memory-efficient settings and features in applications.</li>
-        <li><strong>Use Task Manager</strong> - Identify and disable programs that are consuming excessive system resources.</li>
-        <li><strong>Enable Virtual Memory</strong> - Use additional storage to improve memory performance.</li>
-      </ol>
+      <div class="bg-blue-100 p-3 rounded-md mb-4">
+        <p class="font-medium">Memory Usage Analysis:</p>
+        <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
+          <div>
+            <p class="font-medium">Idle Memory Usage:</p>
+            <p>3.2GB (40% of total)</p>
+          </div>
+          <div>
+            <p class="font-medium">Peak Memory Usage:</p>
+            <p>7.6GB (95% of total)</p>
+          </div>
+          <div>
+            <p class="font-medium">Memory-Intensive Apps:</p>
+            <p>Chrome, Photoshop, Outlook</p>
+          </div>
+          <div>
+            <p class="font-medium">Page File Activity:</p>
+            <p>High (indicating memory shortage)</p>
+          </div>
+        </div>
+      </div>
       
-      <p>These steps can improve system performance by up to 15% and reduce system crashes.</p>`;
+      <h4 class="font-medium mt-4 mb-2">Memory Optimization Recommendations:</h4>
+      
+      <div class="space-y-4 mb-4">
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+          <div>
+            <p class="font-medium">Optimize Current Memory Usage</p>
+            <p class="mb-2">Implement these techniques to reduce memory consumption:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Browser Optimization:</p>
+              <ul class="list-disc pl-4">
+                <li>Install a tab manager extension (like OneTab) to reduce Chrome's memory usage</li>
+                <li>Limit extensions to essential ones only (currently using 12 extensions)</li>
+                <li>Enable browser tab discarding for inactive tabs</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Application Management:</p>
+              <ul class="list-disc pl-4">
+                <li>Close resource-intensive applications when not in use</li>
+                <li>Use lighter alternatives when possible (e.g., Photopea instead of Photoshop for simple edits)</li>
+                <li>Adjust application settings to reduce memory usage:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Reduce Photoshop memory allocation to 60%</li>
+                    <li>Limit Outlook mail sync to 1 month</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Memory Leak Detection and Resolution</p>
+            <p class="mb-2">Address memory leaks that gradually consume system resources:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Detected Memory Leaks:</p>
+              <ul class="list-disc pl-4">
+                <li><strong>Microsoft Teams</strong> - Exhibits a known memory leak after running for 4+ hours</li>
+                <li><strong>Windows Explorer</strong> - Memory usage increases gradually when browsing large folders</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Mitigation Strategies:</p>
+              <ul class="list-disc pl-4">
+                <li>Restart memory-leaking applications periodically</li>
+                <li>Install latest updates that may contain fixes</li>
+                <li>Use Task Manager to monitor and identify other potential memory leaks</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Hardware Upgrade Recommendations</p>
+            <p class="mb-2">Based on your usage patterns, a memory upgrade would significantly improve performance:</p>
+            <div class="bg-gray-100 p-2 rounded-md text-sm">
+              <p class="font-medium">Compatible RAM Upgrades:</p>
+              <ul class="list-disc pl-4">
+                <li><strong>Recommended</strong>: Upgrade to 16GB (2x8GB) DDR4-3200 SODIMM</li>
+                <li><strong>Optimal</strong>: Upgrade to 32GB (2x16GB) DDR4-3200 SODIMM</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Expected Performance Improvement:</p>
+              <ul class="list-disc pl-4">
+                <li>25-40% faster application loading times</li>
+                <li>50-70% reduction in system freezes during multitasking</li>
+                <li>Near elimination of disk paging for most workloads</li>
+              </ul>
+              
+              <p class="font-medium mt-2">Installation Difficulty:</p>
+              <p>Medium - Requires opening laptop bottom panel and replacing SODIMMs</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-green-50 p-3 rounded-md">
+        <p class="font-medium">Performance Impact Analysis:</p>
+        <p class="text-sm">Based on your system's current memory usage patterns, implementing the software optimizations alone could improve application loading times by 15-20%. Adding a hardware upgrade would deliver a 25-40% overall performance boost for memory-intensive applications.</p>
+      </div>`;
     } else {
       return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
     }
   };
 
-  const getSelectedPathSources = () => {
+  const getSelectedPathSources = (): Source[] => {
     if (!currentQueryData || !selectedPathKey) return [];
     const path = currentQueryData.resolutionPaths[selectedPathKey];
     return path?.sources || [];
@@ -776,46 +964,38 @@ const Index: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
+      
       <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
         <div className="max-w-7xl w-full flex flex-col items-center">
           <h1 className="text-4xl font-bold text-center mb-8 text-neutral-900">
             Ask anything
           </h1>
+          
           <section className="w-full flex flex-col items-center">
-            <QueryInput 
-              onSearch={handleSearch} 
-              isLoading={isLoading}
-              suggestedQueries={suggestedQueries}
-            />
-            {currentQueryData && (
+            <QueryInput onSearch={handleSearch} isLoading={isLoading} suggestedQueries={suggestedQueries} />
+            
+            {currentQueryData && showQueryInterpretation && (
               <div className="w-full max-w-5xl mx-auto mt-8">
-                <ConversationThread 
-                  items={conversationHistory}
-                  onItemClick={handleConversationItemClick}
-                  activeItemId={activeConversationItemId}
+                <QueryInterpretation 
+                  steps={currentQueryData.interpretation.steps} 
+                  isVisible={showQueryInterpretation}
+                  isThinking={isThinking}
                 />
-                {showQueryInterpretation && !conversationHistory.find(item => item.isActive) && (
-                  <QueryInterpretation 
-                    steps={currentQueryData.interpretation.steps}
-                    isVisible={showQueryInterpretation}
-                    isThinking={isThinking}
-                  />
-                )}
-                {showResolutionOptions && !conversationHistory.find(item => item.isActive) && (
+                
+                {showResolutionOptions && (
                   <ResolutionOptions 
-                    options={resolutionOptions}
-                    onSelectPath={handleSelectPath}
-                    selectedPath={selectedPathKey}
-                    isVisible={showResolutionOptions}
+                    options={resolutionOptions} 
+                    onSelectPath={handleSelectPath} 
+                    selectedPath={selectedPathKey} 
+                    isVisible={showResolutionOptions} 
                   />
                 )}
+                
                 {showAnswer && selectedPathKey && (
                   <AIGeneratedAnswer 
-                    content={getAnswerContent()}
-                    sources={getSelectedPathSources()}
-                    isVisible={showAnswer}
-                    followUpSuggestions={followUpSuggestions}
-                    onFollowUpSubmit={handleFollowUpSubmit}
+                    content={getAnswerContent()} 
+                    sources={getSelectedPathSources()} 
+                    isVisible={showAnswer} 
                   />
                 )}
               </div>
@@ -823,6 +1003,7 @@ const Index: React.FC = () => {
           </section>
         </div>
       </main>
+      
       <Footer />
     </div>
   );
