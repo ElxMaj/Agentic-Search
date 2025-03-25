@@ -1,20 +1,15 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ConversationItem } from '../types';
 
-export interface ConversationItem {
-  id: string;
-  query: string;
-  answer: React.ReactNode;
-  isActive: boolean;
-}
-
-interface ConversationThreadProps {
+export interface ConversationThreadProps {
   items: ConversationItem[];
+  activeItemId: string;
   onItemClick: (id: string) => void;
 }
 
-const ConversationThread: React.FC<ConversationThreadProps> = ({ items, onItemClick }) => {
+const ConversationThread: React.FC<ConversationThreadProps> = ({ items, activeItemId, onItemClick }) => {
   if (!items || items.length <= 1) {
     return null;
   }

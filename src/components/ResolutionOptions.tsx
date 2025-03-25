@@ -1,18 +1,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ResolutionPathOption } from '../types';
 
-export interface ResolutionPathOption {
-  key: string;
-  name: string;
-  icon: string;
-  description: string;
-  confidence: number;
-  sources: number;
-  detail: string;
-}
-
-interface ResolutionOptionsProps {
+export interface ResolutionOptionsProps {
   options: ResolutionPathOption[];
   onSelectPath: (pathKey: string) => void;
   selectedPath: string;

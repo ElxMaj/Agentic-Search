@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -7,7 +8,7 @@ import QueryInterpretation from '../components/QueryInterpretation';
 import ResolutionOptions from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
 import ConversationThread from '../components/ConversationThread';
-import { mockQueries, suggestedQueries, Source } from '../data/mockData';
+import { mockQueries, suggestedQueries } from '../data/mockData';
 import { generateFollowUpSuggestions } from '../utils/followUpSuggestions';
 import { MockQueryData, ResolutionPathOption, ConversationItem } from '../types';
 
@@ -773,17 +774,55 @@ const Index: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <QueryInput onSearch={handleSearch} />
-      {showQueryInterpretation && <QueryInterpretation />}
-      {showResolutionOptions && <ResolutionOptions options={resolutionOptions} />}
-      {showAnswer && <AIGeneratedAnswer answer={getAnswerContent()} />}
-      <ConversationThread
-        history={conversationHistory}
-        activeItemId={activeConversationItemId}
-        onItemClick={handleConversationItemClick}
-      />
+      <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
+        <div className="max-w-7xl w-full flex flex-col items-center">
+          <h1 className="text-4xl font-bold text-center mb-8 text-neutral-900">
+            Ask anything
+          </h1>
+          <section className="w-full flex flex-col items-center">
+            <QueryInput 
+              onSearch={handleSearch} 
+              isLoading={isLoading}
+              suggestedQueries={suggestedQueries}
+            />
+            {currentQueryData && (
+              <div className="w-full max-w-5xl mx-auto mt-8">
+                <ConversationThread 
+                  items={conversationHistory}
+                  onItemClick={handleConversationItemClick}
+                  activeItemId={activeConversationItemId}
+                />
+                {showQueryInterpretation && !conversationHistory.find(item => item.isActive) && (
+                  <QueryInterpretation 
+                    steps={currentQueryData.interpretation.steps}
+                    isVisible={showQueryInterpretation}
+                    isThinking={isThinking}
+                  />
+                )}
+                {showResolutionOptions && !conversationHistory.find(item => item.isActive) && (
+                  <ResolutionOptions 
+                    options={resolutionOptions}
+                    onSelectPath={handleSelectPath}
+                    selectedPath={selectedPathKey}
+                    isVisible={showResolutionOptions}
+                  />
+                )}
+                {showAnswer && selectedPathKey && (
+                  <AIGeneratedAnswer 
+                    content={getAnswerContent()}
+                    sources={getSelectedPathSources()}
+                    isVisible={showAnswer}
+                    followUpSuggestions={followUpSuggestions}
+                    onFollowUpSubmit={handleFollowUpSubmit}
+                  />
+                )}
+              </div>
+            )}
+          </section>
+        </div>
+      </main>
       <Footer />
     </div>
   );

@@ -5,7 +5,7 @@ import { Source } from '../data/mockData';
 import FoldableSources from './FoldableSources';
 import FollowUpPrompt from './FollowUpPrompt';
 
-interface AIGeneratedAnswerProps {
+export interface AIGeneratedAnswerProps {
   content: string;
   sources: Source[];
   isVisible: boolean;
