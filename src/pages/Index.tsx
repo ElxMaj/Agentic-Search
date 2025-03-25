@@ -630,4 +630,163 @@ const Index: React.FC = () => {
         </div>
         
         <div class="flex items-start">
-          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+          <div>
+            <p class="font-medium">Clear Teams Cache</p>
+            <p class="mb-2 text-sm">Corrupted cache files frequently cause webcam initialization problems:</p>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">For Windows Users:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Completely exit Teams (check Task Manager to ensure it's closed)</li>
+                <li>Press <strong>Win+R</strong> to open Run dialog</li>
+                <li>Type <code>%appdata%\\Microsoft\\Teams</code> and click OK</li>
+                <li>Delete these folders:
+                  <ul class="list-disc pl-4 mt-1">
+                    <li>Cache</li>
+                    <li>blob_storage</li>
+                    <li>databases</li>
+                    <li>GPUCache</li>
+                    <li>IndexedDB</li>
+                    <li>Local Storage</li>
+                    <li>tmp</li>
+                  </ul>
+                </li>
+                <li>Restart your computer</li>
+                <li>Open Teams and test your camera</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">For Mac Users:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Quit Microsoft Teams completely</li>
+                <li>Open Finder and click <strong>Go</strong> in the menu bar</li>
+                <li>Hold the Option key to reveal <strong>Library</strong> and click on it</li>
+                <li>Navigate to <strong>Application Support > Microsoft > Teams</strong></li>
+                <li>Delete the folders listed above</li>
+                <li>Restart your Mac</li>
+                <li>Open Teams and sign in again</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+          <div>
+            <p class="font-medium">Disable Resource-Intensive Features</p>
+            <p class="mb-2 text-sm">Some Teams features can consume excessive resources and affect webcam performance:</p>
+            <ol class="list-decimal pl-5 text-sm space-y-1">
+              <li>In Teams Settings, go to <strong>Devices</strong></li>
+              <li>Disable <strong>GPU hardware acceleration</strong> if enabled</li>
+              <li>Under <strong>Appearance and accessibility</strong>, disable animations</li>
+              <li>During calls, avoid using background effects or use the simple blur option</li>
+              <li>If problems occur in large meetings, disable incoming video for other participants</li>
+            </ol>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+          <div>
+            <p class="font-medium">Update or Reinstall Teams</p>
+            <p class="mb-2 text-sm">Your Teams version is outdated, which could be causing compatibility issues:</p>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs mb-2">
+              <p class="font-medium">Update Teams:</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>In Teams, click your profile picture</li>
+                <li>Select <strong>Check for updates</strong></li>
+                <li>If updates are available, let Teams install them</li>
+                <li>Restart Teams when prompted</li>
+              </ol>
+            </div>
+            
+            <div class="bg-gray-100 p-2 rounded-md text-xs">
+              <p class="font-medium">Reinstall Teams (if updating doesn't help):</p>
+              <ol class="list-decimal pl-4 space-y-1">
+                <li>Uninstall Teams from Control Panel/Settings</li>
+                <li>Clear the Teams cache folders (as described above)</li>
+                <li>Download the latest Teams installer from Microsoft's website</li>
+                <li>Install the application</li>
+                <li>Sign in with your credentials</li>
+                <li>Configure camera settings before joining your first call</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-blue-50 p-3 rounded-md">
+        <p class="font-medium">Technical Insight: Teams Architecture</p>
+        <p class="text-sm">Microsoft Teams uses the Electron framework, which combines Chromium and Node.js. This architecture can sometimes cause conflicts with the WebRTC components that handle video. The cache-clearing steps reset the media subsystem components without affecting your user data or chat history. Recent Teams updates have improved webcam compatibility, particularly for USB devices on Windows 11.</p>
+      </div>`;
+    } else if (selectedPathKey === "diskOptimization") {
+      return `<h3 class="text-lg font-medium mb-3">Disk Optimization</h3>
+      
+      <p class="mb-3">Disk optimization can help improve storage performance and system responsiveness:</p>
+      
+      <ol class="list-decimal pl-5 mb-4 space-y-2">
+        <li><strong>Run Disk Cleanup</strong> - Remove temporary files, system files, and other unnecessary data to free up space.</li>
+        <li><strong>Optimize File System</strong> - Reorganize files to improve read/write speeds and reduce fragmentation.</li>
+        <li><strong>Defragment Disk</strong> - Reorganize data on the disk to improve read/write speeds and reduce fragmentation.</li>
+        <li><strong>Enable File Caching</strong> - Store frequently accessed files in memory for faster access.</li>
+      </ol>
+      
+      <p>These steps can improve disk performance by up to 20% and reduce system load times.</p>`;
+    } else if (selectedPathKey === "startupOptimization") {
+      return `<h3 class="text-lg font-medium mb-3">Startup Optimization</h3>
+      
+      <p class="mb-3">Startup optimization can help reduce system boot time and improve overall system performance:</p>
+      
+      <ol class="list-decimal pl-5 mb-4 space-y-2">
+        <li><strong>Disable Unnecessary Startup Items</strong> - Remove programs that start automatically when your computer boots.</li>
+        <li><strong>Use Task Manager</strong> - Identify and disable programs that are consuming excessive system resources.</li>
+        <li><strong>Enable Startup Applications</strong> - Only start applications that are necessary for your daily tasks.</li>
+        <li><strong>Use Startup Manager</strong> - Manage startup applications and ensure only essential programs are running.</li>
+      </ol>
+      
+      <p>These steps can improve system performance by up to 10% and reduce boot time.</p>`;
+    } else if (selectedPathKey === "memoryManagement") {
+      return `<h3 class="text-lg font-medium mb-3">Memory Management</h3>
+      
+      <p class="mb-3">Memory management can help improve system performance and reduce system crashes:</p>
+      
+      <ol class="list-decimal pl-5 mb-4 space-y-2">
+        <li><strong>Free Up Unused RAM</strong> - Remove programs that are not in use to free up memory.</li>
+        <li><strong>Optimize Applications</strong> - Use memory-efficient settings and features in applications.</li>
+        <li><strong>Use Task Manager</strong> - Identify and disable programs that are consuming excessive system resources.</li>
+        <li><strong>Enable Virtual Memory</strong> - Use additional storage to improve memory performance.</li>
+      </ol>
+      
+      <p>These steps can improve system performance by up to 15% and reduce system crashes.</p>`;
+    } else {
+      return path.steps && path.steps.length > 0 ? path.steps[0].description : "";
+    }
+  };
+
+  const getSelectedPathSources = () => {
+    if (!currentQueryData || !selectedPathKey) return [];
+    const path = currentQueryData.resolutionPaths[selectedPathKey];
+    return path?.sources || [];
+  };
+
+  return (
+    <div>
+      <Header />
+      <QueryInput onSearch={handleSearch} />
+      {showQueryInterpretation && <QueryInterpretation />}
+      {showResolutionOptions && <ResolutionOptions options={resolutionOptions} />}
+      {showAnswer && <AIGeneratedAnswer answer={getAnswerContent()} />}
+      <ConversationThread
+        history={conversationHistory}
+        activeItemId={activeConversationItemId}
+        onItemClick={handleConversationItemClick}
+      />
+      <Footer />
+    </div>
+  );
+};
+
+export default Index;
