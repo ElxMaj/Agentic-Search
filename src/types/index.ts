@@ -2,24 +2,30 @@
 export interface MockQueryData {
   query: string;
   interpretation: {
-    steps: {
-      description: string;
-    }[];
+    steps: InterpretationStep[];
   };
   resolutionPaths: {
     [key: string]: {
       name: string;
       icon: string;
-      steps?: {
-        description: string;
-      }[];
+      steps?: InterpretationStep[];
       sources?: Source[];
     };
   };
 }
 
-export interface Source {
+export interface InterpretationStep {
+  description: string;
+  entities?: Entity[];
+}
+
+export interface Entity {
+  text: string;
   type: string;
+}
+
+export interface Source {
+  type: "official" | "community" | "knowledge-base";
   title: string;
   date: string;
   metadata?: string;

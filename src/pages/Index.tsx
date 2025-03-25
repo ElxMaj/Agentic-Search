@@ -4,12 +4,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import QueryInput from '../components/QueryInput';
 import QueryInterpretation from '../components/QueryInterpretation';
-import ResolutionOptions, { ResolutionPathOption } from '../components/ResolutionOptions';
+import ResolutionOptions from '../components/ResolutionOptions';
 import AIGeneratedAnswer from '../components/AIGeneratedAnswer';
 import ConversationThread from '../components/ConversationThread';
-import { mockQueries, suggestedQueries, Source } from '../data/mockData';
+import { mockQueries, suggestedQueries } from '../data/mockData';
 import { generateFollowUpSuggestions } from '../utils/followUpSuggestions';
-import { MockQueryData, ConversationItem } from '../types';
+import { MockQueryData, ConversationItem, ResolutionPathOption, Source, InterpretationStep } from '../types';
 import FollowUpPrompt from '../components/FollowUpPrompt';
 
 const Index: React.FC = () => {
@@ -1035,7 +1035,7 @@ const Index: React.FC = () => {
             {currentQueryData && showQueryInterpretation && (
               <div className="w-full max-w-5xl mx-auto mt-8">
                 <QueryInterpretation 
-                  steps={currentQueryData.interpretation.steps} 
+                  steps={currentQueryData.interpretation.steps as InterpretationStep[]} 
                   isVisible={showQueryInterpretation}
                   isThinking={isThinking}
                 />
