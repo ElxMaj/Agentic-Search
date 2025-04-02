@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -139,7 +140,27 @@ const Index: React.FC = () => {
           options = options.sort((a, b) => b.confidence - a.confidence);
           
           setResolutionOptions(options);
-          setShowResolutionOptions(true);
+          
+          // For Dell graphics queries, automatically select the highest confidence option
+          if (searchQuery.toLowerCase().includes("dell graphics")) {
+            const highestConfidenceOption = options[0]; // Already sorted by confidence
+            setSelectedPathKey(highestConfidenceOption.key);
+            
+            // Skip showing resolution options
+            setShowResolutionOptions(false);
+            
+            // Show answer and follow-up immediately
+            setTimeout(() => {
+              setShowAnswer(true);
+              setTimeout(() => {
+                setShowFollowUp(true);
+              }, 1000);
+            }, 300);
+          } else {
+            // For other queries, show resolution options as normal
+            setShowResolutionOptions(true);
+          }
+          
           setIsLoading(false);
         }, 500);
       }, 1500);
