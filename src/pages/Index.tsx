@@ -55,91 +55,104 @@ const Index: React.FC = () => {
         setIsThinking(false);
         
         setTimeout(() => {
-          let options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
-            let detail = "";
+          // Check if this is the Dell graphics performance query
+          if (searchQuery.toLowerCase().includes("dell graphics") || 
+              searchQuery.toLowerCase().includes("improve dell graphics performance")) {
+            // For Dell graphics queries, skip showing resolution options and jump directly to answer
+            setSelectedPathKey("diagnostics"); // Set to "diagnostics" path by default
+            setShowAnswer(true);
+            setTimeout(() => {
+              setShowFollowUp(true);
+            }, 1000);
+          } else {
+            // For all other queries, continue with normal flow
+            let options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
+              let detail = "";
+              
+              if (matchedQuery.query.includes("Webcam problem")) {
+                if (key === "permissions") {
+                  detail = "Privacy settings might be blocking camera access";
+                } else if (key === "connection") {
+                  detail = "Physical or USB connection issues detected";
+                } else if (key === "drivers") {
+                  detail = "Driver conflicts or outdated software identified";
+                } else if (key === "teamsConfig") {
+                  detail = "Teams settings and configuration problems identified";
+                }
+              } else if (matchedQuery.query.includes("Dell graphics")) {
+                if (key === "software") {
+                  detail = "Current drivers detected as outdated by 3 months";
+                } else if (key === "hardware") {
+                  detail = "External GPU options and new models available";
+                } else if (key === "diagnostics") {
+                  detail = "Settings optimization for your most-used apps";
+                }
+              } else if (matchedQuery.query.includes("My computer is slow")) {
+                if (key === "diskOptimization") {
+                  detail = "Storage performance analysis and optimization";
+                } else if (key === "startupOptimization") {
+                  detail = "Identify and disable unnecessary startup items";
+                } else if (key === "memoryManagement") {
+                  detail = "Free up and optimize RAM usage";
+                }
+              }
+              
+              const sources = path.sources || [];
+              const sourceCount = sources.length;
+              const confidence = sources.length > 0 
+                ? Math.round(sources.reduce((sum, source) => sum + source.confidence, 0) / sources.length)
+                : Math.floor(Math.random() * 10) + 85;
+              
+              let description = "";
+              if (key === "permissions") {
+                description = "Check and update app permissions in Windows and Teams";
+              } else if (key === "connection") {
+                description = "Troubleshoot physical connections and USB ports";
+              } else if (key === "drivers") {
+                description = "Update or reinstall webcam and USB drivers";
+              } else if (key === "teamsConfig") {
+                description = "Fix Teams settings, cache and configuration issues";
+              } else if (key === "software") {
+                description = "Free software and driver updates";
+              } else if (key === "hardware") {
+                description = "Recommended upgrades for better performance";
+              } else if (key === "diagnostics") {
+                description = "App-specific performance tips";
+              } else if (key === "diskOptimization") {
+                description = "Optimize storage performance and SSD settings";
+              } else if (key === "startupOptimization") {
+                description = "Streamline system startup and background services";
+              } else if (key === "memoryManagement") {
+                description = "Improve RAM utilization and application memory usage";
+              } else {
+                description = "Improve system performance";
+              }
+
+              return {
+                key,
+                name: path.name,
+                icon: path.icon,
+                description,
+                confidence,
+                sources: sourceCount > 0 ? sourceCount : Math.floor(Math.random() * 100) + 150,
+                detail
+              };
+            });
             
             if (matchedQuery.query.includes("Webcam problem")) {
-              if (key === "permissions") {
-                detail = "Privacy settings might be blocking camera access";
-              } else if (key === "connection") {
-                detail = "Physical or USB connection issues detected";
-              } else if (key === "drivers") {
-                detail = "Driver conflicts or outdated software identified";
-              } else if (key === "teamsConfig") {
-                detail = "Teams settings and configuration problems identified";
-              }
-            } else if (matchedQuery.query.includes("Dell graphics")) {
-              if (key === "software") {
-                detail = "Current drivers detected as outdated by 3 months";
-              } else if (key === "hardware") {
-                detail = "External GPU options and new models available";
-              } else if (key === "diagnostics") {
-                detail = "Settings optimization for your most-used apps";
-              }
-            } else if (matchedQuery.query.includes("My computer is slow")) {
-              if (key === "diskOptimization") {
-                detail = "Storage performance analysis and optimization";
-              } else if (key === "startupOptimization") {
-                detail = "Identify and disable unnecessary startup items";
-              } else if (key === "memoryManagement") {
-                detail = "Free up and optimize RAM usage";
-              }
+              options = options.filter(option => option.key !== "teams");
             }
             
-            const sources = path.sources || [];
-            const sourceCount = sources.length;
-            const confidence = sources.length > 0 
-              ? Math.round(sources.reduce((sum, source) => sum + source.confidence, 0) / sources.length)
-              : Math.floor(Math.random() * 10) + 85;
-            
-            let description = "";
-            if (key === "permissions") {
-              description = "Check and update app permissions in Windows and Teams";
-            } else if (key === "connection") {
-              description = "Troubleshoot physical connections and USB ports";
-            } else if (key === "drivers") {
-              description = "Update or reinstall webcam and USB drivers";
-            } else if (key === "teamsConfig") {
-              description = "Fix Teams settings, cache and configuration issues";
-            } else if (key === "software") {
-              description = "Free software and driver updates";
-            } else if (key === "hardware") {
-              description = "Recommended upgrades for better performance";
-            } else if (key === "diagnostics") {
-              description = "App-specific performance tips";
-            } else if (key === "diskOptimization") {
-              description = "Optimize storage performance and SSD settings";
-            } else if (key === "startupOptimization") {
-              description = "Streamline system startup and background services";
-            } else if (key === "memoryManagement") {
-              description = "Improve RAM utilization and application memory usage";
-            } else {
-              description = "Improve system performance";
+            if (matchedQuery.query.includes("My computer is slow")) {
+              options = options.filter(option => option.key !== "softwareCleanup");
             }
-
-            return {
-              key,
-              name: path.name,
-              icon: path.icon,
-              description,
-              confidence,
-              sources: sourceCount > 0 ? sourceCount : Math.floor(Math.random() * 100) + 150,
-              detail
-            };
-          });
-          
-          if (matchedQuery.query.includes("Webcam problem")) {
-            options = options.filter(option => option.key !== "teams");
+            
+            options = options.sort((a, b) => b.confidence - a.confidence);
+            
+            setResolutionOptions(options);
+            setShowResolutionOptions(true);
           }
           
-          if (matchedQuery.query.includes("My computer is slow")) {
-            options = options.filter(option => option.key !== "softwareCleanup");
-          }
-          
-          options = options.sort((a, b) => b.confidence - a.confidence);
-          
-          setResolutionOptions(options);
-          setShowResolutionOptions(true);
           setIsLoading(false);
         }, 500);
       }, 1500);
@@ -988,7 +1001,7 @@ const Index: React.FC = () => {
                   isThinking={isThinking}
                 />
                 
-                {showResolutionOptions && (
+                {showResolutionOptions && !query.toLowerCase().includes("dell graphics") && (
                   <ResolutionOptions 
                     options={resolutionOptions} 
                     onSelectPath={handleSelectPath} 
