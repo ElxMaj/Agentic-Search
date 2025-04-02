@@ -54,15 +54,7 @@ const Index: React.FC = () => {
       setTimeout(() => {
         setIsThinking(false);
         
-        if (searchQuery.toLowerCase().includes('dell') && 
-            searchQuery.toLowerCase().includes('graphics') && 
-            searchQuery.toLowerCase().includes('performance')) {
-          setSelectedPathKey("diagnostics");
-          setShowAnswer(true);
-          setTimeout(() => {
-            setShowFollowUp(true);
-          }, 1000);
-        } else {
+        setTimeout(() => {
           let options: ResolutionPathOption[] = Object.entries(matchedQuery.resolutionPaths).map(([key, path]) => {
             let detail = "";
             
@@ -149,7 +141,7 @@ const Index: React.FC = () => {
           setResolutionOptions(options);
           setShowResolutionOptions(true);
           setIsLoading(false);
-        }
+        }, 500);
       }, 1500);
     }, 1000);
   };
@@ -996,7 +988,7 @@ const Index: React.FC = () => {
                   isThinking={isThinking}
                 />
                 
-                {showResolutionOptions && !query.toLowerCase().includes('dell graphics performance') && (
+                {showResolutionOptions && (
                   <ResolutionOptions 
                     options={resolutionOptions} 
                     onSelectPath={handleSelectPath} 
