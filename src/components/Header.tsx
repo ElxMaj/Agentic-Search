@@ -8,28 +8,29 @@ const Header: React.FC = () => {
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  
+
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-  
+
   const navLinks = [{
     title: 'Home',
     path: '/'
   }];
-  
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 py-4 px-6 transition-all duration-300 ${isScrolled ? 'bg-[#0076CE]/90 backdrop-blur-sm shadow-soft' : 'bg-[#0076CE]'}`}>
       <div className="max-w-6xl mx-auto">
@@ -44,7 +45,9 @@ const Header: React.FC = () => {
               <Link 
                 key={link.path} 
                 to={link.path} 
-                className={`text-sm font-medium transition-colors hover:text-white ${location.pathname === link.path ? 'text-white' : 'text-white/90'}`}
+                className={`text-sm font-medium transition-colors hover:text-white ${
+                  location.pathname === link.path ? 'text-white' : 'text-white/90'
+                }`}
               >
                 {link.title}
               </Link>
@@ -60,21 +63,10 @@ const Header: React.FC = () => {
       {/* Mobile menu */}
       {isMobileMenuOpen && (
         <motion.div 
-          initial={{
-            opacity: 0,
-            y: -20
-          }} 
-          animate={{
-            opacity: 1,
-            y: 0
-          }} 
-          exit={{
-            opacity: 0,
-            y: -20
-          }} 
-          transition={{
-            duration: 0.2
-          }} 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.2 }}
           className="md:hidden absolute top-16 left-0 right-0 bg-[#0076CE] shadow-medium py-4 px-6"
         >
           <nav className="flex flex-col space-y-4">
@@ -82,7 +74,9 @@ const Header: React.FC = () => {
               <Link 
                 key={link.path} 
                 to={link.path} 
-                className={`text-sm font-medium transition-colors hover:text-white ${location.pathname === link.path ? 'text-white' : 'text-white/90'}`} 
+                className={`text-sm font-medium transition-colors hover:text-white ${
+                  location.pathname === link.path ? 'text-white' : 'text-white/90'
+                }`}
                 onClick={closeMobileMenu}
               >
                 {link.title}
