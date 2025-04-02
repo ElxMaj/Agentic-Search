@@ -43,6 +43,11 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
 
   // Limit the options displayed if limitOptions is provided
   const displayOptions = limitOptions ? options.slice(0, limitOptions) : options;
+  
+  // Determine grid classes based on number of options
+  const gridClasses = displayOptions.length === 2 
+    ? "grid grid-cols-1 md:grid-cols-2 gap-4" 
+    : "grid grid-cols-1 md:grid-cols-3 gap-4";
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
@@ -56,7 +61,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
           Here are the most effective approaches to resolve your issue, based on analysis of similar cases.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className={gridClasses}>
           {displayOptions.map((option) => (
             <div 
               key={option.key}
