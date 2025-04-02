@@ -20,6 +20,7 @@ const Index: React.FC = () => {
   const [selectedPathKey, setSelectedPathKey] = useState<string>("");
   const [resolutionOptions, setResolutionOptions] = useState<ResolutionPathOption[]>([]);
   const [showFollowUp, setShowFollowUp] = useState(false);
+  const [limitOptions, setLimitOptions] = useState<number | undefined>(undefined);
 
   const handleSearch = (searchQuery: string) => {
     setQuery(searchQuery);
@@ -41,6 +42,7 @@ const Index: React.FC = () => {
     setShowAnswer(false);
     setShowFollowUp(false);
     setSelectedPathKey(""); // Reset selected path on new search
+    setLimitOptions(undefined); // Reset options limit on new search
     
     setTimeout(() => {
       const matchedQuery = mockQueries.find(q => 
@@ -156,8 +158,14 @@ const Index: React.FC = () => {
                 setShowFollowUp(true);
               }, 1000);
             }, 300);
-          } else {
-            // For other queries, show resolution options as normal
+          } 
+          // For "computer is slow" queries, limit display to 2 highest confidence options
+          else if (searchQuery.toLowerCase().includes("computer is slow")) {
+            setLimitOptions(2); // Limit to 2 options
+            setShowResolutionOptions(true);
+          } 
+          else {
+            // For other queries, show all resolution options as normal
             setShowResolutionOptions(true);
           }
           
@@ -1014,7 +1022,8 @@ const Index: React.FC = () => {
                     options={resolutionOptions} 
                     onSelectPath={handleSelectPath} 
                     selectedPath={selectedPathKey} 
-                    isVisible={showResolutionOptions} 
+                    isVisible={showResolutionOptions}
+                    limitOptions={limitOptions}
                   />
                 )}
                 

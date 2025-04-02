@@ -19,13 +19,15 @@ interface ResolutionOptionsProps {
   onSelectPath: (pathKey: string) => void;
   selectedPath: string;
   isVisible: boolean;
+  limitOptions?: number;
 }
 
 const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({ 
   options, 
   onSelectPath, 
   selectedPath,
-  isVisible
+  isVisible,
+  limitOptions
 }) => {
   if (!isVisible || options.length === 0) {
     return null;
@@ -38,6 +40,9 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
     if (confidence >= 60) return "text-amber-500";
     return "text-orange-500";
   };
+
+  // Limit the options displayed if limitOptions is provided
+  const displayOptions = limitOptions ? options.slice(0, limitOptions) : options;
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8">
@@ -52,7 +57,7 @@ const ResolutionOptions: React.FC<ResolutionOptionsProps> = ({
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {options.map((option) => (
+          {displayOptions.map((option) => (
             <div 
               key={option.key}
               className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer h-full flex flex-col ${
