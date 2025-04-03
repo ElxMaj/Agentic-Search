@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -1035,10 +1034,12 @@ const Index: React.FC = () => {
                       isVisible={showAnswer} 
                     />
                     
-                    <FollowUpPrompt
-                      currentQuery={query}
-                      isVisible={showFollowUp}
-                    />
+                    {showFollowUp && (
+                      <FollowUpPrompt
+                        parentQuery={query}
+                        onSelectFollowUp={handleSearch}
+                      />
+                    )}
                   </>
                 )}
               </div>
