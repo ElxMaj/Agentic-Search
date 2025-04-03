@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
@@ -24,6 +23,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
   const [followUpText, setFollowUpText] = useState('');
   const [followUpAnswers, setFollowUpAnswers] = useState<FollowUpAnswer[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [hasAskedFollowUp, setHasAskedFollowUp] = useState(false);
 
   if (!isVisible) return null;
 
@@ -61,7 +61,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
   const suggestions = getSuggestions();
 
   const processFollowUpQuestion = (question: string) => {
-    if (question.trim() === '' || isProcessing) return;
+    if (question.trim() === '' || isProcessing || hasAskedFollowUp) return;
     
     setIsProcessing(true);
     
@@ -575,166 +575,4 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
             <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
             <div>
               <p class="font-medium">Check for Storage Device Health Issues</p>
-              <p class="text-sm mb-2">Failing storage can cause severe performance degradation:</p>
-              <ol class="list-decimal pl-5 text-sm">
-                <li>Open Command Prompt as administrator</li>
-                <li>Run <code class="bg-gray-100 px-1">wmic diskdrive get status</code> to check basic disk status</li>
-                <li>For more detail, download CrystalDiskInfo to check S.M.A.R.T. status</li>
-                <li>Look for any warnings or errors that indicate drive problems</li>
-                <li>If drive health issues are found, back up your data immediately and consider drive replacement</li>
-              </ol>
-            </div>
-          </div>
-          
-          <div class="flex items-start">
-            <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
-            <div>
-              <p class="font-medium">Run Memory Diagnostics</p>
-              <p class="text-sm mb-2">RAM issues are a common cause of performance problems and crashes:</p>
-              <ol class="list-decimal pl-5 text-sm">
-                <li>Search for "Windows Memory Diagnostic" in the Start menu</li>
-                <li>Choose to restart now and check for problems</li>
-                <li>Let the test complete (may take 15-30 minutes)</li>
-                <li>Windows will restart and show results</li>
-                <li>If errors are found, consider replacing the affected RAM module</li>
-              </ol>
-            </div>
-          </div>
-          
-          <div class="flex items-start">
-            <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
-            <div>
-              <p class="font-medium">Check for Thermal Throttling</p>
-              <p class="text-sm mb-2">Overheating can cause severe performance drops:</p>
-              <ol class="list-decimal pl-5 text-sm">
-                <li>Download and install HWiNFO or Intel XTU (for Intel CPUs)</li>
-                <li>Monitor CPU and GPU temperatures during normal use</li>
-                <li>CPU temperatures above 90°C or GPU above 85°C indicate a cooling problem</li>
-                <li>Clean cooling vents and ensure fans are working properly</li>
-                <li>For laptops, consider using a cooling pad</li>
-              </ol>
-            </div>
-          </div>
-          
-          <div class="flex items-start">
-            <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">5</span>
-            <div>
-              <p class="font-medium">Check for Background Processes with High Resource Usage</p>
-              <p class="text-sm mb-2">Unknown processes may be consuming system resources:</p>
-              <ol class="list-decimal pl-5 text-sm">
-                <li>Press Ctrl+Shift+Esc to open Task Manager</li>
-                <li>Click "More details" if you're in the simplified view</li>
-                <li>Sort by CPU, Memory, Disk, or Network usage to identify high-usage processes</li>
-                <li>Research any unfamiliar processes consuming significant resources</li>
-                <li>For legitimate but resource-heavy processes, consider disabling them at startup</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-yellow-50 p-3 rounded-md mb-4">
-          <p class="font-medium">When to Consider Hardware Upgrades:</p>
-          <p class="text-sm">If all software solutions fail to resolve performance issues, you might need hardware upgrades:</p>
-          <ul class="list-disc pl-5 text-sm">
-            <li><strong>RAM upgrade</strong>: If your system frequently uses 80%+ of available RAM</li>
-            <li><strong>SSD upgrade</strong>: If you're still using a mechanical hard drive as your system disk</li>
-            <li><strong>GPU upgrade</strong>: For graphics-intensive applications and gaming</li>
-            <li><strong>CPU upgrade</strong>: Only if your CPU is consistently at 100% utilization during normal tasks</li>
-          </ul>
-        </div>
-        
-        <p>Before investing in hardware upgrades, try a clean Windows installation as a last resort software solution. This eliminates all software-related issues and gives you a fresh start.</p>`;
-      } else if (question.trim() !== '') {
-        // Generic response for other questions
-        answer = `<h4 class="text-lg font-medium mb-2">Additional Information</h4>
-        <p class="mb-3">Let me provide some additional insights regarding your question about "${question}".</p>
-        <div class="bg-blue-50 p-3 rounded-md mb-4">
-          <p>This appears to be a specific question I don't have a pre-defined answer for. In a real implementation, this would connect to an AI service to generate a relevant response based on your question and the context of our previous conversation.</p>
-        </div>
-        <p>For the purposes of this prototype, I can tell you that the Dell DeepResolution system would analyze your specific query, consider the context of our discussion about ${currentQuery}, and provide a detailed answer with relevant sources, guidance, and next steps.</p>`;
-      }
-
-      // Add the answer to the followUpAnswers array
-      const newAnswer = {
-        question,
-        content: answer,
-        originalQuery: currentQuery,
-      };
-      
-      setFollowUpAnswers(prev => [...prev, newAnswer]);
-      setFollowUpText('');
-      setIsProcessing(false);
-    }, 1500);
-  };
-
-  const handleFollowUpInput = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (followUpText.trim()) {
-      processFollowUpQuestion(followUpText);
-    }
-  };
-
-  const handleChipClick = (suggestion: string) => {
-    processFollowUpQuestion(suggestion);
-  };
-
-  return (
-    <div className="mt-8 border-t pt-6">
-      {followUpAnswers.length > 0 && (
-        <div className="space-y-6 mb-8">
-          {followUpAnswers.map((answer, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-sm border p-4">
-              <div className="mb-2 text-sm text-gray-500">
-                <span>Because you asked "{answer.originalQuery}"</span>
-              </div>
-              <h3 className="font-medium text-gray-800 mb-2">{answer.question}</h3>
-              <AIGeneratedAnswer content={answer.content} />
-            </div>
-          ))}
-        </div>
-      )}
-      
-      <h3 className="font-medium text-lg mb-3">Ask a follow-up question</h3>
-      
-      <div className="mb-4 flex flex-wrap gap-2">
-        {suggestions.map((suggestion, index) => (
-          <FollowUpChip
-            key={index}
-            text={suggestion}
-            onClick={() => handleChipClick(suggestion)}
-            delay={index * 0.1}
-          />
-        ))}
-      </div>
-      
-      <form onSubmit={handleFollowUpInput} className="flex gap-2">
-        <div className="flex-1">
-          <Input
-            value={followUpText}
-            onChange={(e) => setFollowUpText(e.target.value)}
-            placeholder="Type your follow-up question..."
-            className="w-full"
-            disabled={isProcessing}
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={followUpText.trim() === '' || isProcessing}
-          className={`p-2 rounded-full bg-blue-500 text-white ${
-            followUpText.trim() === '' || isProcessing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
-          }`}
-        >
-          <Send size={18} />
-        </button>
-      </form>
-      
-      {isProcessing && (
-        <div className="mt-4 flex items-center text-sm text-gray-500">
-          <div className="animate-pulse mr-2">Processing your question...</div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default FollowUpPrompt;
+              <p class="text-sm mb-2">Failing storage can cause severe performance degradation:</
