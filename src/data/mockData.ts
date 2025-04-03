@@ -30,14 +30,6 @@ export interface ResolutionPath {
   sources?: Source[];
 }
 
-export interface FollowUpAnswer {
-  question: string;
-  relatedToQuery: string;
-  content: string;
-  confidence: number;
-  sources: Source[];
-}
-
 export interface MockQueryData {
   query: string;
   interpretation: {
@@ -1282,98 +1274,6 @@ export const mockQueries: MockQueryData[] = [
         ]
       }
     }
-  }
-];
-
-// Follow-up answers for common questions
-export const followUpAnswers: FollowUpAnswer[] = [
-  {
-    question: "How can I check if my drivers are up to date?",
-    relatedToQuery: "Improve Dell graphics performance",
-    content: `
-      <div class="space-y-6">
-        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r">
-          <h3 class="font-bold text-lg text-blue-800">Extended Analysis and Recommendations</h3>
-          <p class="text-blue-700 mb-2">Building on our previous discussion, I've analyzed additional factors that could impact your situation.</p>
-        </div>
-        
-        <div class="bg-gray-50 p-4 rounded-lg">
-          <h4 class="font-semibold text-gray-800 mb-2">Key Insights</h4>
-          <p class="text-gray-700">After reviewing the information from our earlier conversation, several additional considerations emerge that could significantly improve your experience:</p>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div class="bg-blue-50 p-4 rounded-lg">
-              <h5 class="font-medium text-blue-800 mb-2">Contextual Considerations</h5>
-              <p class="text-blue-700">The underlying architecture of your system reveals patterns that weren't immediately obvious in our initial analysis. These systemic elements often interact in ways that compound both problems and potential solutions.</p>
-            </div>
-            <div class="bg-green-50 p-4 rounded-lg">
-              <h5 class="font-medium text-green-800 mb-2">Optimized Approach</h5>
-              <p class="text-green-700">By leveraging the foundations we've already established, we can implement more refined strategies that build upon earlier optimizations while addressing newly identified factors.</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-          <h4 class="font-semibold text-gray-800 mb-2">Expanded Perspective</h4>
-          <p class="text-gray-700 mb-4">The information from our earlier discussion provides valuable context that helps inform these additional recommendations:</p>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h5 class="font-medium text-gray-800 mb-2">Systemic Patterns</h5>
-              <ul class="list-disc pl-5 space-y-2">
-                <li>Underlying connections between seemingly separate issues often reveal common root causes</li>
-                <li>Multiple small optimizations can compound for significant overall improvement</li>
-                <li>Regular maintenance prevents degradation of initial performance gains</li>
-              </ul>
-            </div>
-            <div>
-              <h5 class="font-medium text-gray-800 mb-2">Long-term Sustainability</h5>
-              <ul class="list-disc pl-5 space-y-2">
-                <li>Implement monitoring practices to catch regressions early</li>
-                <li>Schedule periodic review of system configuration</li>
-                <li>Stay current with relevant updates and patches</li>
-                <li>Document successful optimization strategies for future reference</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    `,
-    confidence: 94,
-    sources: [
-      {
-        type: "official",
-        title: "Dell Driver Update Best Practices",
-        date: "Updated Apr 2024",
-        metadata: "Official Documentation",
-        confidence: 98,
-        excerpt: "Regular driver updates are crucial for maintaining optimal performance and compatibility with the latest software."
-      },
-      {
-        type: "knowledge-base",
-        title: "Windows 11 Driver Management",
-        date: "Updated Mar 2024",
-        metadata: "Microsoft Knowledge Base",
-        confidence: 95,
-        excerpt: "Windows 11 introduces new driver management features that can help automate and simplify the update process."
-      },
-      {
-        type: "community",
-        title: "Dell Community: Driver Update Guide",
-        date: "Thread from Feb 2024",
-        metadata: "Community Forum",
-        confidence: 92,
-        excerpt: "Community members report improved system stability after implementing a structured driver update schedule."
-      },
-      {
-        type: "knowledge-base",
-        title: "Graphics Driver Performance Impact",
-        date: "Updated Jan 2024",
-        metadata: "Technical Analysis",
-        confidence: 91,
-        excerpt: "Recent analysis shows that graphics driver updates can improve performance by up to 15% for integrated GPUs."
-      }
-    ]
   }
 ];
 
