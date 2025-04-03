@@ -14,7 +14,7 @@ interface FollowUpPromptProps {
 interface FollowUpAnswer {
   question: string;
   content: string;
-  timestamp: Date;
+  originalQuery: string;
 }
 
 const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({ 
@@ -24,6 +24,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
   const [followUpText, setFollowUpText] = useState('');
   const [followUpAnswers, setFollowUpAnswers] = useState<FollowUpAnswer[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [hasAskedFollowUp, setHasAskedFollowUp] = useState(false);
 
   if (!isVisible) return null;
 
@@ -60,8 +61,122 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
 
   const suggestions = getSuggestions();
 
+  // Mock sources for follow-up answers
+  const getMockSources = (question: string) => {
+    // Default sources
+    const defaultSources = [
+      {
+        type: "official",
+        title: "Dell Technical Support Documentation",
+        date: "Updated March 2025",
+        metadata: "Official Source",
+        confidence: 95,
+        excerpt: "Regular maintenance of your Dell system ensures optimal performance and longevity."
+      },
+      {
+        type: "community",
+        title: "Dell Community Forums",
+        date: "Discussion from February 2025",
+        metadata: "Community Source",
+        confidence: 87,
+        excerpt: "Many users report performance improvements after following these recommended maintenance steps."
+      }
+    ];
+
+    // Add question-specific sources
+    if (question.toLowerCase().includes('drivers')) {
+      return [
+        {
+          type: "official",
+          title: "Dell Driver Management Guide",
+          date: "Updated April 2025",
+          metadata: "Official Source",
+          confidence: 98,
+          excerpt: "Keeping graphics drivers updated is crucial for optimal performance, especially with Intel Iris Xe graphics."
+        },
+        {
+          type: "technical",
+          title: "Intel Driver Documentation",
+          date: "Technical Reference 2025",
+          metadata: "Partner Documentation",
+          confidence: 96,
+          excerpt: "Intel recommends quarterly driver updates for integrated graphics solutions in laptop environments."
+        },
+        ...defaultSources
+      ];
+    } 
+    
+    if (question.toLowerCase().includes('gaming') || question.toLowerCase().includes('requirements')) {
+      return [
+        {
+          type: "research",
+          title: "Dell XPS Gaming Performance Analysis",
+          date: "Tech Review March 2025",
+          metadata: "Research Report",
+          confidence: 92,
+          excerpt: "Intel Iris Xe graphics can handle most esports titles at 1080p with low to medium settings."
+        },
+        {
+          type: "technical",
+          title: "Intel Iris Xe Gaming Benchmark Database",
+          date: "Performance Data 2025",
+          metadata: "Benchmarking Data",
+          confidence: 94,
+          excerpt: "The Intel Iris Xe can deliver 60+ FPS in popular titles like Valorant when properly configured."
+        },
+        ...defaultSources
+      ];
+    }
+
+    if (question.toLowerCase().includes('battery')) {
+      return [
+        {
+          type: "official",
+          title: "Dell Power Management Guide",
+          date: "Updated February 2025",
+          metadata: "Official Documentation",
+          confidence: 97,
+          excerpt: "High Performance power plans can reduce battery life by 25-40% compared to Balanced modes."
+        },
+        {
+          type: "research",
+          title: "Laptop Battery Optimization Study",
+          date: "Research Paper 2025",
+          metadata: "Academic Source",
+          confidence: 89,
+          excerpt: "Graphics driver updates have minimal to positive impact on battery efficiency in current generation systems."
+        },
+        ...defaultSources
+      ];
+    }
+
+    if (question.toLowerCase().includes('webcam') || question.toLowerCase().includes('camera')) {
+      return [
+        {
+          type: "official",
+          title: "Logitech Webcam Troubleshooting Guide",
+          date: "Updated March 2025",
+          metadata: "Manufacturer Documentation",
+          confidence: 96,
+          excerpt: "Regular driver updates ensure compatibility with the latest video conferencing platforms."
+        },
+        {
+          type: "technical",
+          title: "Windows 11 Camera Access Management",
+          date: "Microsoft Documentation 2025",
+          metadata: "OS Documentation",
+          confidence: 95,
+          excerpt: "Applications require explicit permission to access camera hardware in Windows 11."
+        },
+        ...defaultSources
+      ];
+    }
+
+    return defaultSources;
+  };
+
   const processFollowUpQuestion = (question: string) => {
-    if (question.trim() === '' || isProcessing) return;
+    if (question.trim() === '' || isProcessing || hasAskedFollowUp) return;
     
     setIsProcessing(true);
     
@@ -72,7 +187,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
       // Generate relevant response based on the follow-up question
       if (question.toLowerCase().includes('drivers up to date')) {
         answer = `<h4 class="text-lg font-medium mb-2">Checking if Your Graphics Drivers are Up to Date</h4>
-        <p class="mb-3">There are several ways to check if your Dell graphics drivers are current:</p>
+        <p class="mb-3">Building on our previous discussion about Dell graphics performance, here's how to check if your drivers are current:</p>
         <ol class="list-decimal pl-5 mb-4 space-y-2">
           <li><strong>Dell Update Utility</strong> - The easiest method is using the Dell SupportAssist or Dell Update application that came preinstalled on your system. These tools automatically check for and install the latest drivers.</li>
           <li><strong>Device Manager</strong> - Open Device Manager by right-clicking the Start button, expand "Display adapters", right-click your graphics card and select "Update driver". Choose "Search automatically for updated driver software".</li>
@@ -81,7 +196,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         <p class="mb-3">For your Dell XPS with Intel Iris Xe graphics, I recommend checking both the Dell Support website and Intel's driver page, as sometimes Dell's drivers lag behind Intel's latest releases.</p>`;
       } else if (question.toLowerCase().includes('minimum requirements')) {
         answer = `<h4 class="text-lg font-medium mb-2">Minimum Requirements for Gaming on Dell XPS</h4>
-        <p class="mb-3">For your Dell XPS with Intel Iris Xe integrated graphics, here are the gaming capability thresholds:</p>
+        <p class="mb-3">Based on our earlier discussion about graphics performance, here are the gaming capability thresholds for your Dell XPS with Intel Iris Xe integrated graphics:</p>
         <div class="bg-blue-50 p-3 rounded-md mb-4">
           <p class="font-medium">Entry-Level Gaming (60+ FPS):</p>
           <ul class="list-disc pl-5 mt-1">
@@ -109,7 +224,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         <p>For the best gaming experience on your current hardware, focus on optimizing your system using the software recommendations provided earlier, and consider cloud gaming services like GeForce Now or Xbox Cloud Gaming for more demanding titles.</p>`;
       } else if (question.toLowerCase().includes('battery life')) {
         answer = `<h4 class="text-lg font-medium mb-2">Impact of Graphics Optimizations on Battery Life</h4>
-        <p class="mb-3">The graphics performance improvements I recommended will affect your battery life in the following ways:</p>
+        <p class="mb-3">Following up on our discussion about Dell graphics performance, the optimizations I recommended will affect your battery life in the following ways:</p>
         <div class="space-y-4 mb-4">
           <div class="flex items-start">
             <div class="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">-</div>
@@ -144,7 +259,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         <p>You can also use the Dell Power Manager application to create custom thermal profiles that balance performance and battery life based on your specific needs.</p>`;
       } else if (question.toLowerCase().includes('monitor performance')) {
         answer = `<h4 class="text-lg font-medium mb-2">Performance Monitoring Tools</h4>
-        <p class="mb-3">Here are the best tools for monitoring your system's performance:</p>
+        <p class="mb-3">Building on our previous discussion about system performance, here are the best tools for monitoring your system:</p>
         
         <div class="space-y-4 mb-4">
           <div class="border-l-4 border-blue-400 pl-3">
@@ -184,7 +299,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         </div>`;
       } else if (question.toLowerCase().includes('how often')) {
         answer = `<h4 class="text-lg font-medium mb-2">Optimization Maintenance Schedule</h4>
-        <p class="mb-3">To keep your system running optimally, follow this maintenance schedule:</p>
+        <p class="mb-3">Following up on our previous discussion about system performance, here's an ideal maintenance schedule to keep your system running optimally:</p>
         
         <div class="space-y-4 mb-4">
           <div class="bg-gray-100 p-3 rounded-md">
@@ -236,7 +351,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         </div>`;
       } else if (question.toLowerCase().includes('malware')) {
         answer = `<h4 class="text-lg font-medium mb-2">Malware and System Performance</h4>
-        <p class="mb-3">Malware is indeed a common cause of system slowdowns. Here's how to determine if malware might be affecting your performance:</p>
+        <p class="mb-3">Building on our previous discussion about system slowdowns, malware is indeed a common cause. Here's how to determine if malware might be affecting your performance:</p>
         
         <div class="space-y-4 mb-4">
           <div class="flex items-start">
@@ -313,7 +428,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         </div>`;
       } else if (question.toLowerCase().includes('update my webcam')) {
         answer = `<h4 class="text-lg font-medium mb-2">Updating Webcam Drivers</h4>
-        <p class="mb-3">Here's a detailed guide to update your webcam drivers properly:</p>
+        <p class="mb-3">Based on our previous discussion about webcam issues, here's a detailed guide to update your webcam drivers properly:</p>
         
         <div class="space-y-4 mb-4">
           <div class="border-l-4 border-blue-400 pl-3">
@@ -374,7 +489,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         <p>Regular driver updates are especially important for webcams used with Microsoft Teams, as new Teams versions often include improvements that require updated webcam drivers for optimal compatibility.</p>`;
       } else if (question.toLowerCase().includes('antivirus')) {
         answer = `<h4 class="text-lg font-medium mb-2">Antivirus Software and Webcam Blocking</h4>
-        <p class="mb-3">Many antivirus programs include privacy protection features that can block webcam access. Here's how to check if your antivirus is blocking your webcam and how to fix it:</p>
+        <p class="mb-3">Building on our previous webcam troubleshooting discussion, many antivirus programs include privacy protection features that can block webcam access. Here's how to check if your antivirus is blocking your webcam and how to fix it:</p>
         
         <div class="space-y-4 mb-4">
           <div class="flex items-start">
@@ -461,7 +576,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         <p>When updating antivirus software, webcam permissions may sometimes reset to default (blocking) settings. Always check these settings after antivirus updates if webcam problems reoccur.</p>`;
       } else if (question.toLowerCase().includes('fix work')) {
         answer = `<h4 class="text-lg font-medium mb-2">Will This Webcam Fix Work for All Video Calls?</h4>
-        <p class="mb-3">The fixes we've discussed have varying levels of effectiveness across different video calling platforms. Here's a breakdown:</p>
+        <p class="mb-3">Building on our previous webcam troubleshooting discussion, the fixes have varying levels of effectiveness across different video calling platforms. Here's a breakdown:</p>
         
         <div class="overflow-x-auto mb-4">
           <table class="min-w-full border-collapse border border-gray-300">
@@ -553,7 +668,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         </div>`;
       } else if (question.toLowerCase().includes('fix this if')) {
         answer = `<h4 class="text-lg font-medium mb-2">Alternative Solutions If Initial Fixes Don't Work</h4>
-        <p class="mb-3">If the recommended optimizations didn't resolve your performance issues, here are more advanced troubleshooting steps to consider:</p>
+        <p class="mb-3">Building on our previous discussion about performance optimization, if the recommended steps didn't resolve your issues, here are more advanced troubleshooting steps to consider:</p>
         
         <div class="space-y-4 mb-4">
           <div class="flex items-start">
@@ -643,7 +758,7 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         </div>`;
       } else if (question.toLowerCase().includes('deeper issue')) {
         answer = `<h4 class="text-lg font-medium mb-2">Investigating Deeper System Issues</h4>
-        <p class="mb-3">Beyond the surface-level optimizations, several underlying issues could be contributing to persistent performance problems on your system:</p>
+        <p class="mb-3">Building on our earlier performance discussion, beyond the surface-level optimizations, several underlying issues could be contributing to persistent problems on your system:</p>
         
         <div class="space-y-4 mb-4">
           <div class="border-l-4 border-blue-400 pl-3">
@@ -729,26 +844,30 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
       } else {
         // Generic response for any other follow-up question
         answer = `<h4 class="text-lg font-medium mb-2">Additional Information</h4>
-        <p class="mb-3">Thank you for your follow-up question. Here's some additional information that might help:</p>
+        <p class="mb-3">Thank you for your follow-up question. Building on our previous discussion, here's additional information that may help:</p>
         
         <div class="bg-blue-50 p-3 rounded-md mb-4">
           <p>The solution approaches I've provided are based on analysis of similar cases and best practices for resolving these types of issues. Each recommendation has been tested and verified to be effective in most scenarios.</p>
         </div>
         
-        <p class="mb-3">If you're looking for more specific guidance related to your particular situation, please provide additional details about your system configuration, any error messages you're seeing, or specific challenges you're facing.</p>
+        <p class="mb-3">The recommendations are directly informed by the context of our earlier conversation, allowing me to provide more targeted and effective solutions specific to your situation.</p>
         
-        <p>I'm here to help you troubleshoot and resolve your issue as efficiently as possible.</p>`;
+        <p>I'm here to help you troubleshoot and resolve your issue as efficiently as possible, leveraging the insights gained from our previous interactions.</p>`;
       }
+      
+      // Get mock sources for this question
+      const sources = getMockSources(question);
       
       // Add the new answer to the list
       setFollowUpAnswers(prev => [...prev, {
         question,
         content: answer,
-        timestamp: new Date()
+        originalQuery: currentQuery
       }]);
       
       setIsProcessing(false);
       setFollowUpText('');
+      setHasAskedFollowUp(true); // Mark that a follow-up has been asked
     }, 1500);
   };
 
@@ -772,40 +891,46 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
         className="p-4 border border-gray-200 rounded-lg bg-gray-50"
       >
         <h3 className="text-gray-700 font-medium mb-4">
-          Still need help? Ask a follow-up or try one of these suggestions:
+          {hasAskedFollowUp ? 
+            "Your follow-up question has been answered. Only one follow-up question is allowed per conversation." :
+            "Still need help? Ask a follow-up or try one of these suggestions:"}
         </h3>
 
-        <form onSubmit={handleDemoSubmit} className="mb-4">
-          <div className="flex">
-            <Input
-              value={followUpText}
-              onChange={(e) => setFollowUpText(e.target.value)}
-              placeholder="Ask a follow-up..."
-              className="rounded-r-none focus-visible:ring-blue-500"
-              disabled={isProcessing}
-            />
-            <button
-              type="submit"
-              className={`bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md transition-colors ${isProcessing ? 'opacity-70 cursor-not-allowed' : ''}`}
-              aria-label="Submit follow-up question"
-              disabled={isProcessing}
-            >
-              <Send size={18} />
-            </button>
-          </div>
-        </form>
+        {!hasAskedFollowUp && (
+          <>
+            <form onSubmit={handleDemoSubmit} className="mb-4">
+              <div className="flex">
+                <Input
+                  value={followUpText}
+                  onChange={(e) => setFollowUpText(e.target.value)}
+                  placeholder="Ask a follow-up..."
+                  className="rounded-r-none focus-visible:ring-blue-500"
+                  disabled={isProcessing}
+                />
+                <button
+                  type="submit"
+                  className={`bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md transition-colors ${isProcessing ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  aria-label="Submit follow-up question"
+                  disabled={isProcessing}
+                >
+                  <Send size={18} />
+                </button>
+              </div>
+            </form>
 
-        <div className="flex flex-wrap gap-2">
-          {suggestions.map((suggestion, index) => (
-            <FollowUpChip
-              key={index}
-              text={suggestion}
-              onClick={() => handleDemoChipClick(suggestion)}
-              delay={0.1 + (index * 0.1)}
-              disabled={isProcessing}
-            />
-          ))}
-        </div>
+            <div className="flex flex-wrap gap-2">
+              {suggestions.map((suggestion, index) => (
+                <FollowUpChip
+                  key={index}
+                  text={suggestion}
+                  onClick={() => handleDemoChipClick(suggestion)}
+                  delay={0.1 + (index * 0.1)}
+                  disabled={isProcessing}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </motion.div>
 
       {/* Display previous follow-up answers */}
@@ -822,13 +947,13 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
               <div className="p-3 bg-gray-100 rounded-lg mb-2">
                 <p className="font-medium text-gray-800">{answer.question}</p>
                 <p className="text-xs text-gray-500 mt-1">
-                  {answer.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  Because you asked previously: "{answer.originalQuery}"
                 </p>
               </div>
               
               <AIGeneratedAnswer 
                 content={answer.content} 
-                sources={[]} 
+                sources={getMockSources(answer.question)} 
                 isVisible={true} 
               />
             </motion.div>
