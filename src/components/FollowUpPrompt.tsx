@@ -892,45 +892,42 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
       >
         <h3 className="text-gray-700 font-medium mb-4">
           {hasAskedFollowUp ? 
-            "Your follow-up question has been answered. Only one follow-up question is allowed per conversation." :
+            "Still need help?" :
             "Still need help? Ask a follow-up or try one of these suggestions:"}
         </h3>
 
-        {!hasAskedFollowUp && (
-          <>
-            <form onSubmit={handleDemoSubmit} className="mb-4">
-              <div className="flex">
-                <Input
-                  value={followUpText}
-                  onChange={(e) => setFollowUpText(e.target.value)}
-                  placeholder="Ask a follow-up..."
-                  className="rounded-r-none focus-visible:ring-blue-500"
-                  disabled={isProcessing}
-                />
-                <button
-                  type="submit"
-                  className={`bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md transition-colors ${isProcessing ? 'opacity-70 cursor-not-allowed' : ''}`}
-                  aria-label="Submit follow-up question"
-                  disabled={isProcessing}
-                >
-                  <Send size={18} />
-                </button>
-              </div>
-            </form>
+        {/* Always show the form, but disable it when hasAskedFollowUp is true */}
+        <form onSubmit={handleDemoSubmit} className="mb-4">
+          <div className="flex">
+            <Input
+              value={followUpText}
+              onChange={(e) => setFollowUpText(e.target.value)}
+              placeholder="Ask a follow-up..."
+              className="rounded-r-none focus-visible:ring-blue-500"
+              disabled={isProcessing || hasAskedFollowUp}
+            />
+            <button
+              type="submit"
+              className={`bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md transition-colors ${(isProcessing || hasAskedFollowUp) ? 'opacity-50 cursor-not-allowed' : ''}`}
+              aria-label="Submit follow-up question"
+              disabled={isProcessing || hasAskedFollowUp}
+            >
+              <Send size={18} />
+            </button>
+          </div>
+        </form>
 
-            <div className="flex flex-wrap gap-2">
-              {suggestions.map((suggestion, index) => (
-                <FollowUpChip
-                  key={index}
-                  text={suggestion}
-                  onClick={() => handleDemoChipClick(suggestion)}
-                  delay={0.1 + (index * 0.1)}
-                  disabled={isProcessing}
-                />
-              ))}
-            </div>
-          </>
-        )}
+        <div className="flex flex-wrap gap-2">
+          {suggestions.map((suggestion, index) => (
+            <FollowUpChip
+              key={index}
+              text={suggestion}
+              onClick={() => handleDemoChipClick(suggestion)}
+              delay={0.1 + (index * 0.1)}
+              disabled={isProcessing || hasAskedFollowUp}
+            />
+          ))}
+        </div>
       </motion.div>
 
       {/* Display previous follow-up answers */}
