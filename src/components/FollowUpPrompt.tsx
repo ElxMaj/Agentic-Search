@@ -14,7 +14,6 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({ onSelectFollowUp, paren
   const [selectedFollowUp, setSelectedFollowUp] = useState<string | null>(null);
   const [showSources, setShowSources] = useState(false);
   
-  // Determine follow-up questions based on parent query
   const getFollowUpQuestions = (): string[] => {
     if (parentQuery.toLowerCase().includes("dell") && parentQuery.toLowerCase().includes("graphics")) {
       return [
@@ -51,7 +50,6 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({ onSelectFollowUp, paren
     }
   };
 
-  // Generate mock sources for any follow-up answers
   const getMockSources = (): Source[] => {
     if (selectedFollowUp?.toLowerCase().includes("drivers")) {
       return [
@@ -159,7 +157,6 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({ onSelectFollowUp, paren
     onSelectFollowUp(question);
   };
 
-  // Reset state when parent query changes
   useEffect(() => {
     setSelectedFollowUp(null);
     setShowSources(false);

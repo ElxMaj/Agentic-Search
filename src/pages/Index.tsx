@@ -1037,7 +1037,6 @@ const Index: React.FC = () => {
                     <FollowUpPrompt
                       parentQuery={query}
                       onSelectFollowUp={(text) => handleSearch(text)}
-                      isVisible={showFollowUp}
                     />
                   </>
                 )}
