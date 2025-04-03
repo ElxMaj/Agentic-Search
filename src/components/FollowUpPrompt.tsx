@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
@@ -575,4 +576,133 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
             <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
             <div>
               <p class="font-medium">Check for Storage Device Health Issues</p>
-              <p class="text-sm mb-2">Failing storage can cause severe performance degradation:</
+              <p class="text-sm mb-2">Failing storage can cause severe performance degradation:</p>
+              <ol class="list-decimal pl-5 text-sm">
+                <li>Open Command Prompt as administrator</li>
+                <li>Type <code class="bg-gray-100 px-1">wmic diskdrive get status</code> and press Enter to check basic disk status</li>
+                <li>For more detailed information, download CrystalDiskInfo</li>
+                <li>Look for health status indicators (Good, Caution, Bad)</li>
+                <li>If you see "Caution" or "Bad" status, backup your data immediately and consider replacing the drive</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <p class="mb-3">These advanced techniques often resolve issues that standard optimization methods cannot fix. If your system continues to have performance problems after trying all these solutions, it might be time to consider hardware upgrades or consulting with a professional technician.</p>`;
+      } else {
+        // Default answer for other questions
+        answer = `<h4 class="text-lg font-medium mb-2">Additional Information</h4>
+        <p class="mb-3">I've analyzed your follow-up question and compiled some relevant information that might help you understand your issue better:</p>
+        
+        <div class="bg-blue-50 p-3 rounded-md mb-4">
+          <p class="font-medium">Key Points to Consider:</p>
+          <ul class="list-disc pl-5 mt-1">
+            <li>Make sure you've applied all the recommendations from our initial discussion</li>
+            <li>System performance issues often have multiple contributing factors</li>
+            <li>Hardware limitations can sometimes only be addressed through upgrades</li>
+            <li>Recent Windows updates might temporarily impact performance</li>
+          </ul>
+        </div>
+        
+        <p>Would you like more specific information about any particular aspect of your system's performance or the recommendations I've provided?</p>`;
+      }
+      
+      // Add the follow-up answer to the list and reset states
+      setFollowUpAnswers([...followUpAnswers, {
+        question,
+        content: answer,
+        originalQuery: currentQuery
+      }]);
+      setFollowUpText('');
+      setIsProcessing(false);
+      setHasAskedFollowUp(true);
+    }, 1500);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    processFollowUpQuestion(followUpText);
+  };
+
+  const handleChipClick = (suggestion: string) => {
+    processFollowUpQuestion(suggestion);
+  };
+
+  return (
+    <div className="mt-6 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="p-4 border-b border-gray-200 bg-slate-50">
+        <h3 className="font-medium text-gray-900">Ask a follow-up question</h3>
+      </div>
+      
+      {/* Follow-up suggestions */}
+      {!hasAskedFollowUp && (
+        <div className="p-4 flex flex-wrap gap-2">
+          {suggestions.map((suggestion, i) => (
+            <FollowUpChip 
+              key={i} 
+              text={suggestion}
+              onClick={() => handleChipClick(suggestion)}
+              disabled={isProcessing}
+            />
+          ))}
+        </div>
+      )}
+      
+      {/* Follow-up input */}
+      {!hasAskedFollowUp && (
+        <form onSubmit={handleSubmit} className="flex items-center gap-2 p-4 border-t border-gray-100">
+          <Input
+            type="text"
+            value={followUpText}
+            onChange={(e) => setFollowUpText(e.target.value)}
+            placeholder="Type your follow-up question..."
+            className="flex-1"
+            disabled={isProcessing}
+          />
+          <button
+            type="submit"
+            className={`inline-flex items-center justify-center p-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={isProcessing}
+          >
+            <Send size={16} />
+            <span className="sr-only">Send</span>
+          </button>
+        </form>
+      )}
+      
+      {/* Loading animation */}
+      {isProcessing && (
+        <div className="p-6 flex items-center justify-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full"
+          />
+          <p className="ml-3 text-sm text-gray-600">Processing your question...</p>
+        </div>
+      )}
+      
+      {/* Follow-up answers */}
+      {followUpAnswers.length > 0 && (
+        <div className="p-4">
+          {followUpAnswers.map((answer, index) => (
+            <div key={index} className="mb-4 last:mb-0">
+              <div className="mb-2 bg-slate-100 p-2 rounded-md">
+                <p className="font-medium text-sm">{answer.question}</p>
+              </div>
+              <AIGeneratedAnswer content={answer.content} />
+              
+              {hasAskedFollowUp && (
+                <div className="mt-4 p-3 bg-gray-50 border border-gray-200 rounded-md">
+                  <p className="text-sm text-gray-600">For this prototype, you can only ask one follow-up question per session.</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default FollowUpPrompt;
