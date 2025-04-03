@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
@@ -13,7 +14,7 @@ interface FollowUpPromptProps {
 interface FollowUpAnswer {
   question: string;
   content: string;
-  originalQuery: string;
+  timestamp: Date;
 }
 
 const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({ 
@@ -576,4 +577,266 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
               <p class="font-medium">Check for Storage Device Health Issues</p>
               <p class="text-sm mb-2">Failing storage can cause severe performance degradation:</p>
               <ol class="list-decimal pl-5 text-sm">
-                <li>Open Command Prompt as
+                <li>Open Command Prompt as administrator</li>
+                <li>Run <code class="bg-gray-100 px-1">wmic diskdrive get status,model</code></li>
+                <li>If any drive shows status other than "OK", run <code class="bg-gray-100 px-1">chkdsk C: /f /r</code></li>
+                <li>Schedule the check for next restart when prompted</li>
+                <li>Download and run manufacturer diagnostic tools (Samsung Magician for Samsung SSDs, etc.)</li>
+              </ol>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+            <div>
+              <p class="font-medium">Investigate Temperature Issues</p>
+              <p class="text-sm mb-2">Thermal throttling can severely impact performance:</p>
+              <ol class="list-decimal pl-5 text-sm">
+                <li>Download HWiNFO or Core Temp to monitor CPU and GPU temperatures</li>
+                <li>Check if temperatures exceed 90°C under load</li>
+                <li>If overheating is detected:
+                  <ul class="list-disc pl-5">
+                    <li>Clean laptop vents with compressed air</li>
+                    <li>Use a laptop cooling pad</li>
+                    <li>Consider repasting CPU/GPU thermal compound (professional service recommended)</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">4</span>
+            <div>
+              <p class="font-medium">Reset Windows Without Losing Data</p>
+              <p class="text-sm mb-2">A factory reset while keeping your files can resolve deep-seated issues:</p>
+              <ol class="list-decimal pl-5 text-sm">
+                <li>Backup important data first (always a good precaution)</li>
+                <li>Go to Settings > System > Recovery</li>
+                <li>Under "Reset this PC", click "Get started"</li>
+                <li>Choose "Keep my files"</li>
+                <li>Follow the prompts to reset Windows</li>
+                <li>Note: You'll need to reinstall applications, but your documents will be preserved</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mb-4">
+          <p class="font-medium">Before Hardware Upgrades:</p>
+          <p class="text-sm">If software solutions aren't enough, consider these cost-effective hardware improvements:</p>
+          <ol class="list-decimal pl-5 text-sm">
+            <li>Upgrade to an SSD if still using a mechanical hard drive (biggest performance impact)</li>
+            <li>Increase RAM if currently below 16GB</li>
+            <li>Use an external GPU via Thunderbolt if graphics performance is the main issue</li>
+          </ol>
+        </div>
+        
+        <div class="bg-blue-50 p-3 rounded-md">
+          <p class="font-medium">Professional Assistance:</p>
+          <p class="text-sm">If issues persist after all these steps, consider these options:</p>
+          <ul class="list-disc pl-5 text-sm">
+            <li>Contact Dell Support through <a href="#" class="text-blue-600">support.dell.com</a> (especially if under warranty)</li>
+            <li>Use Dell's hardware diagnostic tools to identify potential component failures</li>
+            <li>Consider utilizing Dell's optimization services for a comprehensive tune-up</li>
+          </ul>
+        </div>`;
+      } else if (question.toLowerCase().includes('deeper issue')) {
+        answer = `<h4 class="text-lg font-medium mb-2">Investigating Deeper System Issues</h4>
+        <p class="mb-3">Beyond the surface-level optimizations, several underlying issues could be contributing to persistent performance problems on your system:</p>
+        
+        <div class="space-y-4 mb-4">
+          <div class="border-l-4 border-blue-400 pl-3">
+            <h5 class="font-medium">BIOS and Firmware Issues</h5>
+            <p class="text-sm mb-2">Outdated BIOS can cause various performance problems:</p>
+            <ul class="list-disc pl-4 text-sm">
+              <li>Dell systems frequently receive BIOS updates that address performance issues</li>
+              <li>Check your current BIOS version by pressing F2 during startup</li>
+              <li>Visit Dell Support, enter your Service Tag, and check for BIOS updates</li>
+              <li>Recent BIOS updates have improved CPU thermal management and RAM compatibility</li>
+              <li>Always connect to AC power before updating BIOS</li>
+            </ul>
+          </div>
+          
+          <div class="border-l-4 border-blue-400 pl-3">
+            <h5 class="font-medium">Windows Power Throttling</h5>
+            <p class="text-sm mb-2">Windows 11 has advanced power management that sometimes over-throttles performance:</p>
+            <ul class="list-disc pl-4 text-sm">
+              <li>Open Registry Editor (regedit) with administrator rights</li>
+              <li>Navigate to <code class="bg-gray-100 px-1">HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Power</code></li>
+              <li>Look for "PowerThrottling" key (create it if not present)</li>
+              <li>Add DWORD value "PowerThrottlingOff" set to 1 to disable power throttling</li>
+              <li>Restart your computer</li>
+              <li>Note: This may reduce battery life but improve performance</li>
+            </ul>
+          </div>
+          
+          <div class="border-l-4 border-blue-400 pl-3">
+            <h5 class="font-medium">Chipset Driver Issues</h5>
+            <p class="text-sm mb-2">Outdated chipset drivers can cause system-wide slowdowns:</p>
+            <ul class="list-disc pl-4 text-sm">
+              <li>Chipset drivers control communication between hardware components</li>
+              <li>Visit Intel's website to download the latest chipset drivers for your system</li>
+              <li>Alternatively, use Dell Update to install official Dell-validated chipset drivers</li>
+              <li>Restart your computer after installation</li>
+              <li>Chipset updates can improve USB performance, power management, and storage speeds</li>
+            </ul>
+          </div>
+          
+          <div class="border-l-4 border-blue-400 pl-3">
+            <h5 class="font-medium">Windows Services Configuration</h5>
+            <p class="text-sm mb-2">Some background services may be consuming resources unnecessarily:</p>
+            <ul class="list-disc pl-4 text-sm">
+              <li>Press Win+R, type <code class="bg-gray-100 px-1">services.msc</code>, and press Enter</li>
+              <li>The following services can be safely set to Manual if not needed:
+                <ul class="list-disc pl-4">
+                  <li>Superfetch/SysMain (can cause high disk usage)</li>
+                  <li>Windows Search (high resource usage during indexing)</li>
+                  <li>Print Spooler (if you don't print regularly)</li>
+                  <li>Bluetooth Support Service (if not using Bluetooth)</li>
+                </ul>
+              </li>
+              <li>Right-click each service, select Properties, and change Startup type to Manual</li>
+              <li>Click Stop to end the current service session</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="bg-purple-50 p-3 rounded-md mb-4">
+          <p class="font-medium">Hardware Diagnostic Tests:</p>
+          <p class="text-sm mb-2">Run Dell's built-in hardware diagnostics to check for component issues:</p>
+          <ol class="list-decimal pl-5 text-sm">
+            <li>Restart your computer and press F12 repeatedly during startup</li>
+            <li>Select "Diagnostics" from the boot menu</li>
+            <li>Run the comprehensive system test</li>
+            <li>Record any error codes that appear</li>
+            <li>Contact Dell Support with these codes if hardware issues are detected</li>
+          </ol>
+        </div>
+        
+        <div class="bg-blue-50 p-3 rounded-md">
+          <p class="font-medium">System Resource Monitoring:</p>
+          <p class="text-sm">Use Resource Monitor to identify resource hogs during slowdowns:</p>
+          <ol class="list-decimal pl-5 text-sm">
+            <li>Press Ctrl+Shift+Esc to open Task Manager</li>
+            <li>Click "Performance" tab</li>
+            <li>Click "Open Resource Monitor" at the bottom</li>
+            <li>Monitor the CPU, Memory, Disk, and Network tabs during performance issues</li>
+            <li>Look for processes consuming excessive resources</li>
+            <li>Research any unknown high-resource processes to determine if they're necessary</li>
+          </ol>
+        </div>`;
+      } else {
+        // Generic response for any other follow-up question
+        answer = `<h4 class="text-lg font-medium mb-2">Additional Information</h4>
+        <p class="mb-3">Thank you for your follow-up question. Here's some additional information that might help:</p>
+        
+        <div class="bg-blue-50 p-3 rounded-md mb-4">
+          <p>The solution approaches I've provided are based on analysis of similar cases and best practices for resolving these types of issues. Each recommendation has been tested and verified to be effective in most scenarios.</p>
+        </div>
+        
+        <p class="mb-3">If you're looking for more specific guidance related to your particular situation, please provide additional details about your system configuration, any error messages you're seeing, or specific challenges you're facing.</p>
+        
+        <p>I'm here to help you troubleshoot and resolve your issue as efficiently as possible.</p>`;
+      }
+      
+      // Add the new answer to the list
+      setFollowUpAnswers(prev => [...prev, {
+        question,
+        content: answer,
+        timestamp: new Date()
+      }]);
+      
+      setIsProcessing(false);
+      setFollowUpText('');
+    }, 1500);
+  };
+
+  const handleDemoSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (followUpText.trim()) {
+      processFollowUpQuestion(followUpText);
+    }
+  };
+
+  const handleDemoChipClick = (text: string) => {
+    processFollowUpQuestion(text);
+  };
+
+  return (
+    <div className="space-y-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="p-4 border border-gray-200 rounded-lg bg-gray-50"
+      >
+        <h3 className="text-gray-700 font-medium mb-4">
+          Still need help? Ask a follow-up or try one of these suggestions:
+        </h3>
+
+        <form onSubmit={handleDemoSubmit} className="mb-4">
+          <div className="flex">
+            <Input
+              value={followUpText}
+              onChange={(e) => setFollowUpText(e.target.value)}
+              placeholder="Ask a follow-up..."
+              className="rounded-r-none focus-visible:ring-blue-500"
+              disabled={isProcessing}
+            />
+            <button
+              type="submit"
+              className={`bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md transition-colors ${isProcessing ? 'opacity-70 cursor-not-allowed' : ''}`}
+              aria-label="Submit follow-up question"
+              disabled={isProcessing}
+            >
+              <Send size={18} />
+            </button>
+          </div>
+        </form>
+
+        <div className="flex flex-wrap gap-2">
+          {suggestions.map((suggestion, index) => (
+            <FollowUpChip
+              key={index}
+              text={suggestion}
+              onClick={() => handleDemoChipClick(suggestion)}
+              delay={0.1 + (index * 0.1)}
+              disabled={isProcessing}
+            />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Display previous follow-up answers */}
+      {followUpAnswers.length > 0 && (
+        <div className="space-y-4 mt-6">
+          {followUpAnswers.map((answer, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-6"
+            >
+              <div className="p-3 bg-gray-100 rounded-lg mb-2">
+                <p className="font-medium text-gray-800">{answer.question}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {answer.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </div>
+              
+              <AIGeneratedAnswer 
+                content={answer.content} 
+                sources={[]} 
+                isVisible={true} 
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default FollowUpPrompt;
