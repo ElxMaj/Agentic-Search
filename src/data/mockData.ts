@@ -30,6 +30,13 @@ export interface ResolutionPath {
   sources?: Source[];
 }
 
+export interface FollowUpAnswer {
+  id: string;
+  question: string;
+  answer: string;
+  sources?: Source[];
+}
+
 export interface MockQueryData {
   query: string;
   interpretation: {
@@ -42,6 +49,7 @@ export interface MockQueryData {
     }[];
   };
   resolutionPaths: Record<string, ResolutionPath>;
+  followUpAnswers?: FollowUpAnswer[];
 }
 
 export const mockQueries: MockQueryData[] = [
@@ -70,6 +78,68 @@ export const mockQueries: MockQueryData[] = [
         }
       ]
     },
+    followUpAnswers: [
+      {
+        id: "dell-fps-benchmarks",
+        question: "What are typical FPS improvements?",
+        answer: `<p>Based on user-reported benchmarks with Dell XPS 13 (Intel Iris Xe Graphics):</p>
+        <ul>
+          <li><strong>Driver updates:</strong> 10-15% FPS improvement in most games</li>
+          <li><strong>Power plan optimization:</strong> 5-10% FPS improvement</li>
+          <li><strong>External GPU connection:</strong> 200-300% FPS improvement (varies by eGPU model)</li>
+          <li><strong>Thermal optimization:</strong> 15-25% improvement in sustained performance</li>
+        </ul>
+        <p>Individual results may vary based on specific games, system configuration, and environmental factors.</p>`,
+        sources: [
+          {
+            type: "community",
+            title: "Dell Community: XPS Gaming Performance Thread",
+            date: "Updated Mar 2024",
+            metadata: "User Benchmarks",
+            confidence: 81,
+            excerpt: "Aggregated user benchmarks show consistent 10-15% FPS improvements after driver updates across most popular games."
+          },
+          {
+            type: "official",
+            title: "Intel Iris Xe Graphics Optimization Guide",
+            date: "Feb 2024",
+            metadata: "Official Documentation",
+            confidence: 92,
+            excerpt: "Thermal optimization can provide up to 25% improvement in sustained performance for Intel Iris Xe Graphics in thin-and-light laptops."
+          }
+        ]
+      },
+      {
+        id: "dell-compatible-egpu",
+        question: "What external GPUs are compatible?",
+        answer: `<p>Compatible external GPU (eGPU) options for Dell XPS 13 with Thunderbolt 4 support:</p>
+        <ul>
+          <li><strong>Razer Core X</strong> - Supports up to full-sized 3-slot wide PCIe desktop graphics cards</li>
+          <li><strong>Sonnet eGPU Breakaway Box 750</strong> - Provides 750W power, compatible with high-end GPUs</li>
+          <li><strong>Dell WD19TB Dock</strong> - Official Dell dock with eGPU capabilities, limited to some graphics cards</li>
+          <li><strong>Mantiz Saturn Pro II</strong> - Includes additional USB ports and SATA bay</li>
+        </ul>
+        <p>All require a compatible Thunderbolt 3 or 4 port on your Dell XPS. Performance will be approximately 85-90% of the same GPU in a desktop due to Thunderbolt bandwidth limitations.</p>`,
+        sources: [
+          {
+            type: "official",
+            title: "Dell XPS eGPU Compatibility Guide",
+            date: "Updated Jan 2024",
+            metadata: "Dell Support",
+            confidence: 96,
+            excerpt: "The Dell XPS 13 with Thunderbolt 4 is compatible with any eGPU enclosure that follows the Thunderbolt specification."
+          },
+          {
+            type: "knowledge-base",
+            title: "eGPU Performance Analysis",
+            date: "Dec 2023",
+            metadata: "Technical Review",
+            confidence: 88,
+            excerpt: "Thunderbolt 3/4 bandwidth limitations result in approximately 10-15% performance reduction compared to the same GPU in a desktop system."
+          }
+        ]
+      }
+    ],
     resolutionPaths: {
       "software": {
         name: "Performance Optimization",
