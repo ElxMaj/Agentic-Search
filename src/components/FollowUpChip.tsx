@@ -9,6 +9,11 @@ interface FollowUpChipProps {
 }
 
 const FollowUpChip: React.FC<FollowUpChipProps> = ({ text, onClick, delay = 0 }) => {
+  // Skip rendering this specific chip
+  if (text === "How can I check if my drivers are up to date?") {
+    return null;
+  }
+  
   return (
     <motion.button
       initial={{ opacity: 0, y: 10 }}
