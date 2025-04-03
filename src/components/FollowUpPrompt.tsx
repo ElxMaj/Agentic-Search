@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
@@ -884,6 +883,35 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
 
   return (
     <div className="space-y-4">
+      {/* Display previous follow-up answers */}
+      {followUpAnswers.length > 0 && (
+        <div className="space-y-4 mb-6">
+          {followUpAnswers.map((answer, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-6"
+            >
+              <div className="p-3 bg-gray-100 rounded-lg mb-2">
+                <p className="font-medium text-gray-800">{answer.question}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Because you asked previously: "{answer.originalQuery}"
+                </p>
+              </div>
+              
+              <AIGeneratedAnswer 
+                content={answer.content} 
+                sources={getMockSources(answer.question)} 
+                isVisible={true} 
+              />
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      {/* Always show the follow-up prompt UI, regardless of whether a follow-up has been asked */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -929,34 +957,6 @@ const FollowUpPrompt: React.FC<FollowUpPromptProps> = ({
           ))}
         </div>
       </motion.div>
-
-      {/* Display previous follow-up answers */}
-      {followUpAnswers.length > 0 && (
-        <div className="space-y-4 mt-6">
-          {followUpAnswers.map((answer, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mb-6"
-            >
-              <div className="p-3 bg-gray-100 rounded-lg mb-2">
-                <p className="font-medium text-gray-800">{answer.question}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Because you asked previously: "{answer.originalQuery}"
-                </p>
-              </div>
-              
-              <AIGeneratedAnswer 
-                content={answer.content} 
-                sources={getMockSources(answer.question)} 
-                isVisible={true} 
-              />
-            </motion.div>
-          ))}
-        </div>
-      )}
     </div>
   );
 };
