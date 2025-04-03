@@ -6,9 +6,16 @@ interface FollowUpChipProps {
   text: string;
   onClick: () => void;
   delay?: number;
+  index?: number;
+  currentQuery?: string;
 }
 
-const FollowUpChip: React.FC<FollowUpChipProps> = ({ text, onClick, delay = 0 }) => {
+const FollowUpChip: React.FC<FollowUpChipProps> = ({ text, onClick, delay = 0, index = 0, currentQuery = "" }) => {
+  // Skip the first chip (index 0) only for Dell graphics performance queries
+  if (index === 0 && currentQuery.toLowerCase().includes("dell graphics")) {
+    return null;
+  }
+
   return (
     <motion.button
       initial={{ opacity: 0, y: 10 }}
