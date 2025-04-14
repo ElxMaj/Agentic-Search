@@ -71,10 +71,10 @@ const QueryInterpretation: React.FC<QueryInterpretationProps> = ({
 
   return (
     <AnimatedTransition isVisible={true} variant="fadeIn" className="mb-8" delay={0.2}>
-      <div className="bg-blue-50 rounded-xl p-6">
+      <div className="bg-brand-primary/5 rounded-xl p-6">
         <div className="flex items-center mb-4">
-          <Zap className="text-[#0076CE] mr-2" size={20} />
-          <h2 className="text-black font-semibold text-lg">Here's how I understood your query:</h2>
+          <Zap className="text-brand-primary mr-2" size={20} />
+          <h2 className="text-brand-primary font-semibold text-lg">Here's how I understood your query:</h2>
         </div>
         
         <div className="space-y-3">
@@ -87,12 +87,12 @@ const QueryInterpretation: React.FC<QueryInterpretationProps> = ({
               className="flex"
             >
               <div className="mr-3 flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-[#0076CE]/10 flex items-center justify-center text-[#0076CE] font-medium">
+                <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary font-medium">
                   {index + 1}
                 </div>
               </div>
               <div className="pt-1">
-                <p className="text-black text-md" dangerouslySetInnerHTML={{ __html: step.description }} />
+                <p className="text-brand-dark text-md" dangerouslySetInnerHTML={{ __html: step.description }} />
               </div>
             </motion.div>
           ))}

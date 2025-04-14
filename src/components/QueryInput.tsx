@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, ArrowRight, Loader2, X, Laptop, Battery, Wifi, Clock, Camera } from 'lucide-react';
@@ -27,7 +26,6 @@ const QueryInput: React.FC<QueryInputProps> = ({
   };
 
   const handleSuggestionClick = (suggestion: string) => {
-    // Replace "Troubleshoot slow application loading" with "My computer is slow" if it's that suggestion
     const updatedSuggestion = suggestion === "Troubleshoot slow application loading" 
       ? "My computer is slow" 
       : suggestion;
@@ -41,15 +39,12 @@ const QueryInput: React.FC<QueryInputProps> = ({
     e.preventDefault(); // Prevent form submission
     e.stopPropagation(); // Stop event propagation
     
-    // Reset the component state
     setQuery('');
     setHasSearched(false);
     
-    // Call onSearch with empty string to reset the application state
     onSearch('');
   };
 
-  // Get a random example query for the placeholder
   const getRandomPlaceholder = () => {
     if (suggestedQueries.length > 0) {
       const randomIndex = Math.floor(Math.random() * suggestedQueries.length);
@@ -58,11 +53,10 @@ const QueryInput: React.FC<QueryInputProps> = ({
     return "e.g., How do I improve my software's performance?";
   };
 
-  // Get the appropriate icon and background color for a suggestion
   const getSuggestionStyle = (suggestion: string) => {
     let icon = <Laptop size={16} />;
-    let bgColor = "bg-[#E6F1F8]"; // Default color
-    let textColor = "text-[#0076CE]"; // Default text color
+    let bgColor = "bg-[#E6F1F8]";
+    let textColor = "text-[#0076CE]";
     
     if (suggestion.toLowerCase().includes("graphics") || suggestion === "How to improve Dell graphics performance?") {
       icon = <Laptop size={16} />;
@@ -94,7 +88,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
       <motion.form 
         onSubmit={handleSubmit}
         className={`relative mt-8 glass-panel p-1.5 transition-all duration-300 ${
-          isInputFocused ? 'shadow-medium ring-2 ring-[#0076CE]/20' : ''
+          isInputFocused ? 'shadow-medium ring-2 ring-brand-primary/20' : ''
         }`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -104,7 +98,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
           <Search 
             size={18} 
             className={`ml-3 transition-colors ${
-              isInputFocused ? 'text-[#0076CE]' : 'text-gray-500'
+              isInputFocused ? 'text-brand-primary' : 'text-gray-500'
             }`} 
           />
           <input
@@ -114,14 +108,14 @@ const QueryInput: React.FC<QueryInputProps> = ({
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
             placeholder={getRandomPlaceholder()}
-            className="flex-1 h-12 px-3 bg-transparent text-black focus:outline-none"
+            className="flex-1 h-12 px-3 bg-transparent text-brand-primary focus:outline-none"
             disabled={isLoading}
           />
           {hasSearched && query.trim() && !isLoading ? (
             <button
               type="button" 
               onClick={handleClearSearch}
-              className="flex items-center justify-center h-12 w-12 mr-1 rounded-md bg-[#D3E4FD] text-[#0076CE] hover:bg-[#B2D0F9] transition-all"
+              className="flex items-center justify-center h-12 w-12 mr-1 rounded-md bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 transition-all"
               aria-label="Clear search"
             >
               <X size={18} />
@@ -132,7 +126,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
               disabled={!query.trim() || isLoading}
               className={`flex items-center justify-center h-12 w-12 mr-1 rounded-md transition-all ${
                 query.trim() && !isLoading
-                  ? 'bg-[#0076CE] text-white hover:bg-[#005DA6]' 
+                  ? 'bg-brand-primary text-white hover:bg-brand-dark' 
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
               aria-label="Search"
@@ -162,7 +156,7 @@ const QueryInput: React.FC<QueryInputProps> = ({
               <button
                 key={index}
                 onClick={() => handleSuggestionClick(suggestion)}
-                className={`flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full ${bgColor} ${textColor} hover:opacity-90 transition-colors font-medium`}
+                className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 transition-colors font-medium"
                 disabled={isLoading}
               >
                 {icon}
