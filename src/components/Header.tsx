@@ -23,7 +23,7 @@ const Header: React.FC = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-
+  
   const navLinks = [{
     title: 'Home',
     path: '/'
@@ -37,12 +37,16 @@ const Header: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3">
-            <img src="/lovable-uploads/c3380cd5-7a26-4828-a4cc-c25f5a55bfef.png" alt="Coveo Logo" className="h-8 object-contain aspect-square" />
+            <img 
+              src="/lovable-uploads/c3380cd5-7a26-4828-a4cc-c25f5a55bfef.png" 
+              alt="Coveo Logo" 
+              className="h-12 w-12 object-contain aspect-square" 
+            />
             <span className="text-xl font-medium ml-1 text-white/90">AI Search Agent</span>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
-            {navLinks.map(link => {})}
+            {navLinks.map(link => null)}
           </nav>
           
           <button className="block md:hidden focus:outline-none" onClick={toggleMobileMenu} aria-label="Toggle menu">
