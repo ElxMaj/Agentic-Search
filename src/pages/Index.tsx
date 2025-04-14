@@ -1000,7 +1000,7 @@ const Index: React.FC = () => {
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-1 flex flex-col items-center py-10 px-6 pt-24">
+      <main className="flex-1 flex flex-col items-center py-10 px-6 pt-36">
         <div className="max-w-7xl w-full flex flex-col items-center">
           <h1 className="text-4xl font-bold text-center mb-8 text-neutral-900">
             Ask anything
