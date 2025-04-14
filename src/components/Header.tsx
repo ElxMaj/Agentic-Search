@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -31,17 +30,17 @@ const Header: React.FC = () => {
   }];
 
   return <header 
-    className={`fixed top-0 left-0 right-0 z-50 py-2 px-6 transition-all duration-300 
+    className={`fixed top-0 left-0 right-0 z-50 py-4 px-6 transition-all duration-300 
     ${isScrolled ? 'backdrop-blur-sm shadow-soft' : ''} 
     bg-gradient-to-r from-[#333357] to-[#40205A]`}
   >
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between h-12">
+        <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-3">
             <img 
               src="/lovable-uploads/c3380cd5-7a26-4828-a4cc-c25f5a55bfef.png" 
               alt="Coveo Logo" 
-              className="h-10 w-10 object-contain aspect-square" 
+              className="h-24 w-24 object-contain aspect-square" 
             />
             <span className="text-xl font-medium ml-1 text-white/90">AI Search Agent</span>
           </Link>
