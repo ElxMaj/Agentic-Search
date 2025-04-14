@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -40,7 +39,6 @@ const Header: React.FC = () => {
               alt="Coveo Logo" 
               className="h-8 object-contain aspect-square"
             />
-            <span className="text-xl font-bold text-white">DELL</span>
             <span className="text-xl font-medium ml-1 text-white/90">DeepResolution</span>
           </Link>
           
