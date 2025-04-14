@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -40,7 +41,7 @@ const Header: React.FC = () => {
             <img 
               src="/lovable-uploads/c3380cd5-7a26-4828-a4cc-c25f5a55bfef.png" 
               alt="Coveo Logo" 
-              className="h-12 w-12 object-contain aspect-square" 
+              className="h-24 w-24 object-contain aspect-square" 
             />
             <span className="text-xl font-medium ml-1 text-white/90">AI Search Agent</span>
           </Link>
