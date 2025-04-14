@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -33,7 +34,12 @@ const Header: React.FC = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 py-4 px-6 transition-all duration-300 ${isScrolled ? 'bg-[#333357]/90 backdrop-blur-sm shadow-soft' : 'bg-[#333357]'}`}>
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center space-x-3">
+            <img 
+              src="/lovable-uploads/c3380cd5-7a26-4828-a4cc-c25f5a55bfef.png" 
+              alt="Coveo Logo" 
+              className="h-8 w-8"
+            />
             <span className="text-xl font-bold text-white">DELL</span>
             <span className="text-xl font-medium ml-1 text-white/90">DeepResolution</span>
           </Link>
