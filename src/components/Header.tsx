@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -36,7 +35,7 @@ const Header: React.FC = () => {
     bg-gradient-to-r from-[#333357] to-[#40205A]`}
   >
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-3">
             <img 
               src="/lovable-uploads/c3380cd5-7a26-4828-a4cc-c25f5a55bfef.png" 
