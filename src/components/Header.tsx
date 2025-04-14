@@ -38,7 +38,7 @@ const Header: React.FC = () => {
             <img 
               src="/lovable-uploads/c3380cd5-7a26-4828-a4cc-c25f5a55bfef.png" 
               alt="Coveo Logo" 
-              className="h-8 w-8"
+              className="h-8 object-contain aspect-square"
             />
             <span className="text-xl font-bold text-white">DELL</span>
             <span className="text-xl font-medium ml-1 text-white/90">DeepResolution</span>
