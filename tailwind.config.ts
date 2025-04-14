@@ -118,7 +118,7 @@ export default {
         'pulse-subtle': 'pulse-subtle 2s ease-in-out infinite',
       },
       fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
       },
       boxShadow: {
         'soft': '0 2px 10px rgba(0, 0, 0, 0.05)',
